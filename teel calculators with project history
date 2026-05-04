@@ -1,0 +1,33 @@
+warning: in the working copy of 'src/app/layout.tsx', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/src/app/layout.tsx b/src/app/layout.tsx[m
+[1mindex c35ce4f..c58f34b 100644[m
+[1m--- a/src/app/layout.tsx[m
+[1m+++ b/src/app/layout.tsx[m
+[36m@@ -1,18 +1,7 @@[m
+ import type { Metadata } from "next";[m
+[31m-import { Geist, Geist_Mono } from "next/font/google";[m
+ import { Providers } from "@/components/auth/Providers";[m
+ import "./globals.css";[m
+ [m
+[31m-const geistSans = Geist({[m
+[31m-  variable: "--font-geist-sans",[m
+[31m-  subsets: ["latin"],[m
+[31m-});[m
+[31m-[m
+[31m-const geistMono = Geist_Mono({[m
+[31m-  variable: "--font-geist-mono",[m
+[31m-  subsets: ["latin"],[m
+[31m-});[m
+[31m-[m
+ export const metadata: Metadata = {[m
+   title: "Chantier Pro",[m
+   description:[m
+[36m@@ -27,7 +16,7 @@[m [mexport default function RootLayout({[m
+   return ([m
+     <html[m
+       lang="fr"[m
+[31m-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}[m
+[32m+[m[32m      className="h-full antialiased"[m
+     >[m
+       <body className="min-h-full flex flex-col">[m
+         <Providers>[m

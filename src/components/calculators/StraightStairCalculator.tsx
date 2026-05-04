@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -22,12 +23,16 @@ function toNumber(value: string): number | null {
 }
 
 export function StraightStairCalculator() {
+  const searchParams = useSearchParams();
+  const projectIdFromUrl = searchParams.get("projectId")?.trim() || "";
+
   const [stepsMode, setStepsMode] = useState<StepsMode>("auto");
 
   const [projectsLoading, setProjectsLoading] = useState(false);
   const [projectsError, setProjectsError] = useState<string | null>(null);
   const [projects, setProjects] = useState<Array<{ id: string; name: string }>>([]);
-  const [projectId, setProjectId] = useState("");
+  const [projectId, setProjectId] = useState(projectIdFromUrl);
+  const [projectPrefilledFromUrl] = useState(Boolean(projectIdFromUrl));
 
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState<string | null>(null);
@@ -89,7 +94,7 @@ export function StraightStairCalculator() {
     };
   }
 
-  async function refreshHistory(nextProjectId: string) {
+  const refreshHistory = useCallback(async (nextProjectId: string) => {
     if (!nextProjectId) {
       setHistory([]);
       return;
@@ -112,7 +117,7 @@ export function StraightStairCalculator() {
 
     setHistory(data.calculations);
     setHistoryLoading(false);
-  }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -142,6 +147,22 @@ export function StraightStairCalculator() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!projectIdFromUrl) return;
+    if (projectsLoading) return;
+    if (projects.length === 0) return;
+    if (projectId !== projectIdFromUrl) return;
+
+    const exists = projects.some((p) => p.id === projectIdFromUrl);
+    if (!exists) return;
+
+    const t = setTimeout(() => {
+      void refreshHistory(projectIdFromUrl);
+    }, 0);
+
+    return () => clearTimeout(t);
+  }, [projectIdFromUrl, projectId, projectsLoading, projects, refreshHistory]);
 
   function handleCompute() {
     setError(null);
@@ -270,6 +291,9 @@ export function StraightStairCalculator() {
           </select>
           {projectsLoading ? <div className="mt-1 text-xs text-white/55">Chargement…</div> : null}
           {projectsError ? <div className="mt-1 text-xs text-[var(--cp-accent)]">{projectsError}</div> : null}
+          {projectPrefilledFromUrl && projectId === projectIdFromUrl ? (
+            <div className="mt-1 text-xs text-white/55">Chantier sélectionné depuis la page projet.</div>
+          ) : null}
         </label>
       </Card>
 
