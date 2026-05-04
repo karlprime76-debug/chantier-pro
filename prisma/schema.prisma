@@ -1,0 +1,290 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  PROFESSIONAL
+  CLIENT
+}
+
+enum ProjectStatus {
+  PLANNED
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum ExpenseStatus {
+  PENDING
+  VALIDATED
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  email        String   @unique
+  name         String
+  role         UserRole @default(PROFESSIONAL)
+  passwordHash String
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  createdProjects Project[] @relation("ProjectCreatedBy")
+  projectMemberships ProjectMember[]
+
+  concreteCalculations ConcreteCalculation[]
+  steelCalculations    SteelCalculation[]
+  expenses            Expense[]
+  dailyReports        DailyReport[]
+  quotes              Quote[]
+  documents           Document[]
+
+  @@index([companyId])
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  users     User[]
+  projects  Project[]
+  documents Document[]
+
+  @@unique([name])
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User @relation("ProjectCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+
+  name            String
+  clientName      String?
+  location        String?
+  projectType     String?
+  estimatedBudget Decimal? @db.Decimal(14, 2)
+  startDate       DateTime?
+  plannedEndDate  DateTime?
+
+  status   ProjectStatus @default(ACTIVE)
+  progress Int           @default(0)
+
+  members              ProjectMember[]
+  concreteCalculations ConcreteCalculation[]
+  steelCalculations    SteelCalculation[]
+  expenses             Expense[]
+  dailyReports         DailyReport[]
+  quotes               Quote[]
+  documents            Document[]
+
+  @@index([companyId])
+  @@index([createdById])
+  @@index([status])
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  role UserRole @default(PROFESSIONAL)
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+model ConcreteCalculation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  elementType  String
+  length       Decimal? @db.Decimal(10, 3)
+  width        Decimal? @db.Decimal(10, 3)
+  height       Decimal? @db.Decimal(10, 3)
+  quantity     Int      @default(1)
+  wasteMargin  Decimal  @db.Decimal(5, 2)
+
+  volumeTotal       Decimal? @db.Decimal(14, 4)
+  volumeWithWaste   Decimal? @db.Decimal(14, 4)
+  cementEstimateKg  Decimal? @db.Decimal(14, 2)
+  sandEstimateM3    Decimal? @db.Decimal(14, 4)
+  gravelEstimateM3  Decimal? @db.Decimal(14, 4)
+
+  @@index([projectId])
+  @@index([createdById])
+}
+
+model SteelCalculation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  diameterMm   Int
+  unitLengthM  Decimal @db.Decimal(10, 3)
+  count        Int
+  overlapM     Decimal @db.Decimal(10, 3)
+
+  totalLengthM Decimal? @db.Decimal(14, 3)
+  totalWeightKg Decimal? @db.Decimal(14, 3)
+  bars12mCount Int?
+  estimatedCost Decimal? @db.Decimal(14, 2)
+
+  @@index([projectId])
+  @@index([createdById])
+}
+
+model Expense {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  category  String
+  label     String
+  amount    Decimal @db.Decimal(14, 2)
+  supplier  String?
+  date      DateTime
+  note      String?
+  status    ExpenseStatus @default(PENDING)
+
+  @@index([projectId])
+  @@index([createdById])
+  @@index([date])
+}
+
+model DailyReport {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  date          DateTime
+  weather       String?
+  workersCount  Int?
+  workDone      String
+  materialsIn   String?
+  incidents     String?
+  observations  String?
+  progressEst   Int?
+
+  @@unique([projectId, date])
+  @@index([createdById])
+}
+
+model Quote {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  status     QuoteStatus @default(DRAFT)
+  title      String
+  clientName String?
+  notes      String?
+
+  currency String @default("XOF")
+  subtotal Decimal @db.Decimal(14, 2)
+  taxTotal  Decimal @db.Decimal(14, 2)
+  total     Decimal @db.Decimal(14, 2)
+
+  items     QuoteItem[]
+  documents Document[]
+
+  @@index([projectId])
+  @@index([createdById])
+  @@index([status])
+}
+
+model QuoteItem {
+  id        String   @id @default(cuid())
+
+  quoteId String
+  quote   Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  label     String
+  quantity  Decimal @db.Decimal(14, 3)
+  unitPrice Decimal @db.Decimal(14, 2)
+  total     Decimal @db.Decimal(14, 2)
+
+  @@index([quoteId])
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  quoteId String?
+  quote   Quote? @relation(fields: [quoteId], references: [id], onDelete: SetNull)
+
+  createdById String?
+  createdBy   User? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  name String
+  mime String
+  url  String
+
+  @@index([companyId])
+  @@index([projectId])
+  @@index([quoteId])
+}
