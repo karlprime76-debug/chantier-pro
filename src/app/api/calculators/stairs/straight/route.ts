@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
 import { requireApiSession } from "@/lib/auth/api";
 import { computeStraightStair, StairStraightInputSchema } from "@/lib/calculators/stairStraight";
+import { assertApiFeatureAccess } from "@/lib/subscription/server";
 
 const SaveStraightStairSchema = z.object({
   projectId: z.string().min(1),
@@ -21,6 +22,7 @@ const SaveStraightStairSchema = z.object({
 
 export async function GET(req: Request) {
   const session = await requireApiSession();
+  assertApiFeatureAccess(session, "stair_straight");
 
   const url = new URL(req.url);
   const projectId = url.searchParams.get("projectId") ?? "";
@@ -71,6 +73,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const session = await requireApiSession();
+  assertApiFeatureAccess(session, "stair_straight");
 
   const json = await req.json().catch(() => null);
   const parsed = SaveStraightStairSchema.safeParse(json);
