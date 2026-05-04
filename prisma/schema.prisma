@@ -51,6 +51,7 @@ model User {
 
   concreteCalculations ConcreteCalculation[]
   steelCalculations    SteelCalculation[]
+  straightStairCalculations StraightStairCalculation[]
   expenses            Expense[]
   dailyReports        DailyReport[]
   quotes              Quote[]
@@ -98,6 +99,7 @@ model Project {
   members              ProjectMember[]
   concreteCalculations ConcreteCalculation[]
   steelCalculations    SteelCalculation[]
+  straightStairCalculations StraightStairCalculation[]
   expenses             Expense[]
   dailyReports         DailyReport[]
   quotes               Quote[]
@@ -262,6 +264,47 @@ model QuoteItem {
   total     Decimal @db.Decimal(14, 2)
 
   @@index([quoteId])
+}
+
+model StraightStairCalculation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  totalHeightCm     Decimal @db.Decimal(10, 2)
+  availableLengthCm Decimal @db.Decimal(10, 2)
+  stairWidthCm      Decimal @db.Decimal(10, 2)
+  stepsCount        Int
+  slabThicknessCm   Decimal @db.Decimal(10, 2)
+
+  concreteDosage      Decimal @db.Decimal(10, 2)
+  lossPercent         Decimal @db.Decimal(6, 2)
+  concretePricePerM3  Decimal? @db.Decimal(14, 2)
+
+  riserHeightCm        Decimal @db.Decimal(10, 2)
+  treadDepthCm         Decimal @db.Decimal(10, 2)
+  comfortFormulaValue  Decimal @db.Decimal(10, 2)
+  comfortStatus        String
+
+  waistSlabLengthM       Decimal @db.Decimal(14, 4)
+  concreteVolumeM3       Decimal @db.Decimal(14, 4)
+  concreteVolumeWithLossM3 Decimal @db.Decimal(14, 4)
+  formworkAreaM2         Decimal @db.Decimal(14, 4)
+
+  cementBags   Int
+  sandVolumeM3 Decimal @db.Decimal(14, 4)
+  gravelVolumeM3 Decimal @db.Decimal(14, 4)
+  estimatedCost Decimal? @db.Decimal(14, 2)
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model Document {
