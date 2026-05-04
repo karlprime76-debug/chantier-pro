@@ -22,26 +22,52 @@ export function RegisterForm() {
         setLoading(true);
         setError(null);
 
+        const normalizedEmail = email.trim().toLowerCase();
+
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ name, email, company, password }),
+          body: JSON.stringify({ name, email: normalizedEmail, company, password }),
         });
 
+        const data = (await res.json().catch(() => null)) as
+          | { ok: true; userId: string }
+          | { ok: false; error: string }
+          | null;
+
         if (!res.ok) {
-          setError("Inscription impossible. Vérifie tes infos.");
+          if (data?.ok === false) {
+            if (data.error === "email_already_used") {
+              setError("Cet email est déjà utilisé. Connecte-toi ou utilise un autre email.");
+            } else {
+              setError("Inscription impossible. Vérifie tes infos.");
+            }
+          } else {
+            setError("Inscription impossible. Vérifie tes infos.");
+          }
           setLoading(false);
           return;
         }
 
-        await signIn("credentials", {
-          email,
+        if (!data || data.ok !== true) {
+          setError("Inscription impossible. Réessaie.");
+          setLoading(false);
+          return;
+        }
+
+        const result = await signIn("credentials", {
+          email: normalizedEmail,
           password,
-          redirect: true,
-          callbackUrl: "/dashboard",
+          redirect: false,
         });
 
-        setLoading(false);
+        if (!result || result.error) {
+          setError("Compte créé, mais connexion automatique impossible. Connecte-toi manuellement.");
+          setLoading(false);
+          return;
+        }
+
+        window.location.href = "/dashboard";
       }}
     >
       <Input
