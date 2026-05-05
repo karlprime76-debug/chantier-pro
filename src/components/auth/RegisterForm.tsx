@@ -32,13 +32,25 @@ export function RegisterForm() {
 
         const data = (await res.json().catch(() => null)) as
           | { ok: true; userId: string }
-          | { ok: false; error: string }
+          | { ok: false; error: string; issues?: Array<{ path: Array<string | number>; message: string }>; message?: string }
           | null;
 
         if (!res.ok) {
           if (data?.ok === false) {
             if (data.error === "email_already_used") {
               setError("Cet email est déjà utilisé. Connecte-toi ou utilise un autre email.");
+            } else if (data.error === "invalid_payload") {
+              const details = (data.issues ?? [])
+                .map((i) => `${i.path.join(".") || "champ"}: ${i.message}`)
+                .slice(0, 3)
+                .join(" • ");
+              setError(details ? `Inscription impossible. ${details}` : "Inscription impossible. Vérifie tes infos.");
+            } else if (data.error === "server_error") {
+              setError(
+                data.message
+                  ? `Inscription impossible (serveur). ${data.message}`
+                  : "Inscription impossible (serveur). Réessaie.",
+              );
             } else {
               setError("Inscription impossible. Vérifie tes infos.");
             }
