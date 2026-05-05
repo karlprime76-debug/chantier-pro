@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { PasswordSuggestion } from "@/components/auth/PasswordSuggestion";
 
 export function RegisterForm() {
   const [name, setName] = useState("");
@@ -111,6 +112,12 @@ export function RegisterForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="••••••••"
+      />
+
+      <PasswordSuggestion
+        onUse={(suggestion: string) => {
+          setPassword(suggestion);
+        }}
       />
 
       {error ? <div className="text-sm text-[var(--cp-accent)]">{error}</div> : null}

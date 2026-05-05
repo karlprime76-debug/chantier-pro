@@ -49,6 +49,16 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
         </div>
 
         <nav className="flex flex-col gap-1">
+          <Link
+            href="/"
+            className={cn(
+              "rounded-xl px-3 py-2 text-sm font-semibold transition",
+              "text-white/70 hover:bg-white/5 hover:text-white",
+            )}
+          >
+            Accueil
+          </Link>
+
           {mainItems.map((item) => {
             const active = activeHref ? activeHref === item.href : false;
             return (

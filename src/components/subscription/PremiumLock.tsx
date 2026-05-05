@@ -1,4 +1,5 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { PlanBadge } from "@/components/ui/PlanBadge";
 
 type PremiumLockProps = {
   title?: string;
@@ -12,7 +13,10 @@ export function PremiumLock({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <div className="flex items-center justify-between gap-3">
+          <CardTitle>{title}</CardTitle>
+          <PlanBadge variant="premium" />
+        </div>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
 
@@ -20,6 +24,9 @@ export function PremiumLock({
         <div className="text-sm font-semibold text-white">Accès restreint</div>
         <div className="mt-1 text-sm text-white/60">
           Passez au plan Pro pour activer cette fonctionnalité.
+        </div>
+        <div className="mt-3 text-xs text-white/55">
+          Si tu penses avoir déjà accès, vérifie que tu es connecté avec le bon compte.
         </div>
       </div>
     </Card>

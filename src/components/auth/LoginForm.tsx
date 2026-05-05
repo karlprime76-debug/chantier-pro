@@ -53,6 +53,12 @@ export function LoginForm({ nextUrl }: { nextUrl?: string }) {
         placeholder="••••••••"
       />
 
+      <div className="-mt-2">
+        <Button href="/forgot-password" variant="ghost" size="sm">
+          Mot de passe oublié ?
+        </Button>
+      </div>
+
       {error ? <div className="text-sm text-[var(--cp-accent)]">{error}</div> : null}
 
       <Button type="submit" size="lg" disabled={loading}>

@@ -2,6 +2,7 @@ import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { AppShell } from "@/components/layout/AppShell";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { PlanBadge } from "@/components/ui/PlanBadge";
 
 export default function Home() {
   return (
@@ -47,6 +48,43 @@ export default function Home() {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="text-sm font-bold text-white">Rapports</div>
                 <div className="mt-1 text-xs text-white/55">Journal chantier</div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-bold text-white">Gratuit vs Premium</div>
+                <PlanBadge variant="free" />
+              </div>
+
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div className="flex items-center gap-2">
+                    <PlanBadge variant="free" />
+                    <div className="text-sm font-bold text-white">Gratuit</div>
+                  </div>
+                  <div className="mt-2 grid gap-1 text-sm text-white/65">
+                    <div>Créer un compte</div>
+                    <div>Accéder au dashboard</div>
+                    <div>Calculateur béton simple</div>
+                    <div>Calculateur acier simple</div>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div className="flex items-center gap-2">
+                    <PlanBadge variant="premium" />
+                    <div className="text-sm font-bold text-white">Premium</div>
+                  </div>
+                  <div className="mt-2 grid gap-1 text-sm text-white/65">
+                    <div>Calculateurs avancés (ex: escalier droit)</div>
+                    <div>Modules réservés (selon ton plan)</div>
+                    <div>Accès aux fonctionnalités Pro / Entreprise</div>
+                  </div>
+                  <div className="mt-3 text-xs text-white/55">
+                    Certaines fonctionnalités affichent un verrou si ton plan ne donne pas l’accès.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
