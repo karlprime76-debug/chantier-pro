@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/Button";
+import { MarketingHeaderAuth } from "@/components/layout/MarketingHeaderAuth";
 
 export function MarketingHeader() {
   return (
@@ -25,14 +26,7 @@ export function MarketingHeader() {
           </Button>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Button href="/login" variant="secondary" size="sm">
-            Connexion
-          </Button>
-          <Button href="/register" size="sm">
-            Créer un compte
-          </Button>
-        </div>
+        <MarketingHeaderAuth />
       </div>
     </header>
   );
