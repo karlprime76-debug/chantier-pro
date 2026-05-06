@@ -18,6 +18,7 @@ function sha256Hex(input: string) {
 
 export async function POST(req: Request) {
   try {
+    console.info("[forgot-password] request received");
     const json = await req.json().catch(() => null);
     const parsed = ForgotPasswordSchema.safeParse(json);
 
@@ -26,6 +27,7 @@ export async function POST(req: Request) {
     }
 
     const email = parsed.data.email.trim().toLowerCase();
+    console.info("[forgot-password] request parsed", { email });
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -33,6 +35,7 @@ export async function POST(req: Request) {
     });
 
     if (user) {
+      console.info("[forgot-password] user found", { userId: user.id });
       await prisma.passwordResetToken.updateMany({
         where: { userId: user.id, usedAt: null, expiresAt: { gt: new Date() } },
         data: { usedAt: new Date() },
@@ -51,6 +54,8 @@ export async function POST(req: Request) {
         select: { id: true },
       });
 
+      console.info("[forgot-password] token created", { userId: user.id, expiresAt: expiresAt.toISOString() });
+
       const appUrl = getAppUrl();
       const resetUrl = `${appUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(rawToken)}`;
 
@@ -66,8 +71,13 @@ export async function POST(req: Request) {
       }).then((result) => {
         if (!result.ok) {
           console.error("[forgot-password] reset email failed.", { userId: user.id, error: result.error });
+          return;
         }
+
+        console.info("[forgot-password] reset email sent", { userId: user.id });
       });
+    } else {
+      console.info("[forgot-password] user not found");
     }
 
     return NextResponse.json({ ok: true, message: GENERIC_MESSAGE });

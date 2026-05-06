@@ -17,6 +17,7 @@ function sha256Hex(input: string) {
 
 export async function POST(req: Request) {
   try {
+    console.info("[reset-password] request received");
     const json = await req.json().catch(() => null);
     const parsed = ResetPasswordSchema.safeParse(json);
 
@@ -40,7 +41,24 @@ export async function POST(req: Request) {
       },
     });
 
-    if (!resetToken || resetToken.usedAt || resetToken.expiresAt <= new Date()) {
+    if (!resetToken) {
+      console.info("[reset-password] token invalid", { reason: "not_found" });
+      return NextResponse.json(
+        { ok: false, message: "Lien de réinitialisation invalide ou expiré." },
+        { status: 400 },
+      );
+    }
+
+    if (resetToken.usedAt) {
+      console.info("[reset-password] token invalid", { reason: "already_used", userId: resetToken.userId });
+      return NextResponse.json(
+        { ok: false, message: "Lien de réinitialisation invalide ou expiré." },
+        { status: 400 },
+      );
+    }
+
+    if (resetToken.expiresAt <= new Date()) {
+      console.info("[reset-password] token invalid", { reason: "expired", userId: resetToken.userId });
       return NextResponse.json(
         { ok: false, message: "Lien de réinitialisation invalide ou expiré." },
         { status: 400 },
@@ -66,6 +84,8 @@ export async function POST(req: Request) {
       }),
     ]);
 
+    console.info("[reset-password] password updated", { userId: resetToken.userId });
+
     if (resetToken.user?.email) {
       const text = `Bonjour,\n\nVotre mot de passe a bien été modifié.\n\nSi vous n’êtes pas à l’origine de cette action, contactez rapidement le support.\n\nL’équipe Chantier Pro.`;
 
@@ -82,7 +102,10 @@ export async function POST(req: Request) {
             userId: resetToken.userId,
             error: result.error,
           });
+          return;
         }
+
+        console.info("[reset-password] confirmation email sent", { userId: resetToken.userId });
       });
     }
 
