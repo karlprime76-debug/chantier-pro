@@ -7,11 +7,25 @@ type BillingHealthResponse = {
   paydunyaConfigured: boolean;
   appUrlConfigured: boolean;
   appUrlDetected: string | null;
+  paydunyaEnv: string | null;
+  paydunyaEndpoint: string;
   missing: string[];
   provider: "paydunya";
   environment: "server";
   message: string;
 };
+
+function getPayDunyaBaseUrl() {
+  const override = process.env.PAYDUNYA_BASE_URL?.trim();
+  if (override) return override;
+
+  const env = (process.env.PAYDUNYA_ENV ?? "").trim().toLowerCase();
+  if (env === "test" || env === "sandbox") {
+    return "https://app.paydunya.com/sandbox-api/v1";
+  }
+
+  return "https://app.paydunya.com/api/v1";
+}
 
 function getAppUrlConfig() {
   const appUrl = process.env.APP_URL?.trim() || "";
@@ -35,15 +49,19 @@ export async function GET() {
   const apiKey = process.env.PAYDUNYA_API_KEY?.trim() || "";
   const apiSecret = process.env.PAYDUNYA_API_SECRET?.trim() || "";
   const masterKey = process.env.PAYDUNYA_MASTER_KEY?.trim() || "";
+  const privateKey = process.env.PAYDUNYA_PRIVATE_KEY?.trim() || "";
+  const token = process.env.PAYDUNYA_TOKEN?.trim() || "";
 
   if (!apiKey) missing.push("PAYDUNYA_API_KEY");
   if (!apiSecret) missing.push("PAYDUNYA_API_SECRET");
   if (!masterKey) missing.push("PAYDUNYA_MASTER_KEY");
+  if (!privateKey) missing.push("PAYDUNYA_PRIVATE_KEY");
+  if (!token) missing.push("PAYDUNYA_TOKEN");
 
   const appUrlConfig = getAppUrlConfig();
   if (!appUrlConfig.configured) missing.push("APP_URL");
 
-  const paydunyaConfigured = !missing.includes("PAYDUNYA_API_KEY") && !missing.includes("PAYDUNYA_API_SECRET") && !missing.includes("PAYDUNYA_MASTER_KEY");
+  const paydunyaConfigured = !missing.includes("PAYDUNYA_MASTER_KEY") && !missing.includes("PAYDUNYA_PRIVATE_KEY") && !missing.includes("PAYDUNYA_TOKEN");
   const appUrlConfigured = appUrlConfig.configured;
 
   let message = "";
@@ -63,6 +81,8 @@ export async function GET() {
     paydunyaConfigured,
     appUrlConfigured,
     appUrlDetected: appUrlConfig.detected,
+    paydunyaEnv: (process.env.PAYDUNYA_ENV ?? "").trim() || null,
+    paydunyaEndpoint: `${getPayDunyaBaseUrl()}/checkout-invoice/create`,
     missing,
     provider: "paydunya",
     environment: "server",
