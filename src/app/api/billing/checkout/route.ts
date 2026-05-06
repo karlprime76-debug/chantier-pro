@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { requireApiSession } from "@/lib/auth/api";
 import { prisma } from "@/lib/db/prisma";
-import { createPayDunyaInvoice } from "@/lib/billing/paydunya";
+import { createPayDunyaInvoice, PayDunyaError } from "@/lib/billing/paydunya";
 
 const CheckoutSchema = z.object({
   plan: z.enum(["PREMIUM", "ENTERPRISE"]),
@@ -131,9 +131,40 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, redirectUrl: invoice.invoiceUrl });
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
-    console.error("[billing/checkout] PayDunya invoice create failed", {
+
+    let details: string | undefined;
+    let status: number | undefined;
+    let responseCode: string | undefined;
+    let responseText: string | undefined;
+    let responseMessage: string | undefined;
+
+    if (err instanceof PayDunyaError) {
+      status = err.details.httpStatus;
+      responseCode = err.details.responseCode;
+      responseText = err.details.responseText;
+      responseMessage = err.details.responseMessage;
+
+      const parts: string[] = [];
+      if (typeof status === "number") parts.push(`HTTP ${status}`);
+      if (responseCode) parts.push(`response_code=${responseCode}`);
+      if (responseText) parts.push(`response_text=${responseText}`);
+      if (responseMessage) parts.push(`response_message=${responseMessage}`);
+      if (err.details.errors) parts.push(`errors=${JSON.stringify(err.details.errors)}`);
+      details = parts.join(" | ") || message;
+    } else {
+      const name = err instanceof Error ? err.name : "Error";
+      const cause = err instanceof Error && "cause" in err ? (err as { cause?: unknown }).cause : undefined;
+      const parts: string[] = [`${name}: ${message}`];
+      if (cause) parts.push(`cause=${typeof cause === "string" ? cause : JSON.stringify(cause)}`);
+      details = parts.join(" | ");
+    }
+
+    console.error("[billing/checkout] PayDunya failed", {
       paymentId: payment.id,
-      message,
+      status,
+      responseText,
+      responseCode,
+      responseMessage,
     });
     try {
       await paymentDelegate.update({ where: { id: payment.id }, data: { status: "error" } });
@@ -150,7 +181,7 @@ export async function POST(req: Request) {
         error: "provider_error",
         message:
           "Impossible de créer le paiement PayDunya. Vérifie PAYDUNYA_* et APP_URL, puis réessaie.",
-        details: message,
+        details,
       },
       { status: 502 },
     );

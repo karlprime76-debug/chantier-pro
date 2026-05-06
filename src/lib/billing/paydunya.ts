@@ -3,13 +3,41 @@ type PayDunyaInvoiceResponse = {
   response_text: string;
   token?: string;
   invoice_url?: string;
+  response_message?: string;
+  errors?: unknown;
 };
 
 type PayDunyaConfirmResponse = {
   response_code: string;
   response_text: string;
   status?: string;
+  response_message?: string;
+  errors?: unknown;
 };
+
+export type PayDunyaErrorDetails = {
+  httpStatus?: number;
+  responseCode?: string;
+  responseText?: string;
+  responseMessage?: string;
+  errors?: unknown;
+};
+
+export class PayDunyaError extends Error {
+  public readonly details: PayDunyaErrorDetails;
+
+  constructor(message: string, details: PayDunyaErrorDetails = {}) {
+    super(message);
+    this.name = "PayDunyaError";
+    this.details = details;
+  }
+}
+
+async function readPayDunyaJson(res: Response) {
+  const text = await res.text().catch(() => "");
+  const json = text ? (JSON.parse(text) as unknown) : null;
+  return { text, json };
+}
 
 type PayDunyaRequestOptions = {
   apiKey: string;
@@ -51,6 +79,14 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
     invoice: {
       total_amount: input.amount,
       description: input.description,
+      items: [
+        {
+          name: input.description,
+          quantity: 1,
+          unit_price: input.amount,
+          total_price: input.amount,
+        },
+      ],
     },
     store: {
       name: "Chantier Pro",
@@ -81,13 +117,34 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
     body: JSON.stringify(body),
   });
 
-  const data = (await res.json().catch(() => null)) as PayDunyaInvoiceResponse | null;
+  let parsed: { text: string; json: unknown };
+  try {
+    parsed = await readPayDunyaJson(res);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    throw new PayDunyaError("PayDunya response parse failed", {
+      httpStatus: res.status,
+      responseMessage: message,
+    });
+  }
+
+  const data = parsed.json as PayDunyaInvoiceResponse | null;
+
   if (!res.ok || !data) {
-    throw new Error("PayDunya create invoice failed");
+    throw new PayDunyaError("PayDunya create invoice failed", {
+      httpStatus: res.status,
+      responseMessage: parsed.text?.slice(0, 500) || undefined,
+    });
   }
 
   if (data.response_code !== "00" || !data.token || !data.invoice_url) {
-    throw new Error(data.response_text || "PayDunya create invoice failed");
+    throw new PayDunyaError(data.response_text || "PayDunya create invoice failed", {
+      httpStatus: res.status,
+      responseCode: data.response_code,
+      responseText: data.response_text,
+      responseMessage: data.response_message,
+      errors: data.errors,
+    });
   }
 
   return { token: data.token, invoiceUrl: data.invoice_url };
@@ -107,13 +164,33 @@ export async function confirmPayDunyaInvoice(token: string) {
     },
   });
 
-  const data = (await res.json().catch(() => null)) as PayDunyaConfirmResponse | null;
+  let parsed: { text: string; json: unknown };
+  try {
+    parsed = await readPayDunyaJson(res);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    throw new PayDunyaError("PayDunya response parse failed", {
+      httpStatus: res.status,
+      responseMessage: message,
+    });
+  }
+
+  const data = parsed.json as PayDunyaConfirmResponse | null;
   if (!res.ok || !data) {
-    throw new Error("PayDunya confirm invoice failed");
+    throw new PayDunyaError("PayDunya confirm invoice failed", {
+      httpStatus: res.status,
+      responseMessage: parsed.text?.slice(0, 500) || undefined,
+    });
   }
 
   if (data.response_code !== "00") {
-    throw new Error(data.response_text || "PayDunya confirm invoice failed");
+    throw new PayDunyaError(data.response_text || "PayDunya confirm invoice failed", {
+      httpStatus: res.status,
+      responseCode: data.response_code,
+      responseText: data.response_text,
+      responseMessage: data.response_message,
+      errors: data.errors,
+    });
   }
 
   return data;
