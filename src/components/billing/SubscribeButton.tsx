@@ -20,35 +20,42 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
         size="lg"
         disabled={loading}
         onClick={async () => {
-          setLoading(true);
-          setError(null);
-          const res = await fetch("/api/billing/checkout", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ plan }),
-          });
+          try {
+            setLoading(true);
+            setError(null);
 
-          if (res.status === 401) {
-            window.location.href = "/login?callbackUrl=/pricing";
-            return;
-          }
+            const res = await fetch("/api/billing/checkout", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({ plan }),
+            });
 
-          const data = (await res.json().catch(() => null)) as
-            | { ok: true; redirectUrl: string }
-            | { ok: false; error: string; message?: string }
-            | null;
+            if (res.status === 401) {
+              window.location.href = "/login?callbackUrl=/pricing";
+              return;
+            }
 
-          if (!res.ok || !data || data.ok !== true) {
-            setError(
-              data && "ok" in data && data.ok === false
-                ? data.message ?? "Paiement indisponible. Réessaie."
-                : "Paiement indisponible. Réessaie.",
-            );
+            const data = (await res.json().catch(() => null)) as
+              | { ok: true; redirectUrl: string }
+              | { ok: false; error: string; message?: string }
+              | null;
+
+            if (!res.ok || !data || data.ok !== true) {
+              const fallback = `Paiement indisponible. Réessaie. (status ${res.status})`;
+              setError(
+                data && "ok" in data && data.ok === false
+                  ? data.message ?? fallback
+                  : fallback,
+              );
+              return;
+            }
+
+            window.location.href = data.redirectUrl;
+          } catch {
+            setError("Paiement indisponible. Vérifie ta connexion et réessaie.");
+          } finally {
             setLoading(false);
-            return;
           }
-
-          window.location.href = data.redirectUrl;
         }}
       >
         {loading ? "Redirection..." : children}
