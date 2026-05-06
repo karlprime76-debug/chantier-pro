@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/cn";
+import { PlanBadge } from "@/components/ui/PlanBadge";
 
 const mainItems = [
-  { href: "/dashboard", label: "Aperçu" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/dashboard/projects", label: "Chantiers" },
   { href: "/dashboard/expenses", label: "Dépenses" },
   { href: "/dashboard/reports", label: "Rapports" },
@@ -75,8 +76,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
             );
           })}
 
-          <div className="mt-3 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white/40">
-            Calculateurs gratuits
+          <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
+            <div className="text-xs font-bold uppercase tracking-wide text-white/40">Calculateurs</div>
+            <PlanBadge variant="free" />
           </div>
           {calculatorFreeItems.map((item) => {
             const active = activeHref ? activeHref === item.href : false;
@@ -94,8 +96,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
             );
           })}
 
-          <div className="mt-3 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white/40">
-            Calculateurs Pro
+          <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
+            <div className="text-xs font-bold uppercase tracking-wide text-white/40">Calculateurs</div>
+            <PlanBadge variant="premium" />
           </div>
           {calculatorProItems.map((item) => {
             const active = activeHref ? activeHref === item.href : false;
@@ -113,8 +116,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
             );
           })}
 
-          <div className="mt-3 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white/40">
-            Premium / Entreprise
+          <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
+            <div className="text-xs font-bold uppercase tracking-wide text-white/40">Entreprise</div>
+            <PlanBadge variant="premium" />
           </div>
           {calculatorEnterpriseItems.map((item) => {
             const active = activeHref ? activeHref === item.href : false;
