@@ -21,6 +21,9 @@ export function MarketingHeader() {
           <Button href="/" variant="ghost" size="sm">
             Accueil
           </Button>
+          <Button href="/pricing" variant="ghost" size="sm">
+            Tarifs
+          </Button>
           <Button href="/dashboard" variant="ghost" size="sm">
             Dashboard
           </Button>

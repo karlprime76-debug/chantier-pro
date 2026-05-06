@@ -22,7 +22,7 @@ const SaveStraightStairSchema = z.object({
 
 export async function GET(req: Request) {
   const session = await requireApiSession();
-  assertApiFeatureAccess(session, "stair_straight");
+  await assertApiFeatureAccess(session, "stair_straight");
 
   const url = new URL(req.url);
   const projectId = url.searchParams.get("projectId") ?? "";
@@ -73,7 +73,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const session = await requireApiSession();
-  assertApiFeatureAccess(session, "stair_straight");
+  await assertApiFeatureAccess(session, "stair_straight");
 
   const json = await req.json().catch(() => null);
   const parsed = SaveStraightStairSchema.safeParse(json);

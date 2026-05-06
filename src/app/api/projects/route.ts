@@ -4,7 +4,8 @@ import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/db/prisma";
 import { requireApiSession } from "@/lib/auth/api";
-import { FREE_LIMITS, getUserPlanFromRole } from "@/lib/subscription/access";
+import { FREE_LIMITS } from "@/lib/subscription/access";
+import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
 const CreateProjectSchema = z.object({
   name: z.string().min(2),
@@ -67,7 +68,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "missing_company" }, { status: 400 });
   }
 
-  const plan = getUserPlanFromRole(session.role);
+  const plan = await getEffectiveUserPlan(session);
   if (plan === "FREE") {
     const existingCount = await prisma.project.count({ where: { companyId: user.companyId } });
     if (existingCount >= FREE_LIMITS.maxProjects) {

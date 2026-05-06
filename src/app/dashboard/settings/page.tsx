@@ -12,6 +12,19 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader>
+          <CardTitle>Abonnement</CardTitle>
+          <CardDescription>Activer Premium ou Entreprise.</CardDescription>
+        </CardHeader>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+          <Button href="/pricing" size="lg">
+            Voir les tarifs
+          </Button>
+        </div>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Profil</CardTitle>
           <CardDescription>Infos de base.</CardDescription>
         </CardHeader>

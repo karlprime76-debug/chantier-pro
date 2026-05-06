@@ -1,4 +1,4 @@
-export type UserPlan = "FREE" | "PRO" | "ENTERPRISE";
+export type UserPlan = "FREE" | "PREMIUM" | "ENTERPRISE";
 
 export type FeatureKey =
   | "concrete_basic"
@@ -23,7 +23,7 @@ export type FeatureKey =
 
 export const PLAN_ORDER: Record<UserPlan, number> = {
   FREE: 0,
-  PRO: 1,
+  PREMIUM: 1,
   ENTERPRISE: 2,
 };
 
@@ -31,24 +31,24 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   concrete_basic: "FREE",
   steel_basic: "FREE",
 
-  stair_straight: "PRO",
-  stair_landing: "PRO",
+  stair_straight: "PREMIUM",
+  stair_landing: "PREMIUM",
   stair_quarter_turn: "ENTERPRISE",
-  formwork: "PRO",
-  masonry: "PRO",
-  plaster: "PRO",
-  tiling: "PRO",
-  painting: "PRO",
-  roofing: "PRO",
-  earthwork: "PRO",
+  formwork: "PREMIUM",
+  masonry: "PREMIUM",
+  plaster: "PREMIUM",
+  tiling: "PREMIUM",
+  painting: "PREMIUM",
+  roofing: "PREMIUM",
+  earthwork: "PREMIUM",
   septic_tank: "ENTERPRISE",
   fence: "ENTERPRISE",
   advanced_slab: "ENTERPRISE",
 
-  quote_pdf: "PRO",
-  report_pdf: "PRO",
+  quote_pdf: "PREMIUM",
+  report_pdf: "PREMIUM",
   team_management: "ENTERPRISE",
-  client_access: "PRO",
+  client_access: "PREMIUM",
 };
 
 export function canAccessFeature(userPlan: UserPlan, featureKey: FeatureKey): boolean {
@@ -58,8 +58,14 @@ export function canAccessFeature(userPlan: UserPlan, featureKey: FeatureKey): bo
 
 export function getUserPlanFromRole(role: "ADMIN" | "PROFESSIONAL" | "CLIENT"): UserPlan {
   if (role === "ADMIN") return "ENTERPRISE";
-  if (role === "PROFESSIONAL") return "PRO";
+  if (role === "PROFESSIONAL") return "PREMIUM";
   return "FREE";
+}
+
+export function normalizeUserPlan(plan: string | null | undefined, role: "ADMIN" | "PROFESSIONAL" | "CLIENT"): UserPlan {
+  if (plan === "FREE" || plan === "PREMIUM" || plan === "ENTERPRISE") return plan;
+  if (plan === "PRO") return "PREMIUM";
+  return getUserPlanFromRole(role);
 }
 
 export const FREE_LIMITS = {

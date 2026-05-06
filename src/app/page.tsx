@@ -1,8 +1,11 @@
+import Link from "next/link";
+
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { AppShell } from "@/components/layout/AppShell";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { PlanBadge } from "@/components/ui/PlanBadge";
+import { HomeHeroCta } from "@/components/home/HomeHeroCta";
 
 export default function Home() {
   return (
@@ -27,14 +30,7 @@ export default function Home() {
               Chantier Pro aide les professionnels du BTP à centraliser les chantiers, enregistrer les
               calculs béton/acier, suivre les dépenses et produire des rapports journaliers.
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href="/register" size="lg">
-                Créer un compte
-              </Button>
-              <Button href="/dashboard" variant="secondary" size="lg">
-                Voir le dashboard
-              </Button>
-            </div>
+            <HomeHeroCta />
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -58,7 +54,10 @@ export default function Home() {
               </div>
 
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <Link
+                  href="/pricing"
+                  className="rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:border-white/20 hover:bg-black/30"
+                >
                   <div className="flex items-center gap-2">
                     <PlanBadge variant="free" />
                     <div className="text-sm font-bold text-white">Gratuit</div>
@@ -69,9 +68,12 @@ export default function Home() {
                     <div>Calculateur béton simple</div>
                     <div>Calculateur acier simple</div>
                   </div>
-                </div>
+                </Link>
 
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <Link
+                  href="/pricing"
+                  className="rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:border-white/20 hover:bg-black/30"
+                >
                   <div className="flex items-center gap-2">
                     <PlanBadge variant="premium" />
                     <div className="text-sm font-bold text-white">Premium</div>
@@ -84,7 +86,7 @@ export default function Home() {
                   <div className="mt-3 text-xs text-white/55">
                     Certaines fonctionnalités affichent un verrou si ton plan ne donne pas l’accès.
                   </div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

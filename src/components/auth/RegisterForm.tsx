@@ -12,6 +12,7 @@ export function RegisterForm() {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,6 +23,12 @@ export function RegisterForm() {
         e.preventDefault();
         setLoading(true);
         setError(null);
+
+        if (password !== confirmPassword) {
+          setError("Les mots de passe ne correspondent pas.");
+          setLoading(false);
+          return;
+        }
 
         const normalizedEmail = email.trim().toLowerCase();
 
@@ -113,10 +120,19 @@ export function RegisterForm() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="••••••••"
       />
+      <Input
+        label="Confirmer le mot de passe"
+        type="password"
+        name="confirmPassword"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        placeholder="••••••••"
+      />
 
       <PasswordSuggestion
         onUse={(suggestion: string) => {
           setPassword(suggestion);
+          setConfirmPassword(suggestion);
         }}
       />
 

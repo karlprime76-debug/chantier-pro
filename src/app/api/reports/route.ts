@@ -3,7 +3,8 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
 import { requireApiSession } from "@/lib/auth/api";
-import { FREE_LIMITS, getUserPlanFromRole } from "@/lib/subscription/access";
+import { FREE_LIMITS } from "@/lib/subscription/access";
+import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
 const CreateReportSchema = z.object({
   projectId: z.string().min(1),
@@ -68,7 +69,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "missing_company" }, { status: 400 });
   }
 
-  const plan = getUserPlanFromRole(session.role);
+  const plan = await getEffectiveUserPlan(session);
   if (plan === "FREE") {
     const existingCount = await prisma.dailyReport.count({ where: { project: { companyId: user.companyId } } });
     if (existingCount >= FREE_LIMITS.maxDailyReports) {

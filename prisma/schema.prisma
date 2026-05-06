@@ -33,6 +33,12 @@ enum QuoteStatus {
   REJECTED
 }
 
+enum SubscriptionPlan {
+  FREE
+  PREMIUM
+  ENTERPRISE
+}
+
 model User {
   id           String   @id @default(cuid())
   createdAt    DateTime @default(now())
@@ -42,6 +48,8 @@ model User {
   name         String
   role         UserRole @default(PROFESSIONAL)
   passwordHash String
+
+  plan SubscriptionPlan @default(FREE)
 
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
@@ -57,9 +65,33 @@ model User {
   quotes              Quote[]
   documents           Document[]
 
+  payments Payment[]
+
   passwordResetTokens PasswordResetToken[]
 
   @@index([companyId])
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  provider String
+  plan     SubscriptionPlan
+  amount   Int
+  currency String @default("XOF")
+  status   String
+
+  providerRef String?
+  raw         Json?
+
+  @@index([userId])
+  @@index([provider, status])
+  @@index([createdAt])
 }
 
 model PasswordResetToken {
