@@ -50,17 +50,46 @@ export async function POST(req: Request) {
 
   const appUrl = getAppUrl(req);
 
-  const payment = await getPaymentDelegate().create({
-    data: {
-      userId: session.id,
-      provider: "paydunya",
-      plan,
-      amount,
-      currency: "XOF",
-      status: "created",
-    },
-    select: { id: true },
-  });
+  const paymentDelegate = getPaymentDelegate();
+  if (!paymentDelegate || typeof paymentDelegate.create !== "function") {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "server_misconfigured",
+        message:
+          "Le modèle Payment n’est pas disponible côté serveur. Vérifie la génération Prisma (prisma generate) et le déploiement.",
+      },
+      { status: 500 },
+    );
+  }
+
+  let payment: { id: string };
+  try {
+    payment = await paymentDelegate.create({
+      data: {
+        userId: session.id,
+        provider: "paydunya",
+        plan,
+        amount,
+        currency: "XOF",
+        status: "created",
+      },
+      select: { id: true },
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    console.error("[billing/checkout] Payment create failed", { message });
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "db_error",
+        message:
+          "Erreur base de données lors de l’initialisation du paiement. Vérifie que la migration Payment/User.plan est appliquée sur la base (table Payment existante) puis réessaie.",
+        details: message,
+      },
+      { status: 500 },
+    );
+  }
 
   try {
     const invoice = await createPayDunyaInvoice({
@@ -76,18 +105,41 @@ export async function POST(req: Request) {
       },
     });
 
-    await getPaymentDelegate().update({
-      where: { id: payment.id },
-      data: {
-        status: "pending",
-        providerRef: invoice.token,
-        raw: { invoiceUrl: invoice.invoiceUrl },
-      },
-    });
+    try {
+      await paymentDelegate.update({
+        where: { id: payment.id },
+        data: {
+          status: "pending",
+          providerRef: invoice.token,
+          raw: { invoiceUrl: invoice.invoiceUrl },
+        },
+      });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "unknown";
+      console.error("[billing/checkout] Payment update failed", { paymentId: payment.id, message });
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "db_error",
+          message:
+            "Le paiement a été créé mais impossible de mettre à jour son statut. Vérifie la base de données puis réessaie.",
+          details: message,
+        },
+        { status: 500 },
+      );
+    }
 
     return NextResponse.json({ ok: true, redirectUrl: invoice.invoiceUrl });
   } catch {
-    await getPaymentDelegate().update({ where: { id: payment.id }, data: { status: "error" } });
+    try {
+      await paymentDelegate.update({ where: { id: payment.id }, data: { status: "error" } });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "unknown";
+      console.error("[billing/checkout] Payment update error status failed", {
+        paymentId: payment.id,
+        message,
+      });
+    }
     return NextResponse.json(
       {
         ok: false,
