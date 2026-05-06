@@ -3,8 +3,13 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { PlanBadge } from "@/components/ui/PlanBadge";
 import { SubscribeButton } from "@/components/billing/SubscribeButton";
+import { BillingHealthCheck } from "@/components/billing/BillingHealthCheck";
+import { getSession } from "@/lib/auth/session";
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const session = await getSession();
+  const canSeeBillingHealth = process.env.NODE_ENV !== "production" || session?.role === "ADMIN";
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
@@ -54,6 +59,8 @@ export default function PricingPage() {
           <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/60">
             Après paiement, ton plan est activé automatiquement.
           </div>
+
+          {canSeeBillingHealth ? <BillingHealthCheck /> : null}
         </div>
       </AppShell>
     </div>

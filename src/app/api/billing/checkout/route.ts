@@ -104,7 +104,6 @@ export async function POST(req: Request) {
         plan,
       },
     });
-
     try {
       await paymentDelegate.update({
         where: { id: payment.id },
@@ -130,7 +129,12 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ ok: true, redirectUrl: invoice.invoiceUrl });
-  } catch {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    console.error("[billing/checkout] PayDunya invoice create failed", {
+      paymentId: payment.id,
+      message,
+    });
     try {
       await paymentDelegate.update({ where: { id: payment.id }, data: { status: "error" } });
     } catch (err) {
@@ -146,6 +150,7 @@ export async function POST(req: Request) {
         error: "provider_error",
         message:
           "Impossible de créer le paiement PayDunya. Vérifie PAYDUNYA_* et APP_URL, puis réessaie.",
+        details: message,
       },
       { status: 502 },
     );

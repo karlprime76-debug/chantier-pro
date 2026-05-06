@@ -11,7 +11,7 @@ type SubscribeButtonProps = {
 
 export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<{ title: string; details?: string } | null>(null);
 
   return (
     <div className="grid gap-2">
@@ -37,22 +37,26 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
 
             const data = (await res.json().catch(() => null)) as
               | { ok: true; redirectUrl: string }
-              | { ok: false; error: string; message?: string }
+              | { ok: false; error: string; message?: string; details?: string }
               | null;
 
             if (!res.ok || !data || data.ok !== true) {
-              const fallback = `Paiement indisponible. Réessaie. (status ${res.status})`;
-              setError(
-                data && "ok" in data && data.ok === false
-                  ? data.message ?? fallback
-                  : fallback,
-              );
+              const fallbackTitle = `Paiement indisponible. Réessaie. (status ${res.status})`;
+
+              if (data && "ok" in data && data.ok === false) {
+                const title = data.message ?? fallbackTitle;
+                const details = typeof data.details === "string" && data.details.trim() ? data.details.trim() : undefined;
+                setError({ title, details });
+                return;
+              }
+
+              setError({ title: fallbackTitle });
               return;
             }
 
             window.location.href = data.redirectUrl;
           } catch {
-            setError("Paiement indisponible. Vérifie ta connexion et réessaie.");
+            setError({ title: "Paiement indisponible. Vérifie ta connexion et réessaie." });
           } finally {
             setLoading(false);
           }
@@ -61,7 +65,12 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
         {loading ? "Redirection..." : children}
       </Button>
 
-      {error ? <div className="text-sm text-[var(--cp-accent)]">{error}</div> : null}
+      {error ? (
+        <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm">
+          <div className="text-[var(--cp-accent)]">{error.title}</div>
+          {error.details ? <div className="mt-1 text-white/70">Détail serveur : {error.details}</div> : null}
+        </div>
+      ) : null}
     </div>
   );
 }
