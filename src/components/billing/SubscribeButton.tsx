@@ -11,31 +11,50 @@ type SubscribeButtonProps = {
 
 export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
-    <Button
-      type="button"
-      size="lg"
-      disabled={loading}
-      onClick={async () => {
-        setLoading(true);
-        const res = await fetch("/api/billing/checkout", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ plan }),
-        });
+    <div className="grid gap-2">
+      <Button
+        type="button"
+        size="lg"
+        disabled={loading}
+        onClick={async () => {
+          setLoading(true);
+          setError(null);
+          const res = await fetch("/api/billing/checkout", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ plan }),
+          });
 
-        const data = (await res.json().catch(() => null)) as { ok: true; redirectUrl: string } | { ok: false; error: string } | null;
+          if (res.status === 401) {
+            window.location.href = "/login?callbackUrl=/pricing";
+            return;
+          }
 
-        if (!res.ok || !data || data.ok !== true) {
-          setLoading(false);
-          return;
-        }
+          const data = (await res.json().catch(() => null)) as
+            | { ok: true; redirectUrl: string }
+            | { ok: false; error: string; message?: string }
+            | null;
 
-        window.location.href = data.redirectUrl;
-      }}
-    >
-      {loading ? "Redirection..." : children}
-    </Button>
+          if (!res.ok || !data || data.ok !== true) {
+            setError(
+              data && "ok" in data && data.ok === false
+                ? data.message ?? "Paiement indisponible. Réessaie."
+                : "Paiement indisponible. Réessaie.",
+            );
+            setLoading(false);
+            return;
+          }
+
+          window.location.href = data.redirectUrl;
+        }}
+      >
+        {loading ? "Redirection..." : children}
+      </Button>
+
+      {error ? <div className="text-sm text-[var(--cp-accent)]">{error}</div> : null}
+    </div>
   );
 }

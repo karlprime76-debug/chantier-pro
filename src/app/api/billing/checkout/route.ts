@@ -31,7 +31,13 @@ function getPaymentDelegate() {
 }
 
 export async function POST(req: Request) {
-  const session = await requireApiSession();
+  let session;
+  try {
+    session = await requireApiSession();
+  } catch (e) {
+    if (e instanceof Response) return e;
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
 
   const json = await req.json().catch(() => null);
   const parsed = CheckoutSchema.safeParse(json);
@@ -82,6 +88,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, redirectUrl: invoice.invoiceUrl });
   } catch {
     await getPaymentDelegate().update({ where: { id: payment.id }, data: { status: "error" } });
-    return NextResponse.json({ ok: false, error: "provider_error" }, { status: 502 });
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "provider_error",
+        message:
+          "Impossible de créer le paiement PayDunya. Vérifie PAYDUNYA_* et APP_URL, puis réessaie.",
+      },
+      { status: 502 },
+    );
   }
 }
