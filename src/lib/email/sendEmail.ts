@@ -31,6 +31,15 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
     const baseUrl = getBaseUrl();
     const safeText = (input.text ?? "").slice(0, 500);
 
+    if (process.env.NODE_ENV === "production") {
+      return {
+        ok: false,
+        provider: "resend",
+        error:
+          "Email provider not configured. Set EMAIL_PROVIDER=resend and RESEND_API_KEY (and a valid EMAIL_FROM).",
+      };
+    }
+
     console.info("[email:fallback] Email provider not configured; logging email instead.", {
       to: input.to,
       subject: input.subject,
