@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { TilingSimpleCalculator } from "@/components/calculators/TilingSimpleCalculator";
 
 export default function TilingCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function TilingCalculatorPage() {
         title="Calculateur carrelage"
         description="Estimation carrelage, colle, joints et chutes selon vos surfaces."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <TilingSimpleCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

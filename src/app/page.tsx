@@ -2,16 +2,21 @@ import Link from "next/link";
 
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { AppShell } from "@/components/layout/AppShell";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { PlanBadge } from "@/components/ui/PlanBadge";
 import { HomeHeroCta } from "@/components/home/HomeHeroCta";
+import { requireSession } from "@/lib/auth/guards";
 
-export default function Home() {
+export default async function Home() {
+  const session = await requireSession();
+  const isAuthenticated = Boolean(session);
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
-      <AppShell className="pb-16">
+      <AppShell className={isAuthenticated ? "pb-[calc(104px+env(safe-area-inset-bottom))]" : "pb-16"}>
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-7">
             <div className="cp-animate-in inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/75">
@@ -114,6 +119,7 @@ export default function Home() {
           </div>
         </div>
       </AppShell>
+      {isAuthenticated ? <MobileBottomNav /> : null}
     </div>
   );
 }

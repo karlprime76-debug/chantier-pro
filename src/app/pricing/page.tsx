@@ -60,6 +60,40 @@ export default async function PricingPage() {
             Après paiement, ton plan est activé automatiquement.
           </div>
 
+          <div className="mt-6">
+            <div className="text-lg font-extrabold tracking-tight text-white">Pourquoi passer à Premium ?</div>
+            <div className="mt-2 text-sm text-white/60">
+              Des bénéfices concrets pour les hommes de terrain et les bureaux.
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-sm font-bold text-white">Réduire les erreurs de commande</div>
+                <div className="mt-1 text-sm text-white/60">
+                  Quantités plus fiables, marge de perte maîtrisée, moins d&apos;allers-retours.
+                </div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-sm font-bold text-white">Gagner du temps sur les quantités</div>
+                <div className="mt-1 text-sm text-white/60">
+                  Calculateurs avancés et historiques pour répéter un calcul en quelques secondes.
+                </div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-sm font-bold text-white">Partager plus vite</div>
+                <div className="mt-1 text-sm text-white/60">
+                  Export PDF (bientôt) et partage WhatsApp pour envoyer au patron, au client ou au fournisseur.
+                </div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-sm font-bold text-white">Suivi chantier (budget + rapports)</div>
+                <div className="mt-1 text-sm text-white/60">
+                  Dépenses, budget prévu vs réel et rapports journaliers pour mieux piloter.
+                </div>
+              </div>
+            </div>
+          </div>
+
           {canSeeBillingHealth ? <BillingHealthCheck /> : null}
         </div>
       </AppShell>
