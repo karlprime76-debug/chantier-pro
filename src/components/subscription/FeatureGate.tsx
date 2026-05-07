@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
+import { redirect } from "next/navigation";
+
 import { requireSession } from "@/lib/auth/guards";
 import { canAccessFeature, getUserPlanFromRole, type FeatureKey } from "@/lib/subscription/access";
-
-import { PremiumLock } from "@/components/subscription/PremiumLock";
 
 type FeatureGateProps = {
   featureKey: FeatureKey;
@@ -15,16 +15,18 @@ type FeatureGateProps = {
 export async function FeatureGate({
   featureKey,
   children,
-  lockTitle,
-  lockDescription,
 }: FeatureGateProps) {
   const session = await requireSession();
-  if (!session) return <PremiumLock title={lockTitle} description={lockDescription} />;
+  if (!session) {
+    redirect("/login");
+  }
 
   const plan = getUserPlanFromRole(session.role);
   const ok = canAccessFeature(plan, featureKey);
 
-  if (!ok) return <PremiumLock title={lockTitle} description={lockDescription} />;
+  if (!ok) {
+    redirect("/pricing");
+  }
 
   return <>{children}</>;
 }

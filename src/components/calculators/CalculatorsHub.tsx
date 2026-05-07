@@ -202,11 +202,8 @@ export function CalculatorsHub() {
                 </Button>
               ) : c.status === "Premium" ? (
                 <div className="flex items-center gap-2">
-                  <Button href={c.href} variant="secondary" size="sm">
-                    Ouvrir
-                  </Button>
-                  <Button href="/pricing" variant="ghost" size="sm">
-                    Passer Premium
+                  <Button href="/pricing" variant="secondary" size="sm">
+                    Voir les abonnements
                   </Button>
                 </div>
               ) : (
