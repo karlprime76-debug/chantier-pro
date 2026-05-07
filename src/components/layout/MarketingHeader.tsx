@@ -13,8 +13,8 @@ export function MarketingHeader() {
             <Image src="/logo.png" alt="Chantier Pro" width={36} height={36} className="h-9 w-9 object-contain" />
           </div>
           <div className="leading-tight">
-            <div className="text-sm font-bold text-white">Chantier Pro</div>
-            <div className="text-[11px] tracking-[0.22em] text-white/55">BTP</div>
+            <div className="text-sm font-bold text-white sm:text-base">Chantier Pro</div>
+            <div className="hidden text-[11px] tracking-[0.22em] text-white/55 sm:block">BTP</div>
           </div>
         </Link>
 

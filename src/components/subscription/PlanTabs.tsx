@@ -56,7 +56,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   type="button"
                   onClick={() => setActive(t.key)}
                   className={cn(
-                    "rounded-2xl px-3 py-2 text-xs font-extrabold tracking-tight transition",
+                    "rounded-2xl px-2 py-2 text-[11px] font-extrabold tracking-tight transition sm:px-3 sm:text-xs",
                     isActive
                       ? "bg-white/10 text-white ring-1 ring-white/15"
                       : "text-white/65 hover:bg-white/5 hover:text-white",
