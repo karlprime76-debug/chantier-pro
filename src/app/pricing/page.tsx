@@ -20,6 +20,18 @@ export default async function PricingPage() {
             <p className="mt-2 text-sm text-white/60">Choisis un plan pour accéder aux calculateurs Premium et Entreprise.</p>
           </div>
 
+          <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div className="text-lg font-extrabold tracking-tight text-white">
+              Passe au niveau pro pour mieux gérer tes chantiers
+            </div>
+            <div className="mt-2 text-sm text-white/65">
+              Gagne du temps, réduis les erreurs de calcul et transforme tes quantités en devis, rapports et suivis chantier.
+            </div>
+            <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-3 text-sm text-white/70">
+              Un seul mauvais calcul peut coûter plus cher qu’un abonnement Premium.
+            </div>
+          </div>
+
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <Card>
               <CardHeader>
@@ -54,6 +66,83 @@ export default async function PricingPage() {
                 <SubscribeButton plan="ENTERPRISE">S&apos;abonner</SubscribeButton>
               </div>
             </Card>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
+            <div className="text-sm font-bold text-white">Comparatif rapide</div>
+            <div className="mt-3 overflow-x-auto">
+              <div className="min-w-[680px]">
+                <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-2 text-xs font-bold text-white/60">
+                  <div />
+                  <div className="text-center">Gratuit</div>
+                  <div className="text-center">Premium</div>
+                  <div className="text-center">Entreprise</div>
+                </div>
+                <div className="mt-2 grid gap-2 text-sm">
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Calculateurs de base</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Calculateurs avancés</div>
+                    <div className="text-center text-white/70">Limité</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Sauvegarde des calculs par chantier</div>
+                    <div className="text-center text-white/70">Limité</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Export PDF</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Oui (bientôt)</div>
+                    <div className="text-center text-white/70">Oui (bientôt)</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Devis depuis les calculs</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Oui (bientôt)</div>
+                    <div className="text-center text-white/70">Oui (bientôt)</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Rapports journaliers</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Suivi budget / dépenses</div>
+                    <div className="text-center text-white/70">Limité</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Multi-utilisateurs</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Export Excel</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Bientôt</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-white/80">Support prioritaire</div>
+                    <div className="text-center text-white/70">Non</div>
+                    <div className="text-center text-white/70">Oui</div>
+                    <div className="text-center text-white/70">Oui</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 text-xs text-white/55">Fais glisser horizontalement si besoin.</div>
           </div>
 
           <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/60">
