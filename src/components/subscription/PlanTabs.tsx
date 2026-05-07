@@ -28,7 +28,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
   const activeTab = useMemo(() => TABS.find((t) => t.key === active) ?? TABS[0], [active]);
 
   return (
-    <Card>
+    <Card className="w-full max-w-full overflow-hidden">
       <CardHeader>
         <div className="grid gap-3">
           <div className="flex items-start justify-between gap-3">
@@ -46,8 +46,8 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-1">
-          <div className="grid grid-cols-3 gap-1">
+        <div className="mt-4 w-full max-w-full rounded-2xl border border-white/10 bg-black/20 p-1">
+          <div className="grid w-full grid-cols-3 gap-1">
             {TABS.map((t) => {
               const isActive = t.key === active;
               return (
@@ -56,7 +56,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   type="button"
                   onClick={() => setActive(t.key)}
                   className={cn(
-                    "rounded-2xl px-2 py-2 text-[11px] font-extrabold tracking-tight transition sm:px-3 sm:text-xs",
+                    "min-w-0 rounded-2xl px-2 py-2 text-[11px] font-extrabold tracking-tight transition sm:px-3 sm:text-xs",
                     isActive
                       ? "bg-white/10 text-white ring-1 ring-white/15"
                       : "text-white/65 hover:bg-white/5 hover:text-white",
@@ -70,7 +70,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
         </div>
       </CardHeader>
 
-      <div className="px-6 pb-6">
+      <div className="px-4 pb-5 sm:px-6 sm:pb-6">
         {active === "free" ? (
           <div className="grid gap-4">
             <div>
@@ -83,7 +83,46 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
 
             <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-bold text-white">Mini comparatif</div>
-              <div className="mt-3 overflow-x-auto">
+
+              <div className="mt-3 grid gap-2 sm:hidden">
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="text-sm font-bold text-white">Calculateurs de base</div>
+                  <div className="mt-2 grid gap-1 text-sm text-white/65">
+                    <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="text-sm font-bold text-white">Calculateurs avancés</div>
+                  <div className="mt-2 grid gap-1 text-sm text-white/65">
+                    <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Limité</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="text-sm font-bold text-white">Export PDF</div>
+                  <div className="mt-2 grid gap-1 text-sm text-white/65">
+                    <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Non</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="text-sm font-bold text-white">Multi-utilisateurs</div>
+                  <div className="mt-2 grid gap-1 text-sm text-white/65">
+                    <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Non</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Non</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 hidden overflow-x-auto sm:block">
                 <div className="min-w-[540px]">
                   <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr] gap-2 text-xs font-bold text-white/60">
                     <div />
@@ -119,7 +158,6 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   </div>
                 </div>
               </div>
-              <div className="mt-2 text-xs text-white/55">Fais glisser horizontalement si besoin.</div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">

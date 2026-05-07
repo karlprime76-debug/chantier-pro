@@ -70,7 +70,56 @@ export default async function PricingPage() {
 
           <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
             <div className="text-sm font-bold text-white">Comparatif rapide</div>
-            <div className="mt-3 overflow-x-auto">
+
+            <div className="mt-3 grid gap-2 sm:hidden">
+              <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div className="text-sm font-bold text-white">Calculateurs de base</div>
+                <div className="mt-2 grid gap-1 text-sm text-white/65">
+                  <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Oui</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Oui</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div className="text-sm font-bold text-white">Calculateurs avancés</div>
+                <div className="mt-2 grid gap-1 text-sm text-white/65">
+                  <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Limité</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Oui</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div className="text-sm font-bold text-white">Sauvegarde des calculs</div>
+                <div className="mt-2 grid gap-1 text-sm text-white/65">
+                  <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-white/80">Limité</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-white/80">Oui</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-white/80">Oui</span></div>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div className="text-sm font-bold text-white">Exports & documents</div>
+                <div className="mt-2 grid gap-1 text-sm text-white/65">
+                  <div className="flex items-center justify-between gap-3"><span>Export PDF</span><span className="font-semibold text-white/80">Premium/Entreprise (bientôt)</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Export Excel</span><span className="font-semibold text-white/80">Entreprise</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Devis depuis les calculs</span><span className="font-semibold text-white/80">Premium/Entreprise (bientôt)</span></div>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                <div className="text-sm font-bold text-white">Suivi & équipe</div>
+                <div className="mt-2 grid gap-1 text-sm text-white/65">
+                  <div className="flex items-center justify-between gap-3"><span>Rapports journaliers</span><span className="font-semibold text-white/80">Premium/Entreprise</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Budget / dépenses</span><span className="font-semibold text-white/80">Premium/Entreprise</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Multi-utilisateurs</span><span className="font-semibold text-white/80">Entreprise</span></div>
+                  <div className="flex items-center justify-between gap-3"><span>Support prioritaire</span><span className="font-semibold text-white/80">Premium/Entreprise</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-3 hidden overflow-x-auto sm:block">
               <div className="min-w-[680px]">
                 <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-2 text-xs font-bold text-white/60">
                   <div />
@@ -142,7 +191,6 @@ export default async function PricingPage() {
                 </div>
               </div>
             </div>
-            <div className="mt-2 text-xs text-white/55">Fais glisser horizontalement si besoin.</div>
           </div>
 
           <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/60">
