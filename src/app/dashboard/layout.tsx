@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { AppShell } from "@/components/layout/AppShell";
-import { DashboardNav } from "@/components/layout/DashboardNav";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { DashboardSidebar } from "@/components/layout/DashboardSidebar";
 import { requireSession } from "@/lib/auth/guards";
 
@@ -28,13 +28,13 @@ async function DashboardLayoutInner({
 
   return (
     <div className="min-h-full">
-      <AppShell className="pb-24 sm:pb-10">
+      <AppShell className="pb-[calc(104px+env(safe-area-inset-bottom))] sm:pb-10">
         <div className="grid gap-6 sm:grid-cols-[16rem_1fr]">
           <DashboardSidebar />
           <div className="min-w-0">{children}</div>
         </div>
       </AppShell>
-      <DashboardNav />
+      <MobileBottomNav />
     </div>
   );
 }

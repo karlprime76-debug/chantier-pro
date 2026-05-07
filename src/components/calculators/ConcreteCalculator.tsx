@@ -271,7 +271,13 @@ export function ConcreteCalculator() {
             <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">{projectsError}</div>
           ) : projects.length === 0 ? (
             <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
-              Aucun chantier. Crée d’abord un chantier pour sauvegarder.
+              <div className="text-sm font-semibold text-white">Aucun chantier</div>
+              <div className="mt-1 text-sm text-white/60">Crée d’abord un chantier pour sauvegarder.</div>
+              <div className="mt-4">
+                <Button href="/dashboard/projects/new" variant="secondary" size="sm">
+                  Créer un chantier
+                </Button>
+              </div>
             </div>
           ) : (
             <select
