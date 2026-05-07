@@ -33,7 +33,7 @@ export default async function PricingPage() {
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <Card>
+            <Card className="ring-1 ring-[var(--cp-accent)]/20">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Premium</CardTitle>
@@ -46,6 +46,9 @@ export default async function PricingPage() {
               <div className="grid gap-3">
                 <div className="text-2xl font-extrabold tracking-tight text-white">15 000 FCFA</div>
                 <div className="text-sm text-white/60">par mois</div>
+                <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                  Premium recommandé
+                </div>
                 <SubscribeButton plan="PREMIUM">S&apos;abonner</SubscribeButton>
               </div>
             </Card>

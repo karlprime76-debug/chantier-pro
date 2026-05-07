@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 
+import { useSession } from "next-auth/react";
+
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { PlanBadge } from "@/components/ui/PlanBadge";
@@ -24,6 +26,9 @@ const TABS: Tab[] = [
 
 export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
   const [active, setActive] = useState<TabKey>(defaultTab);
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
+  const startHref = isAuthenticated ? "/dashboard/projects/new" : "/register?next=/dashboard/projects/new";
 
   const activeTab = useMemo(() => TABS.find((t) => t.key === active) ?? TABS[0], [active]);
 
@@ -186,8 +191,8 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <Button href="/register" size="lg" variant="secondary">
-                Commencer gratuitement
+              <Button href={startHref} size="lg" variant="secondary">
+                {isAuthenticated ? "Créer mon chantier" : "Commencer gratuitement"}
               </Button>
               <Button type="button" size="lg" variant="ghost" onClick={() => setActive("premium")}>
                 Voir Premium
