@@ -4,6 +4,8 @@ import { z } from "zod";
 import { requireApiSession } from "@/lib/auth/api";
 import { prisma } from "@/lib/db/prisma";
 import { createPayDunyaInvoice, PayDunyaError } from "@/lib/billing/paydunya";
+import { logError, logInfo } from "@/lib/observability/logger";
+import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
 const CheckoutSchema = z.object({
   plan: z.enum(["PREMIUM", "ENTERPRISE"]),
@@ -31,18 +33,31 @@ function getPaymentDelegate() {
 }
 
 export async function POST(req: Request) {
+  const requestId = getRequestId(req);
+  logInfo("billing.checkout.request_received", { requestId });
+
   let session;
   try {
     session = await requireApiSession();
   } catch (e) {
     if (e instanceof Response) return e;
-    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: false, error: "unauthorized", requestId }, { status: 401 }),
+      requestId,
+    );
   }
 
   const json = await req.json().catch(() => null);
   const parsed = CheckoutSchema.safeParse(json);
   if (!parsed.success) {
-    return NextResponse.json({ ok: false, error: "invalid_payload", issues: parsed.error.issues }, { status: 400 });
+    logInfo("billing.checkout.invalid_payload", { requestId });
+    return withRequestIdHeaders(
+      NextResponse.json(
+        { ok: false, error: "invalid_payload", issues: parsed.error.issues, requestId },
+        { status: 400 },
+      ),
+      requestId,
+    );
   }
 
   const plan = parsed.data.plan;
@@ -52,14 +67,19 @@ export async function POST(req: Request) {
 
   const paymentDelegate = getPaymentDelegate();
   if (!paymentDelegate || typeof paymentDelegate.create !== "function") {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "server_misconfigured",
-        message:
-          "Le modèle Payment n’est pas disponible côté serveur. Vérifie la génération Prisma (prisma generate) et le déploiement.",
-      },
-      { status: 500 },
+    logError("billing.checkout.server_misconfigured", { requestId });
+    return withRequestIdHeaders(
+      NextResponse.json(
+        {
+          ok: false,
+          error: "server_misconfigured",
+          message:
+            "Le modèle Payment n’est pas disponible côté serveur. Vérifie la génération Prisma (prisma generate) et le déploiement.",
+          requestId,
+        },
+        { status: 500 },
+      ),
+      requestId,
     );
   }
 
@@ -78,18 +98,24 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
-    console.error("[billing/checkout] Payment create failed", { message });
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "db_error",
-        message:
-          "Erreur base de données lors de l’initialisation du paiement. Vérifie que la migration Payment/User.plan est appliquée sur la base (table Payment existante) puis réessaie.",
-        details: message,
-      },
-      { status: 500 },
+    logError("billing.checkout.db_create_failed", { requestId, message });
+    return withRequestIdHeaders(
+      NextResponse.json(
+        {
+          ok: false,
+          error: "db_error",
+          message:
+            "Erreur base de données lors de l’initialisation du paiement. Vérifie que la migration Payment/User.plan est appliquée sur la base (table Payment existante) puis réessaie.",
+          details: message,
+          requestId,
+        },
+        { status: 500 },
+      ),
+      requestId,
     );
   }
+
+  logInfo("billing.checkout.payment_created", { requestId, paymentId: payment.id, plan, amount });
 
   try {
     const invoice = await createPayDunyaInvoice({
@@ -115,20 +141,28 @@ export async function POST(req: Request) {
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : "unknown";
-      console.error("[billing/checkout] Payment update failed", { paymentId: payment.id, message });
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "db_error",
-          message:
-            "Le paiement a été créé mais impossible de mettre à jour son statut. Vérifie la base de données puis réessaie.",
-          details: message,
-        },
-        { status: 500 },
+      logError("billing.checkout.db_update_failed", { requestId, paymentId: payment.id, message });
+      return withRequestIdHeaders(
+        NextResponse.json(
+          {
+            ok: false,
+            error: "db_error",
+            message:
+              "Le paiement a été créé mais impossible de mettre à jour son statut. Vérifie la base de données puis réessaie.",
+            details: message,
+            requestId,
+          },
+          { status: 500 },
+        ),
+        requestId,
       );
     }
 
-    return NextResponse.json({ ok: true, redirectUrl: invoice.invoiceUrl });
+    logInfo("billing.checkout.invoice_created", { requestId, paymentId: payment.id });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: true, redirectUrl: invoice.invoiceUrl, requestId }),
+      requestId,
+    );
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
 
@@ -159,7 +193,8 @@ export async function POST(req: Request) {
       details = parts.join(" | ");
     }
 
-    console.error("[billing/checkout] PayDunya failed", {
+    logError("billing.checkout.provider_failed", {
+      requestId,
       paymentId: payment.id,
       status,
       responseText,
@@ -170,20 +205,21 @@ export async function POST(req: Request) {
       await paymentDelegate.update({ where: { id: payment.id }, data: { status: "error" } });
     } catch (err) {
       const message = err instanceof Error ? err.message : "unknown";
-      console.error("[billing/checkout] Payment update error status failed", {
-        paymentId: payment.id,
-        message,
-      });
+      logError("billing.checkout.db_mark_error_failed", { requestId, paymentId: payment.id, message });
     }
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "provider_error",
-        message:
-          "Impossible de créer le paiement PayDunya. Vérifie PAYDUNYA_* et APP_URL, puis réessaie.",
-        details,
-      },
-      { status: 502 },
+    return withRequestIdHeaders(
+      NextResponse.json(
+        {
+          ok: false,
+          error: "provider_error",
+          message:
+            "Impossible de créer le paiement PayDunya. Vérifie PAYDUNYA_* et APP_URL, puis réessaie.",
+          details,
+          requestId,
+        },
+        { status: 502 },
+      ),
+      requestId,
     );
   }
 }

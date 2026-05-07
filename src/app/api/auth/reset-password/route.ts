@@ -5,6 +5,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
 import { sendEmail } from "@/lib/email/sendEmail";
+import { logError, logInfo } from "@/lib/observability/logger";
+import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
 const ResetPasswordSchema = z.object({
   token: z.string().min(1),
@@ -16,15 +18,19 @@ function sha256Hex(input: string) {
 }
 
 export async function POST(req: Request) {
+  const requestId = getRequestId(req);
   try {
-    console.info("[reset-password] request received");
+    logInfo("auth.reset_password.request_received", { requestId });
     const json = await req.json().catch(() => null);
     const parsed = ResetPasswordSchema.safeParse(json);
 
     if (!parsed.success) {
-      return NextResponse.json(
-        { ok: false, message: "Lien de réinitialisation invalide." },
-        { status: 400 },
+      return withRequestIdHeaders(
+        NextResponse.json(
+          { ok: false, message: "Lien de réinitialisation invalide.", requestId },
+          { status: 400 },
+        ),
+        requestId,
       );
     }
 
@@ -42,26 +48,39 @@ export async function POST(req: Request) {
     });
 
     if (!resetToken) {
-      console.info("[reset-password] token invalid", { reason: "not_found" });
-      return NextResponse.json(
-        { ok: false, message: "Lien de réinitialisation invalide ou expiré." },
-        { status: 400 },
+      logInfo("auth.reset_password.token_invalid", { requestId, reason: "not_found" });
+      return withRequestIdHeaders(
+        NextResponse.json(
+          { ok: false, message: "Lien de réinitialisation invalide ou expiré.", requestId },
+          { status: 400 },
+        ),
+        requestId,
       );
     }
 
     if (resetToken.usedAt) {
-      console.info("[reset-password] token invalid", { reason: "already_used", userId: resetToken.userId });
-      return NextResponse.json(
-        { ok: false, message: "Lien de réinitialisation invalide ou expiré." },
-        { status: 400 },
+      logInfo("auth.reset_password.token_invalid", {
+        requestId,
+        reason: "already_used",
+        userId: resetToken.userId,
+      });
+      return withRequestIdHeaders(
+        NextResponse.json(
+          { ok: false, message: "Lien de réinitialisation invalide ou expiré.", requestId },
+          { status: 400 },
+        ),
+        requestId,
       );
     }
 
     if (resetToken.expiresAt <= new Date()) {
-      console.info("[reset-password] token invalid", { reason: "expired", userId: resetToken.userId });
-      return NextResponse.json(
-        { ok: false, message: "Lien de réinitialisation invalide ou expiré." },
-        { status: 400 },
+      logInfo("auth.reset_password.token_invalid", { requestId, reason: "expired", userId: resetToken.userId });
+      return withRequestIdHeaders(
+        NextResponse.json(
+          { ok: false, message: "Lien de réinitialisation invalide ou expiré.", requestId },
+          { status: 400 },
+        ),
+        requestId,
       );
     }
 
@@ -84,7 +103,7 @@ export async function POST(req: Request) {
       }),
     ]);
 
-    console.info("[reset-password] password updated", { userId: resetToken.userId });
+    logInfo("auth.reset_password.password_updated", { requestId, userId: resetToken.userId });
 
     if (resetToken.user?.email) {
       const text = `Bonjour,\n\nVotre mot de passe a bien été modifié.\n\nSi vous n’êtes pas à l’origine de cette action, contactez rapidement le support.\n\nL’équipe Chantier Pro.`;
@@ -98,21 +117,28 @@ export async function POST(req: Request) {
         html,
       }).then((result) => {
         if (!result.ok) {
-          console.error("[reset-password] confirmation email failed.", {
+          logError("auth.reset_password.confirmation_email_failed", {
+            requestId,
             userId: resetToken.userId,
             error: result.error,
           });
           return;
         }
 
-        console.info("[reset-password] confirmation email sent", { userId: resetToken.userId });
+        logInfo("auth.reset_password.confirmation_email_sent", { requestId, userId: resetToken.userId });
       });
     }
 
-    return NextResponse.json({ ok: true, message: "Votre mot de passe a été réinitialisé." });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: true, message: "Votre mot de passe a été réinitialisé.", requestId }),
+      requestId,
+    );
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
-    console.error("[reset-password] server error", { error: message });
-    return NextResponse.json({ ok: false, message: "Erreur serveur. Réessaie." }, { status: 500 });
+    logError("auth.reset_password.server_error", { requestId, error: message });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: false, message: "Erreur serveur. Réessaie.", requestId }, { status: 500 }),
+      requestId,
+    );
   }
 }

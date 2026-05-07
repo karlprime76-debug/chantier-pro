@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { requireApiSession } from "@/lib/auth/api";
+import { logInfo } from "@/lib/observability/logger";
+import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
 type EmailHealthResponse = {
   ok: boolean;
@@ -23,11 +25,17 @@ function getAppUrlConfig() {
   return { configured: false, detected: null as string | null, usedFallback: false };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const requestId = getRequestId(req);
+  logInfo("email.health.request_received", { requestId });
+
   if (process.env.NODE_ENV === "production") {
     const session = await requireApiSession();
     if (session.role !== "ADMIN") {
-      return NextResponse.json({ ok: false, error: "forbidden" }, { status: 403 });
+      return withRequestIdHeaders(
+        NextResponse.json({ ok: false, error: "forbidden", requestId }, { status: 403 }),
+        requestId,
+      );
     }
   }
 
@@ -71,5 +79,5 @@ export async function GET() {
     message,
   };
 
-  return NextResponse.json(res);
+  return withRequestIdHeaders(NextResponse.json({ ...res, requestId }), requestId);
 }

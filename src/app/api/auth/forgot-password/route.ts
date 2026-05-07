@@ -4,6 +4,8 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
 import { getAppUrl, sendEmail } from "@/lib/email/sendEmail";
+import { logError, logInfo } from "@/lib/observability/logger";
+import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
 const ForgotPasswordSchema = z.object({
   email: z.string().email(),
@@ -17,17 +19,21 @@ function sha256Hex(input: string) {
 }
 
 export async function POST(req: Request) {
+  const requestId = getRequestId(req);
   try {
-    console.info("[forgot-password] request received");
+    logInfo("auth.forgot_password.request_received", { requestId });
     const json = await req.json().catch(() => null);
     const parsed = ForgotPasswordSchema.safeParse(json);
 
     if (!parsed.success) {
-      return NextResponse.json({ ok: true, message: GENERIC_MESSAGE });
+      return withRequestIdHeaders(
+        NextResponse.json({ ok: true, message: GENERIC_MESSAGE }),
+        requestId,
+      );
     }
 
     const email = parsed.data.email.trim().toLowerCase();
-    console.info("[forgot-password] request parsed", { email });
+    logInfo("auth.forgot_password.request_parsed", { requestId, email });
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -35,7 +41,7 @@ export async function POST(req: Request) {
     });
 
     if (user) {
-      console.info("[forgot-password] user found", { userId: user.id });
+      logInfo("auth.forgot_password.user_found", { requestId, userId: user.id });
       await prisma.passwordResetToken.updateMany({
         where: { userId: user.id, usedAt: null, expiresAt: { gt: new Date() } },
         data: { usedAt: new Date() },
@@ -54,7 +60,11 @@ export async function POST(req: Request) {
         select: { id: true },
       });
 
-      console.info("[forgot-password] token created", { userId: user.id, expiresAt: expiresAt.toISOString() });
+      logInfo("auth.forgot_password.token_created", {
+        requestId,
+        userId: user.id,
+        expiresAt: expiresAt.toISOString(),
+      });
 
       const appUrl = getAppUrl();
       const resetUrl = `${appUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(rawToken)}`;
@@ -70,20 +80,30 @@ export async function POST(req: Request) {
         html,
       }).then((result) => {
         if (!result.ok) {
-          console.error("[forgot-password] reset email failed.", { userId: user.id, error: result.error });
+          logError("auth.forgot_password.email_failed", {
+            requestId,
+            userId: user.id,
+            error: result.error,
+          });
           return;
         }
 
-        console.info("[forgot-password] reset email sent", { userId: user.id });
+        logInfo("auth.forgot_password.email_sent", { requestId, userId: user.id });
       });
     } else {
-      console.info("[forgot-password] user not found");
+      logInfo("auth.forgot_password.user_not_found", { requestId });
     }
 
-    return NextResponse.json({ ok: true, message: GENERIC_MESSAGE });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: true, message: GENERIC_MESSAGE }),
+      requestId,
+    );
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
-    console.error("[forgot-password] server error", { error: message });
-    return NextResponse.json({ ok: true, message: GENERIC_MESSAGE });
+    logError("auth.forgot_password.server_error", { requestId, error: message });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: true, message: GENERIC_MESSAGE }),
+      requestId,
+    );
   }
 }
