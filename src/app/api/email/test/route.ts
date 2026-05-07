@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { requireApiSession } from "@/lib/auth/api";
 import { sendEmail } from "@/lib/email/sendEmail";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
@@ -14,11 +15,21 @@ export async function POST(req: Request) {
   logInfo("email.test.request_received", { requestId });
 
   const secretRequired = (process.env.EMAIL_TEST_SECRET ?? "").trim();
+  if (process.env.NODE_ENV === "production" && !secretRequired) {
+    const session = await requireApiSession();
+    if (session.role !== "ADMIN") {
+      return withRequestIdHeaders(
+        NextResponse.json({ ok: false, error: "forbidden", message: "Accès refusé.", requestId }, { status: 403 }),
+        requestId,
+      );
+    }
+  }
+
   if (secretRequired) {
     const provided = req.headers.get("x-email-test-secret") ?? "";
     if (provided !== secretRequired) {
       return withRequestIdHeaders(
-        NextResponse.json({ ok: false, error: "unauthorized", requestId }, { status: 401 }),
+        NextResponse.json({ ok: false, error: "unauthorized", message: "Secret invalide.", requestId }, { status: 401 }),
         requestId,
       );
     }
@@ -30,7 +41,7 @@ export async function POST(req: Request) {
     logInfo("email.test.invalid_payload", { requestId });
     return withRequestIdHeaders(
       NextResponse.json(
-        { ok: false, error: "invalid_payload", issues: parsed.error.issues, requestId },
+        { ok: false, error: "invalid_payload", message: "Payload invalide.", issues: parsed.error.issues, requestId },
         { status: 400 },
       ),
       requestId,
@@ -54,7 +65,14 @@ export async function POST(req: Request) {
     });
     return withRequestIdHeaders(
       NextResponse.json(
-        { ok: false, error: "send_failed", provider: result.provider, message: result.error, requestId },
+        {
+          ok: false,
+          error: "send_failed",
+          message: "Envoi email test impossible.",
+          details: result.error,
+          provider: result.provider,
+          requestId,
+        },
         { status: 502 },
       ),
       requestId,
@@ -63,7 +81,7 @@ export async function POST(req: Request) {
 
   logInfo("email.test.send_ok", { requestId, provider: result.provider });
   return withRequestIdHeaders(
-    NextResponse.json({ ok: true, provider: result.provider, requestId }),
+    NextResponse.json({ ok: true, message: "Email test envoyé.", provider: result.provider, requestId }),
     requestId,
   );
 }

@@ -22,13 +22,25 @@ function getBaseUrl() {
   return "http://localhost:3000";
 }
 
+function isLocalhostUrl(url: string) {
+  return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\b/i.test(url.trim());
+}
+
 export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult> {
   const provider = (process.env.EMAIL_PROVIDER ?? "").trim().toLowerCase();
   const resendKey = (process.env.RESEND_API_KEY ?? "").trim();
   const from = (process.env.EMAIL_FROM ?? "").trim() || "Chantier Pro <onboarding@resend.dev>";
 
+  const baseUrl = getBaseUrl();
+  if (process.env.NODE_ENV === "production" && isLocalhostUrl(baseUrl)) {
+    return {
+      ok: false,
+      provider: "resend",
+      error: "Invalid APP_URL/NEXTAUTH_URL: points to localhost in production.",
+    };
+  }
+
   if (provider !== "resend" || !resendKey) {
-    const baseUrl = getBaseUrl();
     const safeText = (input.text ?? "").slice(0, 500);
 
     if (process.env.NODE_ENV === "production") {
@@ -74,8 +86,20 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
     return { ok: true, provider: "resend" };
   } catch (err) {
     const error = err instanceof Error ? err.message : "unknown";
-    console.error("[email:resend] Failed to send email.", { to: input.to, subject: input.subject, error });
-    return { ok: false, provider: "resend", error };
+    const extra =
+      typeof err === "object" && err !== null
+        ? {
+            name: "name" in err ? String((err as { name?: unknown }).name) : undefined,
+            statusCode: "statusCode" in err ? String((err as { statusCode?: unknown }).statusCode) : undefined,
+          }
+        : {};
+    console.error("[email:resend] Failed to send email.", {
+      to: input.to,
+      subject: input.subject,
+      error,
+      ...extra,
+    });
+    return { ok: false, provider: "resend", error: extra.statusCode ? `${error} (status ${extra.statusCode})` : error };
   }
 }
 

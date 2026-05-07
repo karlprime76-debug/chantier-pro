@@ -4,6 +4,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
 import { getAppUrl, sendEmail } from "@/lib/email/sendEmail";
+import { logError, logInfo } from "@/lib/observability/logger";
+import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
 const RegisterSchema = z.object({
   name: z.string().min(2),
@@ -13,13 +15,19 @@ const RegisterSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const requestId = getRequestId(req);
   try {
+    logInfo("auth.register.request_received", { requestId });
     const json = await req.json().catch(() => null);
     const parsed = RegisterSchema.safeParse(json);
     if (!parsed.success) {
-      return NextResponse.json(
-        { ok: false, error: "invalid_payload", issues: parsed.error.issues },
-        { status: 400 },
+      logInfo("auth.register.invalid_payload", { requestId });
+      return withRequestIdHeaders(
+        NextResponse.json(
+          { ok: false, error: "invalid_payload", issues: parsed.error.issues, requestId },
+          { status: 400 },
+        ),
+        requestId,
       );
     }
 
@@ -27,7 +35,11 @@ export async function POST(req: Request) {
 
     const existing = await prisma.user.findUnique({ where: { email }, select: { id: true } });
     if (existing) {
-      return NextResponse.json({ ok: false, error: "email_already_used" }, { status: 409 });
+      logInfo("auth.register.email_already_used", { requestId });
+      return withRequestIdHeaders(
+        NextResponse.json({ ok: false, error: "email_already_used", requestId }, { status: 409 }),
+        requestId,
+      );
     }
 
     const passwordHash = await hashPassword(parsed.data.password);
@@ -53,6 +65,8 @@ export async function POST(req: Request) {
       select: { id: true },
     });
 
+    logInfo("auth.register.user_created", { requestId, userId: user.id });
+
     const appUrl = getAppUrl();
     const dashboardUrl = `${appUrl.replace(/\/$/, "")}/dashboard`;
 
@@ -67,16 +81,20 @@ export async function POST(req: Request) {
       html: welcomeHtml,
     }).then((result) => {
       if (!result.ok) {
-        console.error("[register] Welcome email failed.", { userId: user.id, error: result.error });
+        logError("auth.register.welcome_email_failed", { requestId, userId: user.id, error: result.error });
+        return;
       }
+
+      logInfo("auth.register.welcome_email_sent", { requestId, userId: user.id, provider: result.provider });
     });
 
-    return NextResponse.json({ ok: true, userId: user.id });
+    return withRequestIdHeaders(NextResponse.json({ ok: true, userId: user.id, requestId }), requestId);
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
-    return NextResponse.json(
-      { ok: false, error: "server_error", message },
-      { status: 500 },
+    logError("auth.register.server_error", { requestId, error: message });
+    return withRequestIdHeaders(
+      NextResponse.json({ ok: false, error: "server_error", message, requestId }, { status: 500 }),
+      requestId,
     );
   }
 }

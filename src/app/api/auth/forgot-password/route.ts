@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db/prisma";
 import { getAppUrl, sendEmail } from "@/lib/email/sendEmail";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
+import { checkRateLimit } from "@/lib/security/rateLimit";
 
 const ForgotPasswordSchema = z.object({
   email: z.string().email(),
@@ -22,6 +23,20 @@ export async function POST(req: Request) {
   const requestId = getRequestId(req);
   try {
     logInfo("auth.forgot_password.request_received", { requestId });
+
+    const rl = checkRateLimit(req, {
+      keyPrefix: "auth.forgot_password",
+      limit: 5,
+      windowMs: 15 * 60 * 1000,
+    });
+    if (!rl.allowed) {
+      logInfo("auth.forgot_password.rate_limited", { requestId });
+      return withRequestIdHeaders(
+        NextResponse.json({ ok: true, message: GENERIC_MESSAGE, requestId }),
+        requestId,
+      );
+    }
+
     const json = await req.json().catch(() => null);
     const parsed = ForgotPasswordSchema.safeParse(json);
 
@@ -33,7 +48,7 @@ export async function POST(req: Request) {
     }
 
     const email = parsed.data.email.trim().toLowerCase();
-    logInfo("auth.forgot_password.request_parsed", { requestId, email });
+    logInfo("auth.forgot_password.request_parsed", { requestId });
 
     const user = await prisma.user.findUnique({
       where: { email },
