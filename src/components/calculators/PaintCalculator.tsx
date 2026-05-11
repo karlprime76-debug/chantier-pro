@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 
 import { computePaint, PaintInputSchema, type PaintOutput } from "@/lib/calculators/paint";
 
@@ -16,6 +18,8 @@ function toNumber(value: string): number | null {
 }
 
 export function PaintCalculator() {
+  const searchParams = useSearchParams();
+  const userPlan = (searchParams.get("plan") as UserPlan | null) ?? "FREE";
   const [roomLengthM, setRoomLengthM] = useState("4");
   const [roomWidthM, setRoomWidthM] = useState("3");
   const [wallHeightM, setWallHeightM] = useState("2.8");
@@ -106,7 +110,7 @@ export function PaintCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
             <div>
               <span className="text-white/55">Surface murs brute:</span> {output.wallsAreaM2} m²
             </div>
@@ -121,6 +125,24 @@ export function PaintCalculator() {
             </div>
             <div>
               <span className="text-white/55">Nombre de pots:</span> {output.potsCount === null ? "—" : output.potsCount}
+            </div>
+
+            <div className="pt-2">
+              <Button
+                type="button"
+                variant="ghost"
+                disabled={!canAccessFeature(userPlan, "quote_from_calc")}
+                onClick={() => {
+                  const url = new URL(window.location.origin + "/dashboard/quotes");
+                  url.searchParams.set("title", "Devis depuis calcul peinture");
+                  url.searchParams.set("itemLabel", "Peinture (L)");
+                  url.searchParams.set("quantity", String(output.litersWithWaste));
+                  url.searchParams.set("unitPrice", "");
+                  window.location.href = url.pathname + url.search;
+                }}
+              >
+                Créer un devis avec ce calcul
+              </Button>
             </div>
           </div>
         ) : (

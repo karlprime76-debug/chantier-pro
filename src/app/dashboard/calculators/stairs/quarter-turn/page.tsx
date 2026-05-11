@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { QuarterTurnStairCalculator } from "@/components/calculators/QuarterTurnStairCalculator";
 
 export default function QuarterTurnStairCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function QuarterTurnStairCalculatorPage() {
         title="Calculateur escalier quart tournant"
         description="Pré-dimensionnement et quantités estimatives pour un quart tournant (à venir)."
       >
-        <div className="text-sm text-white/60">Module planifié. Implémentation plus tard.</div>
+        <QuarterTurnStairCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

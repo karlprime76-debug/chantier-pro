@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 
 import {
   computeConcrete,
@@ -33,6 +34,7 @@ const ELEMENT_LABEL: Record<string, string> = {
 export function ConcreteCalculator() {
   const searchParams = useSearchParams();
   const projectIdFromUrl = searchParams.get("projectId")?.trim() || "";
+  const userPlan = (searchParams.get("plan") as UserPlan | null) ?? "FREE";
 
   const [projectsLoading, setProjectsLoading] = useState(false);
   const [projectsError, setProjectsError] = useState<string | null>(null);
@@ -361,6 +363,24 @@ export function ConcreteCalculator() {
             </Button>
             <Button type="button" variant="ghost" onClick={handleSave} disabled={saveLoading}>
               {saveLoading ? "Sauvegarde…" : "Sauvegarder dans le chantier"}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={!output || !canAccessFeature(userPlan, "quote_from_calc")}
+              onClick={() => {
+                if (!output) return;
+
+                const url = new URL(window.location.origin + "/dashboard/quotes");
+                if (projectId) url.searchParams.set("projectId", projectId);
+                url.searchParams.set("title", "Devis depuis calcul béton");
+                url.searchParams.set("itemLabel", "Béton (m³)");
+                url.searchParams.set("quantity", String(output.volumeWithWasteM3));
+                url.searchParams.set("unitPrice", "");
+                window.location.href = url.pathname + url.search;
+              }}
+            >
+              Créer un devis avec ce calcul
             </Button>
           </div>
 

@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 
 import { computeTiling, TilingInputSchema, type TilingOutput } from "@/lib/calculators/tilingSimple";
 
@@ -16,6 +18,8 @@ function toNumber(value: string): number | null {
 }
 
 export function TilingSimpleCalculator() {
+  const searchParams = useSearchParams();
+  const userPlan = (searchParams.get("plan") as UserPlan | null) ?? "FREE";
   const [roomLengthM, setRoomLengthM] = useState("4");
   const [roomWidthM, setRoomWidthM] = useState("3");
   const [tileLengthCm, setTileLengthCm] = useState("60");
@@ -97,7 +101,7 @@ export function TilingSimpleCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
             <div>
               <span className="text-white/55">Surface:</span> {output.areaM2} m²
             </div>
@@ -109,6 +113,24 @@ export function TilingSimpleCalculator() {
             </div>
             <div>
               <span className="text-white/55">Cartons:</span> {output.boxesCount === null ? "—" : output.boxesCount}
+            </div>
+
+            <div className="pt-2">
+              <Button
+                type="button"
+                variant="ghost"
+                disabled={!canAccessFeature(userPlan, "quote_from_calc")}
+                onClick={() => {
+                  const url = new URL(window.location.origin + "/dashboard/quotes");
+                  url.searchParams.set("title", "Devis depuis calcul carrelage");
+                  url.searchParams.set("itemLabel", "Carrelage (m²)");
+                  url.searchParams.set("quantity", String(output.areaM2));
+                  url.searchParams.set("unitPrice", "");
+                  window.location.href = url.pathname + url.search;
+                }}
+              >
+                Créer un devis avec ce calcul
+              </Button>
             </div>
           </div>
         ) : (

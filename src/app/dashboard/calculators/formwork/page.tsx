@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { FormworkCalculator } from "@/components/calculators/FormworkCalculator";
 
 export default function FormworkCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function FormworkCalculatorPage() {
         title="Calculateur coffrage"
         description="Surfaces de coffrage estimatives pour optimiser vos quantités et votre temps."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <FormworkCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

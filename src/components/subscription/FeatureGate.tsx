@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { requireSession } from "@/lib/auth/guards";
-import { canAccessFeature, getUserPlanFromRole, type FeatureKey } from "@/lib/subscription/access";
+import { canAccessFeature, type FeatureKey } from "@/lib/subscription/access";
+import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
 type FeatureGateProps = {
   featureKey: FeatureKey;
@@ -21,7 +22,7 @@ export async function FeatureGate({
     redirect("/login");
   }
 
-  const plan = getUserPlanFromRole(session.role);
+  const plan = await getEffectiveUserPlan(session);
   const ok = canAccessFeature(plan, featureKey);
 
   if (!ok) {

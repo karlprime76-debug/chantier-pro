@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { SepticTankCalculator } from "@/components/calculators/SepticTankCalculator";
 
 export default function SepticTankCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function SepticTankCalculatorPage() {
         title="Calculateur fosse septique / puisard"
         description="Pré-dimensionnement et quantités estimatives selon usage et volume (MVP)."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <SepticTankCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

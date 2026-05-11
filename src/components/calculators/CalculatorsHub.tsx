@@ -8,147 +8,82 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { PlanBadge } from "@/components/ui/PlanBadge";
+import {
+  CALCULATORS_CATALOG,
+  type CalculatorCatalogItem,
+  type CalculatorCategory,
+} from "@/lib/calculators/catalog";
 import { cn } from "@/lib/cn";
+import { canAccessFeature, canAccessPlan, type UserPlan } from "@/lib/subscription/access";
 
-type CalculatorCategory =
-  | "Tous"
-  | "Béton"
-  | "Acier"
-  | "Maçonnerie"
-  | "Finition"
-  | "Terrassement"
-  | "Devis"
-  | "Outils Pro";
+type PlanFilter = "ALL" | UserPlan;
 
-type CalculatorStatus = "Disponible" | "Bientôt" | "Premium";
-
-type CalculatorCard = {
-  title: string;
-  description: string;
-  category: Exclude<CalculatorCategory, "Tous">;
-  href: string;
-  planBadge: "free" | "premium" | "soon";
-  status: CalculatorStatus;
-};
-
-const FILTERS: CalculatorCategory[] = [
-  "Tous",
-  "Béton",
-  "Acier",
-  "Maçonnerie",
-  "Finition",
-  "Devis",
-  "Outils Pro",
+const PLAN_FILTERS: Array<{ id: PlanFilter; label: string }> = [
+  { id: "ALL", label: "Tous" },
+  { id: "FREE", label: "Gratuit" },
+  { id: "PREMIUM", label: "Premium" },
+  { id: "ENTERPRISE", label: "Entreprise" },
 ];
 
-const CALCULATORS: CalculatorCard[] = [
-  {
-    title: "Béton (simple)",
-    description: "Volume + marge de perte + estimation matériaux.",
-    category: "Béton",
-    href: "/dashboard/calculators/concrete",
-    planBadge: "free",
-    status: "Disponible",
-  },
-  {
-    title: "Béton (escalier)",
-    description: "Bientôt: escalier béton dédié.",
-    category: "Béton",
-    href: "/dashboard/calculators/stairs/straight",
-    planBadge: "soon",
-    status: "Bientôt",
-  },
-  {
-    title: "Acier (simple)",
-    description: "Calcul simple d’acier (MVP).",
-    category: "Acier",
-    href: "/dashboard/calculators/steel",
-    planBadge: "free",
-    status: "Disponible",
-  },
-  {
-    title: "Poids acier",
-    description: "Poids total selon diamètre et longueur.",
-    category: "Acier",
-    href: "/dashboard/calculators/steel-weight",
-    planBadge: "free",
-    status: "Disponible",
-  },
-  {
-    title: "Agglos / Briques",
-    description: "Surface de mur + nombre de blocs + perte.",
-    category: "Maçonnerie",
-    href: "/dashboard/calculators/masonry-blocks",
-    planBadge: "free",
-    status: "Disponible",
-  },
-  {
-    title: "Maçonnerie (avancé)",
-    description: "Premium: blocs, mortier, surfaces et ouvertures.",
-    category: "Maçonnerie",
-    href: "/dashboard/calculators/masonry",
-    planBadge: "premium",
-    status: "Premium",
-  },
-  {
-    title: "Carrelage",
-    description: "Estimation carreaux + cartons + chutes.",
-    category: "Finition",
-    href: "/dashboard/calculators/tiling",
-    planBadge: "premium",
-    status: "Premium",
-  },
-  {
-    title: "Peinture",
-    description: "Surfaces, couches, rendement et litres.",
-    category: "Finition",
-    href: "/dashboard/calculators/paint",
-    planBadge: "free",
-    status: "Disponible",
-  },
-  {
-    title: "Devis",
-    description: "Devis simple (PDF plus tard).",
-    category: "Devis",
-    href: "/dashboard/quotes",
-    planBadge: "free",
-    status: "Disponible",
-  },
-  {
-    title: "Mémo dosages",
-    description: "Bientôt: repères terrain (dosages, rendements).",
-    category: "Outils Pro",
-    href: "/more",
-    planBadge: "soon",
-    status: "Bientôt",
-  },
+type CategoryFilter = "ALL" | CalculatorCategory;
+
+const CATEGORY_FILTERS: Array<{ id: CategoryFilter; label: string }> = [
+  { id: "ALL", label: "Tous" },
+  { id: "Béton", label: "Béton" },
+  { id: "Acier", label: "Acier" },
+  { id: "Maçonnerie", label: "Maçonnerie" },
+  { id: "Finition", label: "Finition" },
+  { id: "Devis", label: "Devis" },
+  { id: "Chantier", label: "Chantier" },
+  { id: "Outils Pro", label: "Outils Pro" },
 ];
 
-function statusLabel(status: CalculatorStatus): string {
-  if (status === "Disponible") return "Disponible";
-  if (status === "Premium") return "Premium";
-  return "Bientôt";
+function planLabel(plan: UserPlan): string {
+  if (plan === "FREE") return "Gratuit";
+  if (plan === "PREMIUM") return "Premium";
+  return "Entreprise";
 }
 
-export function CalculatorsHub() {
+function statusLabel(item: CalculatorCatalogItem): string {
+  return item.status === "AVAILABLE" ? "Disponible" : "Bientôt";
+}
+
+type CalculatorsHubProps = {
+  userPlan: UserPlan;
+};
+
+function withPlan(href: string, userPlan: UserPlan) {
+  if (!href.startsWith("/")) return href;
+  const sep = href.includes("?") ? "&" : "?";
+  return `${href}${sep}plan=${encodeURIComponent(userPlan)}`;
+}
+
+export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<CalculatorCategory>("Tous");
+  const [planFilter, setPlanFilter] = useState<PlanFilter>("ALL");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("ALL");
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    return CALCULATORS.filter((c) => {
-      if (filter !== "Tous" && c.category !== filter) return false;
+    return CALCULATORS_CATALOG.filter((c) => {
+      if (planFilter !== "ALL" && c.plan !== planFilter) return false;
+      if (categoryFilter !== "ALL" && c.category !== categoryFilter) return false;
       if (!q) return true;
       return (c.title + " " + c.description).toLowerCase().includes(q);
     });
-  }, [query, filter]);
+  }, [query, planFilter, categoryFilter]);
+
+  const visibleCountLabel = `${filtered.length} outil${filtered.length > 1 ? "s" : ""}`;
 
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Calculs</h1>
-        <p className="mt-1 text-sm text-white/60">Centre de calcul Chantier Pro: terrain + bureau.</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-white">Centre de calculs Chantier Pro</h1>
+        <p className="mt-1 text-sm text-white/60">Tous vos outils de calcul BTP selon votre plan.</p>
+        <div className="mt-2 text-xs font-semibold text-white/45">
+          Plan actuel: <span className="text-white/70">{planLabel(userPlan)}</span> · {visibleCountLabel}
+        </div>
       </div>
 
       <div className="grid gap-3">
@@ -159,61 +94,111 @@ export function CalculatorsHub() {
           onChange={(e) => setQuery(e.target.value)}
         />
 
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          {FILTERS.map((f) => {
-            const active = f === filter;
-            return (
-              <button
-                key={f}
-                type="button"
-                onClick={() => setFilter(f)}
-                className={cn(
-                  "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 ring-white/10 transition",
-                  active ? "bg-white/10 text-white" : "bg-black/20 text-white/70 hover:bg-black/30 hover:text-white",
-                )}
-              >
-                {f}
-              </button>
-            );
-          })}
+        <div className="grid gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {PLAN_FILTERS.map((f) => {
+              const active = f.id === planFilter;
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => setPlanFilter(f.id)}
+                  className={cn(
+                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 ring-white/10 transition",
+                    active ? "bg-white/10 text-white" : "bg-black/20 text-white/70 hover:bg-black/30 hover:text-white",
+                  )}
+                >
+                  {f.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {CATEGORY_FILTERS.map((f) => {
+              const active = f.id === categoryFilter;
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => setCategoryFilter(f.id)}
+                  className={cn(
+                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 ring-white/10 transition",
+                    active ? "bg-white/10 text-white" : "bg-black/20 text-white/70 hover:bg-black/30 hover:text-white",
+                  )}
+                >
+                  {f.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {filtered.map((c) => (
-          <Card key={c.href}>
-            <CardHeader>
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <CardTitle>{c.title}</CardTitle>
-                  <CardDescription>{c.description}</CardDescription>
-                </div>
-                <div className="grid justify-items-end gap-2">
-                  <PlanBadge variant={c.planBadge} />
-                  <span className="text-[11px] font-bold text-white/55">{statusLabel(c.status)}</span>
-                </div>
-              </div>
-            </CardHeader>
+        {filtered.map((c) => {
+          const requiredPlanOk = canAccessPlan(userPlan, c.plan);
+          const featureOk = c.featureKey ? canAccessFeature(userPlan, c.featureKey) : true;
+          const canAccess = requiredPlanOk && featureOk;
 
-            <div className="px-6 pb-6">
-              {c.status === "Disponible" ? (
-                <Button href={c.href} variant="secondary" size="sm">
-                  Ouvrir
-                </Button>
-              ) : c.status === "Premium" ? (
-                <div className="flex items-center gap-2">
-                  <Button href="/pricing" variant="secondary" size="sm">
-                    Voir les abonnements
-                  </Button>
+          const isEnterpriseLocked = c.plan === "ENTERPRISE" && !canAccessPlan(userPlan, "ENTERPRISE");
+          const shouldShowUpgrade = !isEnterpriseLocked && !canAccess;
+
+          return (
+            <Card key={c.id}>
+              <CardHeader>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <CardTitle>
+                      <span className="mr-2" aria-hidden="true">
+                        {c.iconName}
+                      </span>
+                      {c.title}
+                    </CardTitle>
+                    <CardDescription>{c.description}</CardDescription>
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <span className="inline-flex items-center rounded-full bg-black/20 px-2 py-1 text-[11px] font-bold text-white/65 ring-1 ring-white/10">
+                        {c.category}
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-black/20 px-2 py-1 text-[11px] font-bold text-white/65 ring-1 ring-white/10">
+                        {planLabel(c.plan)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="grid justify-items-end gap-2">
+                    {c.plan === "FREE" ? <PlanBadge variant="free" /> : <PlanBadge variant="premium" />}
+                    <span className="text-[11px] font-bold text-white/55">{statusLabel(c)}</span>
+                  </div>
                 </div>
-              ) : (
-                <Button type="button" variant="ghost" size="sm" disabled>
-                  Bientôt
-                </Button>
-              )}
-            </div>
-          </Card>
-        ))}
+              </CardHeader>
+
+              <div className="px-6 pb-6">
+                {c.status !== "AVAILABLE" ? (
+                  <Button type="button" variant="ghost" size="sm" disabled>
+                    Bientôt
+                  </Button>
+                ) : canAccess ? (
+                  <Button href={withPlan(c.href, userPlan)} variant="secondary" size="sm">
+                    Ouvrir
+                  </Button>
+                ) : isEnterpriseLocked ? (
+                  <Button href="/pricing" variant="secondary" size="sm">
+                    Contacter pour Entreprise
+                  </Button>
+                ) : shouldShowUpgrade ? (
+                  <Button href="/pricing" variant="secondary" size="sm">
+                    Passer Premium
+                  </Button>
+                ) : (
+                  <Button href="/pricing" variant="secondary" size="sm">
+                    Voir les offres
+                  </Button>
+                )}
+              </div>
+            </Card>
+          );
+        })}
       </div>
 
       <Card>

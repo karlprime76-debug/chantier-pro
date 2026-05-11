@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { LandingStairCalculator } from "@/components/calculators/LandingStairCalculator";
 
 export default function LandingStairCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function LandingStairCalculatorPage() {
         title="Calculateur escalier avec palier"
         description="Estimation des dimensions et quantités pour un escalier avec palier (MVP)."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <LandingStairCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

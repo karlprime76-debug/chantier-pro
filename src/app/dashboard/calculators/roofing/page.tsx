@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { RoofingCalculator } from "@/components/calculators/RoofingCalculator";
 
 export default function RoofingCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function RoofingCalculatorPage() {
         title="Calculateur toiture"
         description="Estimation des surfaces, pentes et quantités selon la couverture."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <RoofingCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

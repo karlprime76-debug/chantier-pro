@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { AdvancedPaintingCalculator } from "@/components/calculators/AdvancedPaintingCalculator";
 
 export default function PaintingCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function PaintingCalculatorPage() {
         title="Calculateur peinture"
         description="Estimation litres, couches et surfaces selon supports et rendement."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <AdvancedPaintingCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

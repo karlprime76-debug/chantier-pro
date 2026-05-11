@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { FenceCalculator } from "@/components/calculators/FenceCalculator";
 
 export default function FenceCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function FenceCalculatorPage() {
         title="Calculateur clôture"
         description="Estimation poteaux, linéaire, fondations et consommables (MVP)."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <FenceCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

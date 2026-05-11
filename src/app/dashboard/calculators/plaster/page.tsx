@@ -1,5 +1,6 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { PlasterCalculator } from "@/components/calculators/PlasterCalculator";
 
 export default function PlasterCalculatorPage() {
   return (
@@ -8,7 +9,7 @@ export default function PlasterCalculatorPage() {
         title="Calculateur enduit"
         description="Estimation des quantités d’enduit, ciment/sable et surfaces à traiter."
       >
-        <div className="text-sm text-white/60">Calculateur en cours d’implémentation.</div>
+        <PlasterCalculator />
       </CalculatorPageShell>
     </FeatureGate>
   );

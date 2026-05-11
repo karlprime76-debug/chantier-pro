@@ -2,9 +2,11 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Ca
 import { NewQuoteForm } from "@/components/quotes/NewQuoteForm";
 import { prisma } from "@/lib/db/prisma";
 import { requireSession } from "@/lib/auth/guards";
+import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
 export default async function QuotesPage() {
   const session = await requireSession();
+  const userPlan = session ? await getEffectiveUserPlan(session) : "FREE";
   const user = session
     ? await prisma.user.findUnique({ where: { id: session.id }, select: { companyId: true } })
     : null;
@@ -45,7 +47,7 @@ export default async function QuotesPage() {
           <CardDescription>Ajoute des lignes, calcule total, puis envoie.</CardDescription>
         </CardHeader>
 
-        <NewQuoteForm />
+        <NewQuoteForm userPlan={userPlan} />
       </Card>
 
       <Card>

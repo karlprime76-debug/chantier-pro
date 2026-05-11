@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 
 import {
   computeMasonryBlocks,
@@ -22,6 +24,8 @@ function toNumber(value: string): number | null {
 }
 
 export function MasonryBlocksCalculator() {
+  const searchParams = useSearchParams();
+  const userPlan = (searchParams.get("plan") as UserPlan | null) ?? "FREE";
   const [preset, setPreset] = useState<UnitPreset>("agglos_20");
 
   const [wallLengthM, setWallLengthM] = useState("6");
@@ -141,7 +145,7 @@ export function MasonryBlocksCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
             <div>
               <span className="text-white/55">Surface mur:</span> {output.wallAreaM2} m²
             </div>
@@ -153,6 +157,24 @@ export function MasonryBlocksCalculator() {
             </div>
             <div>
               <span className="text-white/55">Mortier (simple):</span> {output.mortarEstimateM3 === null ? "—" : `${output.mortarEstimateM3} m³`}
+            </div>
+
+            <div className="pt-2">
+              <Button
+                type="button"
+                variant="ghost"
+                disabled={!canAccessFeature(userPlan, "quote_from_calc")}
+                onClick={() => {
+                  const url = new URL(window.location.origin + "/dashboard/quotes");
+                  url.searchParams.set("title", "Devis depuis calcul agglos");
+                  url.searchParams.set("itemLabel", "Agglos (unité)");
+                  url.searchParams.set("quantity", String(output.blocksWithWaste));
+                  url.searchParams.set("unitPrice", "");
+                  window.location.href = url.pathname + url.search;
+                }}
+              >
+                Créer un devis avec ce calcul
+              </Button>
             </div>
           </div>
         ) : (
