@@ -4,6 +4,7 @@ import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { HomeHeroCta } from "@/components/home/HomeHeroCta";
+import { InstallAppCard } from "@/components/pwa/InstallAppCard";
 import { PlanTabs } from "@/components/subscription/PlanTabs";
 import { requireSession } from "@/lib/auth/guards";
 import Link from "next/link";
@@ -36,6 +37,10 @@ export default async function Home() {
               calculs béton/acier, suivre les dépenses et produire des rapports journaliers.
             </p>
             <HomeHeroCta />
+
+            <div className="mt-6">
+              <InstallAppCard />
+            </div>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <Link

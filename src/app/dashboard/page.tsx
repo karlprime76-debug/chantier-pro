@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { InstallAppCard } from "@/components/pwa/InstallAppCard";
 import { prisma } from "@/lib/db/prisma";
 import { requireSession } from "@/lib/auth/guards";
 
@@ -74,8 +73,6 @@ export default async function DashboardPage() {
           </Button>
         </div>
       </div>
-
-      <InstallAppCard />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="cp-hover-lift">
