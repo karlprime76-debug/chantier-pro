@@ -134,6 +134,11 @@ export function MobileBottomNav() {
     },
   ];
 
+  const activeIndex = items.findIndex((item) => {
+    const ok = item.isActive ? item.isActive(pathname) : pathname === item.href;
+    return ok;
+  });
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden">
       <div
@@ -147,7 +152,7 @@ export function MobileBottomNav() {
           )}
         >
           {items.map((item) => {
-            const active = item.isActive ? item.isActive(pathname) : pathname === item.href;
+            const active = items.indexOf(item) === activeIndex;
             return (
               <Link
                 key={item.href}

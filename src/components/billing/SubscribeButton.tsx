@@ -13,6 +13,8 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ title: string; details?: string } | null>(null);
 
+  const showTechnicalDetails = process.env.NODE_ENV !== "production";
+
   return (
     <div className="grid gap-2">
       <Button
@@ -41,11 +43,14 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
               | null;
 
             if (!res.ok || !data || data.ok !== true) {
-              const fallbackTitle = `Paiement indisponible. Réessaie. (status ${res.status})`;
+              const fallbackTitle = "Impossible de créer le paiement. Veuillez réessayer dans un instant.";
 
               if (data && "ok" in data && data.ok === false) {
-                const title = data.message ?? fallbackTitle;
-                const details = typeof data.details === "string" && data.details.trim() ? data.details.trim() : undefined;
+                const title = fallbackTitle;
+                const details =
+                  showTechnicalDetails && typeof data.details === "string" && data.details.trim()
+                    ? data.details.trim()
+                    : undefined;
                 setError({ title, details });
                 return;
               }
@@ -56,7 +61,7 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
 
             window.location.href = data.redirectUrl;
           } catch {
-            setError({ title: "Paiement indisponible. Vérifie ta connexion et réessaie." });
+            setError({ title: "Impossible de créer le paiement. Veuillez réessayer dans un instant." });
           } finally {
             setLoading(false);
           }

@@ -213,7 +213,7 @@ export async function POST(req: Request) {
           ok: false,
           error: "provider_error",
           message:
-            "Impossible de créer le paiement PayDunya. Vérifie PAYDUNYA_* et APP_URL, puis réessaie.",
+            "Impossible de créer le paiement. Veuillez réessayer dans un instant.",
           details,
           requestId,
         },

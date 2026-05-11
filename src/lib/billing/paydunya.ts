@@ -1,3 +1,5 @@
+import { logInfo } from "@/lib/observability/logger";
+
 type PayDunyaInvoiceResponse = {
   response_code: string;
   response_text: string;
@@ -111,26 +113,17 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
   const url = `${getPayDunyaBaseUrl()}/checkout-invoice/create`;
   const body = {
     invoice: {
-      total_amount: input.amount,
-      description: input.description,
       items: {
-        item_0: {
-          name: input.description,
+        premium: {
+          name: input.description || "Abonnement Premium Chantier Pro",
           quantity: 1,
-          unit_price: String(input.amount),
-          total_price: String(input.amount),
-          description: "",
+          unit_price: input.amount,
+          total_price: input.amount,
+          description: input.description,
         },
       },
-      store: {
-        name: "Chantier Pro",
-      },
-      actions: {
-        return_url: input.returnUrl,
-        cancel_url: input.cancelUrl,
-        callback_url: input.callbackUrl,
-      },
-      custom_data: input.customData ?? {},
+      total_amount: input.amount,
+      description: input.description,
       ...(input.customerEmail
         ? {
             customer: {
@@ -139,7 +132,26 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
           }
         : {}),
     },
+    store: {
+      name: "Chantier Pro",
+      tagline: "L’application des pros du BTP",
+      phone: "",
+      postal_address: "Bénin",
+      website_url: "",
+      logo_url: "",
+    },
+    actions: {
+      cancel_url: input.cancelUrl,
+      return_url: input.returnUrl,
+      callback_url: input.callbackUrl,
+    },
+    custom_data: input.customData ?? {},
   };
+
+  logInfo("billing.paydunya.create_invoice.request", {
+    url,
+    body,
+  });
 
   const res = await fetch(url, {
     method: "POST",
@@ -190,7 +202,15 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
     });
   }
 
-  if (data.response_code !== "00" || !data.token || !data.invoice_url) {
+  logInfo("billing.paydunya.create_invoice.response", {
+    httpStatus: res.status,
+    response_code: data.response_code,
+    response_text: data.response_text,
+  });
+
+  const invoiceUrl = data.invoice_url || (data.response_text?.startsWith("http") ? data.response_text : "");
+
+  if (data.response_code !== "00" || !data.token || !invoiceUrl) {
     throw new PayDunyaError(data.response_text || "PayDunya create invoice failed", {
       httpStatus: res.status,
       contentType: parsed.contentType,
@@ -201,7 +221,7 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
     });
   }
 
-  return { token: data.token, invoiceUrl: data.invoice_url };
+  return { token: data.token, invoiceUrl };
 }
 
 export async function confirmPayDunyaInvoice(token: string) {

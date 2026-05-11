@@ -1,27 +1,26 @@
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { SubscriptionCard } from "@/components/settings/SubscriptionCard";
+import { InstallAppCard } from "@/components/settings/InstallAppCard";
+import { HelpSupportCard } from "@/components/settings/HelpSupportCard";
+import { requireSession } from "@/lib/auth/guards";
+import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const session = await requireSession();
+  const plan = session ? await getEffectiveUserPlan(session) : "FREE";
+
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 pb-[calc(104px+env(safe-area-inset-bottom))] sm:pb-10">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Réglages</h1>
-        <p className="mt-1 text-sm text-white/60">Profil, société et préférences.</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--cp-text)]">Réglages</h1>
+        <p className="mt-1 text-sm text-[color-mix(in_oklab,var(--cp-text),transparent_45%)]">
+          Profil, société, application et support.
+        </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Abonnement</CardTitle>
-          <CardDescription>Activer Premium ou Entreprise.</CardDescription>
-        </CardHeader>
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-          <Button href="/pricing" size="lg">
-            Voir les tarifs
-          </Button>
-        </div>
-      </Card>
+      <SubscriptionCard plan={plan} />
 
       <Card>
         <CardHeader>
@@ -55,6 +54,10 @@ export default function SettingsPage() {
           </div>
         </form>
       </Card>
+
+      <InstallAppCard />
+
+      <HelpSupportCard />
 
       <Card>
         <CardHeader>

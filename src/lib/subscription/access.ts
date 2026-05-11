@@ -23,7 +23,14 @@ export type FeatureKey =
   | "quote_pdf"
   | "report_pdf"
   | "team_management"
-  | "client_access";
+  | "client_access"
+  | "dosage_library"
+  | "price_library"
+  | "project_profitability"
+  | "expenses_validation"
+  | "advanced_exports"
+  | "daily_reports"
+  | "project_budget";
 
 export const PLAN_ORDER: Record<UserPlan, number> = {
   FREE: 0,
@@ -58,6 +65,14 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   report_pdf: "PREMIUM",
   team_management: "ENTERPRISE",
   client_access: "PREMIUM",
+
+  dosage_library: "PREMIUM",
+  price_library: "ENTERPRISE",
+  project_profitability: "ENTERPRISE",
+  expenses_validation: "ENTERPRISE",
+  advanced_exports: "ENTERPRISE",
+  daily_reports: "PREMIUM",
+  project_budget: "PREMIUM",
 };
 
 export function canAccessPlan(userPlan: UserPlan, requiredPlan: UserPlan): boolean {
