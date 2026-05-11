@@ -22,7 +22,7 @@ function styles({
   size: ButtonSize;
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cp-bg)] disabled:opacity-60 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cp-bg)] disabled:opacity-60 disabled:pointer-events-none";
 
   const sizes: Record<ButtonSize, string> = {
     sm: "h-9 px-3 text-sm",
@@ -32,11 +32,11 @@ function styles({
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      "bg-[var(--cp-accent)] text-white hover:bg-[color-mix(in_oklab,var(--cp-accent),black_12%)] focus-visible:ring-[var(--cp-accent)]",
+      "bg-[var(--cp-accent)] text-white hover:bg-[color-mix(in_oklab,var(--cp-accent),black_14%)] focus-visible:ring-[var(--cp-accent)]",
     secondary:
-      "bg-white/5 text-white ring-1 ring-white/12 hover:bg-white/8 focus-visible:ring-white/40",
+      "bg-[color-mix(in_oklab,var(--cp-accent-2),white_92%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--cp-border)] hover:bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] focus-visible:ring-[var(--cp-accent-2)]",
     ghost:
-      "bg-transparent text-white/85 hover:bg-white/6 ring-1 ring-transparent hover:ring-white/10 focus-visible:ring-white/30",
+      "bg-transparent text-[color-mix(in_oklab,var(--cp-text),transparent_15%)] hover:bg-[color-mix(in_oklab,var(--cp-text),transparent_92%)] ring-1 ring-transparent hover:ring-[var(--cp-border)] focus-visible:ring-[var(--cp-accent-2)]",
   };
 
   return cn(base, sizes[size], variants[variant]);

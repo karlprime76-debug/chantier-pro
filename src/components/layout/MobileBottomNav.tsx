@@ -14,6 +14,25 @@ type MobileNavItem = {
   isActive?: (pathname: string) => boolean;
 };
 
+function UserIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M20 21a8 8 0 1 0-16 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 13a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function HomeIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
@@ -79,14 +98,6 @@ function FileIcon({ className }: { className?: string }) {
   );
 }
 
-function MoreIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
-      <path d="M6 12h.01M12 12h.01M18 12h.01" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export function MobileBottomNav() {
   const pathname = usePathname();
 
@@ -110,28 +121,31 @@ export function MobileBottomNav() {
       isActive: (p) => p.startsWith("/dashboard/calculators") || p.startsWith("/calculs"),
     },
     {
-      href: "/dashboard/quotes",
-      label: "Devis",
+      href: "/dashboard/reports",
+      label: "Documents",
       icon: ({ className }) => <FileIcon className={className} />,
-      isActive: (p) => p.startsWith("/dashboard/quotes"),
+      isActive: (p) => p.startsWith("/dashboard/reports"),
     },
     {
-      href: "/more",
-      label: "Plus",
-      icon: ({ className }) => <MoreIcon className={className} />,
-      isActive: (p) =>
-        p.startsWith("/more") ||
-        p === "/dashboard" ||
-        p.startsWith("/dashboard/settings") ||
-        p.startsWith("/dashboard/expenses") ||
-        p.startsWith("/dashboard/reports"),
+      href: "/dashboard/settings",
+      label: "Profil",
+      icon: ({ className }) => <UserIcon className={className} />,
+      isActive: (p) => p.startsWith("/dashboard/settings"),
     },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[rgba(11,15,20,0.84)] backdrop-blur sm:hidden">
-      <div className="mx-auto w-full max-w-6xl px-3 pt-2" style={{ paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom))" }}>
-        <div className="grid grid-cols-5 gap-2">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden">
+      <div
+        className="mx-auto w-full max-w-6xl px-3"
+        style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+      >
+        <div
+          className={cn(
+            "mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg backdrop-blur",
+            "bg-[color-mix(in_oklab,var(--cp-card),transparent_10%)] border-[var(--cp-border)]",
+          )}
+        >
           {items.map((item) => {
             const active = item.isActive ? item.isActive(pathname) : pathname === item.href;
             return (
@@ -139,11 +153,20 @@ export function MobileBottomNav() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex h-[60px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center transition",
-                  active ? "bg-white/10 text-white" : "text-white/65 hover:bg-white/5 hover:text-white",
+                  "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center transition",
+                  active
+                    ? "bg-[color-mix(in_oklab,var(--cp-accent),transparent_86%)] text-[var(--cp-accent)]"
+                    : "text-[color-mix(in_oklab,var(--cp-text),transparent_40%)] hover:bg-[color-mix(in_oklab,var(--cp-text),transparent_92%)]",
                 )}
               >
-                <span className={cn("h-6 w-6", active ? "text-white" : "text-white/70")}>{item.icon({ className: "h-6 w-6" })}</span>
+                <span
+                  className={cn(
+                    "grid h-7 w-7 place-items-center",
+                    active ? "text-[var(--cp-accent)]" : "text-[color-mix(in_oklab,var(--cp-text),transparent_40%)]",
+                  )}
+                >
+                  {item.icon({ className: "h-6 w-6" })}
+                </span>
                 <span className="text-[12px] font-semibold leading-none">{item.label}</span>
               </Link>
             );
