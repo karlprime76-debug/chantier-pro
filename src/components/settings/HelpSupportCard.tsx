@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { ResponsiveButton } from "@/components/ui/ResponsiveButton";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 
 export function HelpSupportCard() {
@@ -10,24 +10,24 @@ export function HelpSupportCard() {
       </CardHeader>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Button href="/help" variant="secondary" className="justify-start">
+        <ResponsiveButton href="/help" prefetch loadingText="Ouverture…" variant="secondary" className="justify-start">
           Centre d’aide
-        </Button>
-        <Button href="/support" variant="secondary" className="justify-start">
+        </ResponsiveButton>
+        <ResponsiveButton href="/support" prefetch loadingText="Ouverture…" variant="secondary" className="justify-start">
           Contacter le support
-        </Button>
-        <Button href="/install" variant="secondary" className="justify-start">
+        </ResponsiveButton>
+        <ResponsiveButton href="/install" prefetch loadingText="Ouverture…" variant="secondary" className="justify-start">
           Guide d’installation
-        </Button>
-        <Button href="/privacy" variant="secondary" className="justify-start">
+        </ResponsiveButton>
+        <ResponsiveButton href="/privacy" prefetch loadingText="Ouverture…" variant="secondary" className="justify-start">
           Politique de confidentialité
-        </Button>
-        <Button href="/terms" variant="secondary" className="justify-start">
+        </ResponsiveButton>
+        <ResponsiveButton href="/terms" prefetch loadingText="Ouverture…" variant="secondary" className="justify-start">
           Conditions d’utilisation
-        </Button>
-        <Button href="/legal" variant="secondary" className="justify-start">
+        </ResponsiveButton>
+        <ResponsiveButton href="/legal" prefetch loadingText="Ouverture…" variant="secondary" className="justify-start">
           Mentions légales
-        </Button>
+        </ResponsiveButton>
       </div>
     </Card>
   );

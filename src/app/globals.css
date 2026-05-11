@@ -12,6 +12,24 @@
   --cp-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
 }
 
+@keyframes cp-splash-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+    filter: drop-shadow(0 0 0 rgba(249, 115, 22, 0));
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 18px rgba(249, 115, 22, 0.18));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.12));
+  }
+}
+
 html[data-theme="dark"] {
   --cp-bg: #0b0f14;
   --cp-surface: #101826;
@@ -53,6 +71,10 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .cp-animate-in {
     animation: cp-fade-up 520ms ease-out both;
+  }
+
+  .cp-splash-in {
+    animation: cp-splash-in 620ms ease-out both;
   }
 
   .cp-hover-lift {

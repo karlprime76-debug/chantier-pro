@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { ResponsiveButton } from "@/components/ui/ResponsiveButton";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 
 type InstallPromptEvent = Event & {
@@ -77,9 +78,9 @@ export function InstallAppCard() {
           >
             {installed ? "Déjà installée" : canPrompt ? "Installer Chantier Pro" : "Installer Chantier Pro"}
           </Button>
-          <Button href="/install" variant="secondary" size="lg">
+          <ResponsiveButton href="/install" prefetch loadingText="Ouverture…" variant="secondary" size="lg">
             Voir le guide d’installation
-          </Button>
+          </ResponsiveButton>
         </div>
 
         {!canPrompt && !installed ? (

@@ -157,8 +157,9 @@ export function MobileBottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch
                 className={cn(
-                  "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center transition",
+                  "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",
                   active
                     ? "bg-[color-mix(in_oklab,var(--cp-accent),transparent_86%)] text-[var(--cp-accent)]"
                     : "text-[color-mix(in_oklab,var(--cp-text),transparent_40%)] hover:bg-[color-mix(in_oklab,var(--cp-text),transparent_92%)]",

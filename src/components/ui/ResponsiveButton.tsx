@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 import { cn } from "@/lib/cn";
@@ -12,15 +15,10 @@ type CommonProps = {
   size?: ButtonSize;
   className?: string;
   children: React.ReactNode;
+  loadingText?: string;
 };
 
-function styles({
-  variant,
-  size,
-}: {
-  variant: ButtonVariant;
-  size: ButtonSize;
-}) {
+function styles({ variant, size }: { variant: ButtonVariant; size: ButtonSize }) {
   const base =
     "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.98] active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cp-bg)] disabled:opacity-60 disabled:pointer-events-none";
 
@@ -50,9 +48,13 @@ type ButtonProps = CommonProps &
 type LinkButtonProps = CommonProps &
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof CommonProps> & {
     href: string;
+    prefetch?: boolean;
   };
 
-export function Button(props: ButtonProps | LinkButtonProps) {
+export function ResponsiveButton(props: ButtonProps | LinkButtonProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = React.useTransition();
+
   if ("href" in props && typeof props.href === "string") {
     const {
       variant = "primary",
@@ -60,14 +62,35 @@ export function Button(props: ButtonProps | LinkButtonProps) {
       className,
       children,
       href,
+      loadingText = "Ouverture…",
+      prefetch,
+      onClick,
       ...anchorProps
     } = props;
 
-    const cls = cn(styles({ variant, size }), className);
+    const cls = cn(styles({ variant, size }), className, isPending && "pointer-events-none");
 
     return (
-      <Link href={href} className={cls} {...anchorProps}>
-        {children}
+      <Link
+        href={href}
+        prefetch={prefetch}
+        aria-busy={isPending}
+        className={cls}
+        onClick={(e) => {
+          onClick?.(e);
+          if (e.defaultPrevented) return;
+          if (isPending) {
+            e.preventDefault();
+            return;
+          }
+          e.preventDefault();
+          startTransition(() => {
+            router.push(href);
+          });
+        }}
+        {...anchorProps}
+      >
+        {isPending ? loadingText : children}
       </Link>
     );
   }
@@ -77,14 +100,26 @@ export function Button(props: ButtonProps | LinkButtonProps) {
     size = "md",
     className,
     children,
+    loadingText = "Chargement…",
+    disabled,
+    onClick,
     ...buttonProps
   } = props;
 
   const cls = cn(styles({ variant, size }), className);
 
   return (
-    <button className={cls} {...buttonProps}>
-      {children}
+    <button
+      className={cls}
+      disabled={disabled || isPending}
+      aria-busy={isPending}
+      onClick={(e) => {
+        if (isPending) return;
+        onClick?.(e);
+      }}
+      {...buttonProps}
+    >
+      {isPending ? loadingText : children}
     </button>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Providers } from "@/components/auth/Providers";
+import { AppSplashScreen } from "@/components/branding/AppSplashScreen";
+import { HomeButton } from "@/components/navigation/HomeButton";
 import { AutoTheme } from "@/components/theme/AutoTheme";
 import "./globals.css";
 
@@ -31,6 +33,8 @@ export default function RootLayout({
         <Providers>
           <AutoTheme />
           <div className="relative flex min-h-full flex-1 flex-col">
+            <AppSplashScreen />
+            <HomeButton />
             <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
               <div className="absolute -top-48 left-1/2 h-[680px] w-[680px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(249,115,22,0.22),transparent_62%)] blur-3xl" />
               <div className="absolute -bottom-72 right-[-180px] h-[720px] w-[720px] rounded-full bg-[radial-gradient(circle,rgba(11,42,82,0.34),transparent_60%)] blur-3xl" />

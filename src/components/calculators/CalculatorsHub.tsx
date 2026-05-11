@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/Button";
+import { ResponsiveButton } from "@/components/ui/ResponsiveButton";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { PlanBadge } from "@/components/ui/PlanBadge";
@@ -59,9 +60,29 @@ function withPlan(href: string, userPlan: UserPlan) {
 }
 
 export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [planFilter, setPlanFilter] = useState<PlanFilter>("ALL");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("ALL");
+
+  useEffect(() => {
+    const routesToPrefetch = [
+      "/calculs/devis",
+      "/calculs/budget-chantier",
+      "/calculs/rapports-journaliers",
+      "/calculs/bibliotheque-dosages",
+      "/calculs/bibliotheque-prix",
+      "/calculs/rentabilite-chantier",
+      "/calculs/exports-avances",
+      "/calculs/suivi-equipe",
+      "/calculs/validation-depenses",
+      "/pricing",
+    ];
+
+    routesToPrefetch.forEach((href) => {
+      router.prefetch(href);
+    });
+  }, [router]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -175,25 +196,31 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
 
               <div className="px-6 pb-6">
                 {c.status !== "AVAILABLE" ? (
-                  <Button type="button" variant="ghost" size="sm" disabled>
+                  <ResponsiveButton type="button" variant="ghost" size="sm" disabled>
                     Bientôt
-                  </Button>
+                  </ResponsiveButton>
                 ) : canAccess ? (
-                  <Button href={withPlan(c.href, userPlan)} variant="secondary" size="sm">
+                  <ResponsiveButton
+                    href={withPlan(c.href, userPlan)}
+                    prefetch
+                    loadingText="Ouverture…"
+                    variant="secondary"
+                    size="sm"
+                  >
                     Ouvrir
-                  </Button>
+                  </ResponsiveButton>
                 ) : isEnterpriseLocked ? (
-                  <Button href="/pricing" variant="secondary" size="sm">
+                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
                     Contacter pour Entreprise
-                  </Button>
+                  </ResponsiveButton>
                 ) : shouldShowUpgrade ? (
-                  <Button href="/pricing" variant="secondary" size="sm">
+                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
                     Passer Premium
-                  </Button>
+                  </ResponsiveButton>
                 ) : (
-                  <Button href="/pricing" variant="secondary" size="sm">
+                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
                     Voir les offres
-                  </Button>
+                  </ResponsiveButton>
                 )}
               </div>
             </Card>

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { ResponsiveButton } from "@/components/ui/ResponsiveButton";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import type { UserPlan } from "@/lib/subscription/access";
 
@@ -43,9 +43,9 @@ export function SubscriptionCard({ plan }: SubscriptionCardProps) {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-          <Button href={action.href} size="lg">
+          <ResponsiveButton href={action.href} prefetch loadingText="Ouverture…" size="lg">
             {action.label}
-          </Button>
+          </ResponsiveButton>
         </div>
       </div>
     </Card>
