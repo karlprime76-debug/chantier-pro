@@ -4,8 +4,16 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Chantier Pro",
-  description:
-    "Chantier Pro aide les professionnels du BTP à calculer, suivre les dépenses, créer des rapports et gérer leurs chantiers.",
+  description: "Application de gestion de chantiers, calculs BTP, devis et rapports.",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport = {
+  themeColor: "#0f172a",
 };
 
 export default function RootLayout({

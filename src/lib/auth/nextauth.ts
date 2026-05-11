@@ -13,7 +13,10 @@ type DbUserAuthFields = {
 };
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET ?? "development-secret-change-me",
+  secret:
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXTAUTH_SECRET
+      : (process.env.NEXTAUTH_SECRET ?? "development-secret-change-me"),
   session: {
     strategy: "jwt",
   },

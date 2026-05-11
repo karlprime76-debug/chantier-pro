@@ -6,6 +6,8 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Ca
 import { HomeHeroCta } from "@/components/home/HomeHeroCta";
 import { PlanTabs } from "@/components/subscription/PlanTabs";
 import { requireSession } from "@/lib/auth/guards";
+import Link from "next/link";
+import { cn } from "@/lib/cn";
 
 export default async function Home() {
   const session = await requireSession();
@@ -36,18 +38,44 @@ export default async function Home() {
             <HomeHeroCta />
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              <div className="cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4">
+              <Link
+                href="/calculs"
+                aria-label="Ouvrir les calculateurs"
+                className={cn(
+                  "cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4 transition",
+                  "cursor-pointer hover:bg-white/10",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(11,15,20)]",
+                )}
+              >
                 <div className="text-sm font-bold text-white">Calculs</div>
                 <div className="mt-1 text-xs text-white/55">Béton & acier</div>
-              </div>
-              <div className="cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4">
+              </Link>
+
+              <Link
+                href="/dashboard"
+                aria-label="Ouvrir le suivi sur le dashboard"
+                className={cn(
+                  "cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4 transition",
+                  "cursor-pointer hover:bg-white/10",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(11,15,20)]",
+                )}
+              >
                 <div className="text-sm font-bold text-white">Suivi</div>
                 <div className="mt-1 text-xs text-white/55">Budget vs réel</div>
-              </div>
-              <div className="cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4">
+              </Link>
+
+              <Link
+                href="/dashboard/reports"
+                aria-label="Ouvrir les rapports journaliers"
+                className={cn(
+                  "cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4 transition",
+                  "cursor-pointer hover:bg-white/10",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(11,15,20)]",
+                )}
+              >
                 <div className="text-sm font-bold text-white">Rapports</div>
                 <div className="mt-1 text-xs text-white/55">Journal chantier</div>
-              </div>
+              </Link>
             </div>
 
             <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
