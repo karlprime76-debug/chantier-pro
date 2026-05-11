@@ -105,16 +105,24 @@ export type CreateInvoiceInput = {
   callbackUrl: string;
   customerEmail?: string;
   customData?: Record<string, string>;
+  storeWebsiteUrl?: string;
+  storeLogoUrl?: string;
+  storePhone?: string;
+  itemKey?: string;
 };
 
 export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
   const { apiKey, apiSecret, masterKey, privateKey, token } = getPayDunyaConfig();
 
   const url = `${getPayDunyaBaseUrl()}/checkout-invoice/create`;
+  const itemKey = (input.itemKey || "premium").trim() || "premium";
+  const storeWebsiteUrl = (input.storeWebsiteUrl || "").trim();
+  const storeLogoUrl = (input.storeLogoUrl || "").trim();
+  const storePhone = (input.storePhone || "").trim();
   const body = {
     invoice: {
       items: {
-        premium: {
+        [itemKey]: {
           name: input.description || "Abonnement Premium Chantier Pro",
           quantity: 1,
           unit_price: input.amount,
@@ -135,10 +143,10 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
     store: {
       name: "Chantier Pro",
       tagline: "L’application des pros du BTP",
-      phone: "",
+      phone: storePhone,
       postal_address: "Bénin",
-      website_url: "",
-      logo_url: "",
+      website_url: storeWebsiteUrl,
+      logo_url: storeLogoUrl,
     },
     actions: {
       cancel_url: input.cancelUrl,

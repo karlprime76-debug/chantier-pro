@@ -61,16 +61,22 @@ export async function GET(req: Request) {
   const privateKey = process.env.PAYDUNYA_PRIVATE_KEY?.trim() || "";
   const token = process.env.PAYDUNYA_TOKEN?.trim() || "";
 
-  if (!apiKey) missing.push("PAYDUNYA_API_KEY");
-  if (!apiSecret) missing.push("PAYDUNYA_API_SECRET");
+  const hasPrivateFlow = Boolean(masterKey && privateKey && token);
+  const hasApiFlow = Boolean(masterKey && apiKey && apiSecret);
+
   if (!masterKey) missing.push("PAYDUNYA_MASTER_KEY");
-  if (!privateKey) missing.push("PAYDUNYA_PRIVATE_KEY");
-  if (!token) missing.push("PAYDUNYA_TOKEN");
+
+  if (!hasPrivateFlow && !hasApiFlow) {
+    if (!privateKey) missing.push("PAYDUNYA_PRIVATE_KEY");
+    if (!token) missing.push("PAYDUNYA_TOKEN");
+    if (!apiKey) missing.push("PAYDUNYA_API_KEY");
+    if (!apiSecret) missing.push("PAYDUNYA_API_SECRET");
+  }
 
   const appUrlConfig = getAppUrlConfig();
   if (!appUrlConfig.configured) missing.push("APP_URL");
 
-  const paydunyaConfigured = !missing.includes("PAYDUNYA_MASTER_KEY") && !missing.includes("PAYDUNYA_PRIVATE_KEY") && !missing.includes("PAYDUNYA_TOKEN");
+  const paydunyaConfigured = hasPrivateFlow || hasApiFlow;
   const appUrlConfigured = appUrlConfig.configured;
 
   let message = "";

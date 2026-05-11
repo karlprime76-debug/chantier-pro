@@ -16,6 +16,27 @@ const PLAN_PRICES_XOF: Record<"PREMIUM" | "ENTERPRISE", number> = {
   ENTERPRISE: 25000,
 };
 
+function getPayDunyaEnvMissing() {
+  const apiKey = process.env.PAYDUNYA_API_KEY?.trim() || "";
+  const apiSecret = process.env.PAYDUNYA_API_SECRET?.trim() || "";
+  const masterKey = process.env.PAYDUNYA_MASTER_KEY?.trim() || "";
+  const privateKey = process.env.PAYDUNYA_PRIVATE_KEY?.trim() || "";
+  const token = process.env.PAYDUNYA_TOKEN?.trim() || "";
+
+  const hasPrivateFlow = Boolean(masterKey && privateKey && token);
+  const hasApiFlow = Boolean(masterKey && apiKey && apiSecret);
+
+  const missing: string[] = [];
+  if (!masterKey) missing.push("PAYDUNYA_MASTER_KEY");
+  if (!hasPrivateFlow && !hasApiFlow) {
+    if (!privateKey) missing.push("PAYDUNYA_PRIVATE_KEY");
+    if (!token) missing.push("PAYDUNYA_TOKEN");
+    if (!apiKey) missing.push("PAYDUNYA_API_KEY");
+    if (!apiSecret) missing.push("PAYDUNYA_API_SECRET");
+  }
+  return { missing, configured: hasPrivateFlow || hasApiFlow };
+}
+
 function getAppUrl(req: Request) {
   const envUrl = process.env.APP_URL || process.env.NEXTAUTH_URL;
   if (envUrl) return envUrl.replace(/\/$/, "");
@@ -64,6 +85,24 @@ export async function POST(req: Request) {
   const amount = PLAN_PRICES_XOF[plan];
 
   const appUrl = getAppUrl(req);
+
+  const paydunyaEnv = getPayDunyaEnvMissing();
+  if (!paydunyaEnv.configured) {
+    logError("billing.checkout.paydunya_not_configured", { requestId, missing: paydunyaEnv.missing });
+    return withRequestIdHeaders(
+      NextResponse.json(
+        {
+          ok: false,
+          error: "provider_not_configured",
+          message: "Paiement indisponible : configuration PayDunya incomplète côté serveur.",
+          details: paydunyaEnv.missing.join(", "),
+          requestId,
+        },
+        { status: 500 },
+      ),
+      requestId,
+    );
+  }
 
   const paymentDelegate = getPaymentDelegate();
   if (!paymentDelegate || typeof paymentDelegate.create !== "function") {
@@ -129,6 +168,10 @@ export async function POST(req: Request) {
         userId: session.id,
         plan,
       },
+      itemKey: plan === "PREMIUM" ? "premium" : "enterprise",
+      storeWebsiteUrl: appUrl,
+      storeLogoUrl: `${appUrl}/icons/icon-192x192.png`,
+      storePhone: process.env.PAYDUNYA_STORE_PHONE?.trim() || "",
     });
     try {
       await paymentDelegate.update({
