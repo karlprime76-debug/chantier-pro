@@ -7,11 +7,38 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Chantier Pro",
-  description: "Application de gestion de chantiers, calculs BTP, devis et rapports.",
+  description: "Application de gestion de chantiers, calculs BTP et documents professionnels.",
+  metadataBase: new URL("https://chantier-pro-snowy.vercel.app"),
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  openGraph: {
+    title: "Chantier Pro",
+    description: "Application de gestion de chantiers, calculs BTP et documents professionnels.",
+    url: "https://chantier-pro-snowy.vercel.app",
+    siteName: "Chantier Pro",
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Chantier Pro",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chantier Pro",
+    description: "Application de gestion de chantiers, calculs BTP et documents professionnels.",
+    images: ["/twitter-image"],
   },
 };
 
