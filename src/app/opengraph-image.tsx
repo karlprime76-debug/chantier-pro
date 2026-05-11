@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -10,20 +9,7 @@ export const size = {
 
 export const contentType = "image/png";
 
-function arrayBufferToBase64(buffer: ArrayBuffer) {
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const chunkSize = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
-  }
-  return btoa(binary);
-}
-
 export default async function OpenGraphImage() {
-  const logoBuffer = await fetch(new URL("../../public/logo.png", import.meta.url)).then((res) => res.arrayBuffer());
-  const logoBase64 = arrayBufferToBase64(logoBuffer);
-
   return new ImageResponse(
     (
       <div
@@ -82,18 +68,31 @@ export default async function OpenGraphImage() {
                 background: "radial-gradient(circle, rgba(255,106,0,0.22), transparent 60%)",
               }}
             />
-            <img
-              alt="Chantier Pro"
-              src={`data:image/png;base64,${logoBase64}`}
-              width={104}
-              height={104}
+            <div
               style={{
+                position: "relative",
                 width: 104,
                 height: 104,
-                objectFit: "contain",
-                position: "relative",
+                borderRadius: 26,
+                border: "1px solid rgba(255,255,255,0.12)",
+                backgroundColor: "rgba(0,0,0,0.18)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 0 40px rgba(255,106,0,0.18)",
               }}
-            />
+            >
+              <div
+                style={{
+                  fontSize: 54,
+                  fontWeight: 900,
+                  letterSpacing: "-0.06em",
+                  color: "#ffffff",
+                }}
+              >
+                CP
+              </div>
+            </div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
