@@ -11,9 +11,17 @@ type InstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 };
 
+function isAppInstalled() {
+  if (typeof window === "undefined") return false;
+  const nav = navigator as Navigator & { standalone?: boolean };
+  const standalone = Boolean(nav.standalone);
+  const displayModeStandalone = window.matchMedia?.("(display-mode: standalone)")?.matches ?? false;
+  return standalone || displayModeStandalone;
+}
+
 export function InstallAppCard() {
   const [deferredPrompt, setDeferredPrompt] = useState<InstallPromptEvent | null>(null);
-  const [installed, setInstalled] = useState(false);
+  const [installed, setInstalled] = useState(() => isAppInstalled());
 
   useEffect(() => {
     const onBeforeInstallPrompt = (e: Event) => {
@@ -68,7 +76,7 @@ export function InstallAppCard() {
           <Button
             type="button"
             size="lg"
-            disabled={installed}
+            disabled={installed || !canPrompt}
             onClick={async () => {
               if (!deferredPrompt) return;
               await deferredPrompt.prompt();
@@ -76,9 +84,9 @@ export function InstallAppCard() {
               setDeferredPrompt(null);
             }}
           >
-            {installed ? "Déjà installée" : canPrompt ? "Installer Chantier Pro" : "Installer Chantier Pro"}
+            {installed ? "Déjà installée" : "Installer Chantier Pro"}
           </Button>
-          <ResponsiveButton href="/install" prefetch loadingText="Ouverture…" variant="secondary" size="lg">
+          <ResponsiveButton href="/install" prefetch loadingText="Ouverture…" variant={canPrompt ? "secondary" : "primary"} size="lg">
             Voir le guide d’installation
           </ResponsiveButton>
         </div>
