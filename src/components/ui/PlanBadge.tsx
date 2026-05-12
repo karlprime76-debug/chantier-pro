@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { cn } from "@/lib/cn";
 
 type PlanBadgeVariant = "free" | "premium" | "soon";
@@ -5,9 +7,10 @@ type PlanBadgeVariant = "free" | "premium" | "soon";
 type PlanBadgeProps = {
   variant: PlanBadgeVariant;
   className?: string;
+  children?: ReactNode;
 };
 
-export function PlanBadge({ variant, className }: PlanBadgeProps) {
+export function PlanBadge({ variant, className, children }: PlanBadgeProps) {
   const styles: Record<PlanBadgeVariant, string> = {
     free: "bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]",
     premium: "bg-[var(--cp-accent)] text-[var(--app-on-primary)] ring-1 ring-[color-mix(in_oklab,var(--cp-accent),black_18%)]",
@@ -28,7 +31,7 @@ export function PlanBadge({ variant, className }: PlanBadgeProps) {
         className,
       )}
     >
-      {labels[variant]}
+      {children ?? labels[variant]}
     </span>
   );
 }

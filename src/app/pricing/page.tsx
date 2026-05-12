@@ -60,7 +60,7 @@ export default async function PricingPage() {
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Entreprise</CardTitle>
-                  <PlanBadge variant="free" />
+                  <PlanBadge variant="free">Entreprise</PlanBadge>
                 </div>
                 <CardDescription>
                   Pour les équipes, la gestion multi-chantiers et les besoins avancés.

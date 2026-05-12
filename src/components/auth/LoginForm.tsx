@@ -66,7 +66,7 @@ export function LoginForm({ nextUrl }: { nextUrl?: string }) {
       </Button>
 
       <Button href="/register" variant="ghost">
-        Pas de compte ? Créer un compte
+        Pas de compte ? Créer un compte gratuit
       </Button>
     </form>
   );

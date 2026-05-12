@@ -37,7 +37,7 @@ export function MarketingHeaderAuth() {
       </Button>
       <Button href="/register" size="sm">
         <span className="sm:hidden">Créer</span>
-        <span className="hidden sm:inline">Créer un compte</span>
+        <span className="hidden sm:inline">Créer un compte gratuit</span>
       </Button>
     </div>
   );

@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { MarketingHeaderAuth } from "@/components/layout/MarketingHeaderAuth";
+import { MarketingHeaderNavDashboard } from "@/components/layout/MarketingHeaderNavDashboard";
 
 export function MarketingHeader() {
   return (
@@ -25,9 +26,7 @@ export function MarketingHeader() {
           <Button href="/pricing" variant="ghost" size="sm">
             Tarifs
           </Button>
-          <Button href="/dashboard" variant="ghost" size="sm">
-            Dashboard
-          </Button>
+          <MarketingHeaderNavDashboard />
         </nav>
 
         <MarketingHeaderAuth />

@@ -169,7 +169,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
               <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
                 <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
                 <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
-                  <div>Créer un compte</div>
+                  <div>Compte Chantier Pro</div>
                   <div>Accéder au dashboard</div>
                   <div>Calculateur béton simple</div>
                   <div>Calculateur acier simple</div>

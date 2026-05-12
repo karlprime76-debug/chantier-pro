@@ -1,9 +1,9 @@
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
-import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { HomeClientExtras } from "@/components/home/HomeClientExtras";
+import { HomePublicCtas } from "@/components/home/HomePublicCtas";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
@@ -30,17 +30,7 @@ export default function Home() {
               Chantier Pro centralise tes chantiers, automatise les calculs de quantités et t’aide à suivre les coûts et l’avancement,
               directement sur mobile.
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href="/register" size="lg">
-                Créer un compte gratuit
-              </Button>
-              <Button href="/pricing" variant="secondary" size="lg">
-                Voir les tarifs
-              </Button>
-              <Button href="#fonctionnalites" variant="ghost" size="lg">
-                Découvrir les fonctionnalités
-              </Button>
-            </div>
+            <HomePublicCtas variant="hero" />
 
             <HomeClientExtras />
 
@@ -118,17 +108,7 @@ export default function Home() {
                   Crée un chantier, ajoute les membres, puis enregistre calculs, dépenses et rapports.
                 </CardDescription>
               </CardHeader>
-              <div className="grid gap-3">
-                <Button href="/dashboard/projects/new" variant="secondary">
-                  Nouveau chantier
-                </Button>
-                <Button href="/dashboard/calculators/concrete" variant="ghost">
-                  Calculateur béton
-                </Button>
-                <Button href="/dashboard/calculators/steel" variant="ghost">
-                  Calculateur acier
-                </Button>
-              </div>
+              <HomePublicCtas variant="quickstart" />
             </Card>
           </div>
         </div>

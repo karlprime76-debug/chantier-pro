@@ -10,8 +10,8 @@ export function HomeHeroCta() {
   if (status === "authenticated") {
     return (
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-        <Button href="/dashboard" variant="secondary" size="lg">
-          Voir le dashboard
+        <Button href="/dashboard/projects" variant="secondary" size="lg">
+          Accéder à mes chantiers
         </Button>
       </div>
     );
@@ -19,11 +19,11 @@ export function HomeHeroCta() {
 
   return (
     <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-      <Button href="/register" size="lg">
-        Créer un compte
+      <Button href="/login" variant="secondary" size="lg">
+        Connexion
       </Button>
-      <Button href="/dashboard" variant="secondary" size="lg">
-        Voir le dashboard
+      <Button href="/register" size="lg">
+        Créer un compte gratuit
       </Button>
     </div>
   );
