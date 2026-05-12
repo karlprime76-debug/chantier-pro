@@ -21,7 +21,7 @@ type Tab = {
 const TABS: Tab[] = [
   { key: "free", label: "Gratuit", badgeVariant: "free" },
   { key: "premium", label: "Premium", badgeVariant: "premium" },
-  { key: "enterprise", label: "Entreprise", badgeVariant: "premium" },
+  { key: "enterprise", label: "Entreprise", badgeVariant: "free" },
 ];
 
 export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
@@ -287,7 +287,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
           <div className="grid gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <PlanBadge variant="premium" />
+                <PlanBadge variant="free" />
                 <div className="text-sm font-extrabold text-[var(--app-text)]">Plan Entreprise</div>
               </div>
               <div className="mt-1 text-sm text-[var(--app-text-muted)]">

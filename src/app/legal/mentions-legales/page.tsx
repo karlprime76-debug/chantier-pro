@@ -7,13 +7,13 @@ export default function MentionsLegalesPage() {
       <div className="grid gap-6">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Mentions légales</h1>
-          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Document provisoire — à compléter avant lancement commercial.</p>
+          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Informations légales relatives au service Chantier Pro.</p>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>Éditeur</CardTitle>
-            <CardDescription>Informations de base (MVP).</CardDescription>
+            <CardDescription>Informations d’identification du service.</CardDescription>
           </CardHeader>
 
           <div className="grid gap-3 text-sm text-[var(--app-text-muted)]">
@@ -35,7 +35,7 @@ export default function MentionsLegalesPage() {
         <Card>
           <CardHeader>
             <CardTitle>Responsabilité</CardTitle>
-            <CardDescription>Cadre de transparence.</CardDescription>
+            <CardDescription>Cadre d’utilisation et limites.</CardDescription>
           </CardHeader>
           <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
             <div>

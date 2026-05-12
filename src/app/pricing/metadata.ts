@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/pricing",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Tarifs | Chantier Pro",
     description:

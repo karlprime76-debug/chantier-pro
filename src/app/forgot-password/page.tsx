@@ -1,4 +1,5 @@
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
+import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { ForgotPasswordForm } from "@/components/auth/ForgotPasswordForm";
@@ -23,6 +24,7 @@ export default function ForgotPasswordPage() {
           </Card>
         </div>
       </AppShell>
+      <MarketingFooter />
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default function ConfidentialitePage() {
       <div className="grid gap-6">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Politique de confidentialité</h1>
-          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Document provisoire — adapté à Chantier Pro (Bénin).</p>
+          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Cette page décrit comment Chantier Pro traite vos données.</p>
         </div>
 
         <Card>
@@ -35,6 +35,10 @@ export default function ConfidentialitePage() {
           </CardHeader>
           <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
             <div>Fournir l’application, sécuriser l’accès, améliorer l’expérience et prévenir les abus.</div>
+            <div>
+              Les calculateurs et estimations fournis dans l’application sont des outils d’aide et ne remplacent pas l’expertise
+              d’un professionnel qualifié.
+            </div>
           </div>
         </Card>
 

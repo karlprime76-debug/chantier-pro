@@ -6,4 +6,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/legal/mentions-legales",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Mentions légales | Chantier Pro",
+    description: "Mentions légales du service Chantier Pro.",
+    url: "/legal/mentions-legales",
+  },
+  twitter: {
+    title: "Mentions légales | Chantier Pro",
+    description: "Mentions légales du service Chantier Pro.",
+  },
 };

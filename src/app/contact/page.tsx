@@ -12,22 +12,35 @@ export default function ContactPage() {
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Contact</h1>
           <p className="mt-1 text-sm text-[var(--app-text-muted)]">
-            Une question sur Chantier Pro ? Besoin d’aide pour un chantier ou un abonnement ?
+            Une question sur Chantier Pro ? Notre équipe répond aux demandes de support technique et d’abonnement.
           </p>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>Nous contacter</CardTitle>
-            <CardDescription>Réponse sous 24–72h ouvrées (MVP).</CardDescription>
+            <CardDescription>Réponse sous 24–72h ouvrées.</CardDescription>
           </CardHeader>
 
           <div className="grid gap-4">
             <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
               <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Email</div>
               <div className="mt-1 text-sm font-bold text-[var(--app-text)]">{CONTACT_EMAIL}</div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                Pour les demandes de support technique, merci d’indiquer votre email de compte et une description du problème.
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">Ville : Cotonou, Bénin</div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Support technique</div>
+                <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                  Indique ton email de compte, la page concernée et une description du problème (captures si possible).
+                </div>
+              </div>
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Support abonnement</div>
+                <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                  Questions sur les plans, la facturation, l’activation Premium/Entreprise et l’accès aux fonctionnalités.
+                </div>
               </div>
             </div>
 

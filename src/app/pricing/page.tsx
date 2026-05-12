@@ -19,7 +19,7 @@ export default async function PricingPage() {
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-[var(--app-text)]">Tarifs</h1>
             <p className="mt-2 text-sm text-[var(--app-text-muted)]">
-              Choisis un plan pour accéder aux calculateurs Premium et Entreprise.
+              Compare les plans Gratuit, Premium et Entreprise pour choisir le niveau adapté à tes besoins.
             </p>
           </div>
 
@@ -28,7 +28,7 @@ export default async function PricingPage() {
               Passe au niveau pro pour mieux gérer tes chantiers
             </div>
             <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-              Gagne du temps, réduis les erreurs de calcul et transforme tes quantités en devis, rapports et suivis chantier.
+              Gagne du temps, réduis les erreurs de calcul et transforme tes quantités en documents et suivis de chantier.
             </div>
             <div className="mt-4 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] p-3 text-sm text-[var(--app-text-muted)]">
               Un seul mauvais calcul peut coûter plus cher qu’un abonnement Premium.
@@ -43,7 +43,7 @@ export default async function PricingPage() {
                   <PlanBadge variant="premium" />
                 </div>
                 <CardDescription>
-                  Calculateurs avancés + fonctionnalités réservées.
+                  Pour les pros qui veulent aller plus vite et mieux suivre les coûts.
                 </CardDescription>
               </CardHeader>
               <div className="grid gap-3">
@@ -60,10 +60,10 @@ export default async function PricingPage() {
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Entreprise</CardTitle>
-                  <PlanBadge variant="premium" />
+                  <PlanBadge variant="free" />
                 </div>
                 <CardDescription>
-                  Modules complets + besoins d&apos;équipe.
+                  Pour les équipes, la gestion multi-chantiers et les besoins avancés.
                 </CardDescription>
               </CardHeader>
               <div className="grid gap-3">

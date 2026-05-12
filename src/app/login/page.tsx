@@ -19,7 +19,7 @@ export default function LoginPage({
           <Card>
             <CardHeader>
               <CardTitle>Connexion</CardTitle>
-              <CardDescription>Accède à ton dashboard Chantier Pro.</CardDescription>
+              <CardDescription>Connecte-toi pour retrouver tes chantiers, calculs, dépenses et rapports.</CardDescription>
             </CardHeader>
 
             <LoginForm nextUrl={nextUrl} />

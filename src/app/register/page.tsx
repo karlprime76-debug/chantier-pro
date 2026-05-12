@@ -13,7 +13,7 @@ export default function RegisterPage() {
           <Card>
             <CardHeader>
               <CardTitle>Créer un compte</CardTitle>
-              <CardDescription>Démarre en 2 minutes. Mobile-first.</CardDescription>
+              <CardDescription>Crée ton compte pour accéder au dashboard et commencer un chantier.</CardDescription>
             </CardHeader>
 
             <RegisterForm />

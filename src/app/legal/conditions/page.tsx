@@ -7,7 +7,7 @@ export default function ConditionsPage() {
       <div className="grid gap-6">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Conditions d’utilisation</h1>
-          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Document provisoire — à compléter.</p>
+          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Conditions générales d’utilisation du service Chantier Pro.</p>
         </div>
 
         <Card>
@@ -19,7 +19,9 @@ export default function ConditionsPage() {
             <div>
               <div className="font-bold text-[var(--app-text)]">Usage des calculateurs</div>
               <div className="mt-1">
-                Les calculateurs sont des outils d’aide à l’estimation. Vous restez responsable des décisions de chantier.
+                Les calculateurs et contenus fournis par Chantier Pro sont des outils d’aide à l’estimation. Ils ne remplacent pas
+                l’expertise d’un professionnel qualifié (ingénieur, technicien, conducteur de travaux). Vous restez responsable des
+                décisions de chantier, des quantités commandées et de l’exécution.
               </div>
             </div>
             <div>

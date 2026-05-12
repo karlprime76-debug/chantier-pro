@@ -10,4 +10,13 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  openGraph: {
+    title: "Connexion | Chantier Pro",
+    description: "Connectez-vous à Chantier Pro.",
+    url: "/login",
+  },
+  twitter: {
+    title: "Connexion | Chantier Pro",
+    description: "Connectez-vous à Chantier Pro.",
+  },
 };
