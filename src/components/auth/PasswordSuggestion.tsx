@@ -70,7 +70,10 @@ export function PasswordSuggestion({ onUse }: PasswordSuggestionProps) {
   return (
     <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
       <div className="text-sm font-bold text-[var(--app-text)]">Suggestion de mot de passe</div>
-      <div className="mt-1 text-xs text-[var(--app-text-muted)]">Optionnel. Tu peux garder ton mot de passe actuel.</div>
+      <div className="mt-1 text-xs text-[var(--app-text-muted)]">
+        Tu peux utiliser ton propre mot de passe ou générer un mot de passe sécurisé.
+      </div>
+      <div className="mt-1 text-xs text-[var(--app-text-muted)]">Minimum 8 caractères recommandé.</div>
 
       {suggestion ? (
         <div className="mt-3 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-3 py-2">

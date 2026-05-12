@@ -5,11 +5,13 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Ca
 import { PlanBadge } from "@/components/ui/PlanBadge";
 import { SubscribeButton } from "@/components/billing/SubscribeButton";
 import { BillingHealthCheck } from "@/components/billing/BillingHealthCheck";
+import { Button } from "@/components/ui/Button";
 import { getSession } from "@/lib/auth/session";
 
 export default async function PricingPage() {
   const session = await getSession();
   const canSeeBillingHealth = process.env.NODE_ENV !== "production" || session?.role === "ADMIN";
+  const freeCtaHref = session ? "/dashboard" : "/register";
 
   return (
     <div className="min-h-full">
@@ -35,7 +37,27 @@ export default async function PricingPage() {
             </div>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between gap-3">
+                  <CardTitle>Gratuit</CardTitle>
+                  <PlanBadge variant="free" />
+                </div>
+                <CardDescription>Pour démarrer et tester Chantier Pro.</CardDescription>
+              </CardHeader>
+              <div className="grid gap-3">
+                <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">0 FCFA</div>
+                <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
+                  Calculateurs de base + découverte du suivi.
+                </div>
+                <Button href={freeCtaHref} size="lg">
+                  Commencer gratuitement
+                </Button>
+              </div>
+            </Card>
+
             <Card className="ring-1 ring-[var(--cp-accent)]/20">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
@@ -72,6 +94,27 @@ export default async function PricingPage() {
                 <SubscribeButton plan="ENTERPRISE">S&apos;abonner</SubscribeButton>
               </div>
             </Card>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+              <div className="text-sm font-bold text-[var(--app-text)]">Disponible maintenant</div>
+              <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                <div>Calculs béton & acier</div>
+                <div>Historique par chantier</div>
+                <div>Suivi dépenses & budget</div>
+                <div>Rapports journaliers</div>
+                <div>Multi-utilisateurs (Entreprise)</div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+              <div className="text-sm font-bold text-[var(--app-text)]">Bientôt</div>
+              <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                <div>Export PDF</div>
+                <div>Devis depuis les calculs</div>
+                <div>Templates de devis</div>
+              </div>
+            </div>
           </div>
 
           <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
