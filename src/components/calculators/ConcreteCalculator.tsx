@@ -268,13 +268,13 @@ export function ConcreteCalculator() {
         </CardHeader>
         <div className="grid gap-2">
           {projectsLoading ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">Chargement…</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">Chargement…</div>
           ) : projectsError ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">{projectsError}</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">{projectsError}</div>
           ) : projects.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
-              <div className="text-sm font-semibold text-white">Aucun chantier</div>
-              <div className="mt-1 text-sm text-white/60">Crée d’abord un chantier pour sauvegarder.</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
+              <div className="text-sm font-semibold text-[var(--app-text)]">Aucun chantier</div>
+              <div className="mt-1 text-sm text-[var(--app-text-muted)]">Crée d’abord un chantier pour sauvegarder.</div>
               <div className="mt-4">
                 <Button href="/dashboard/projects/new" variant="secondary" size="sm">
                   Créer un chantier
@@ -283,7 +283,7 @@ export function ConcreteCalculator() {
             </div>
           ) : (
             <select
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+              className="w-full rounded-xl border border-[var(--app-card-border)] bg-[var(--app-input-bg)] px-3 py-2 text-sm text-[var(--app-text)]"
               value={projectId}
               onChange={(e) => {
                 const next = e.target.value;
@@ -303,7 +303,7 @@ export function ConcreteCalculator() {
           )}
 
           {projectPrefilledFromUrl && projectId === projectIdFromUrl ? (
-            <div className="text-xs text-white/55">Chantier sélectionné depuis la page projet.</div>
+            <div className="text-xs text-[var(--app-text-muted)]">Chantier sélectionné depuis la page projet.</div>
           ) : null}
         </div>
       </Card>
@@ -316,9 +316,9 @@ export function ConcreteCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <label className="text-sm font-semibold text-white">Type d’élément</label>
+            <label className="text-sm font-semibold text-[var(--app-text)]">Type d’élément</label>
             <select
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+              className="w-full rounded-xl border border-[var(--app-card-border)] bg-[var(--app-input-bg)] px-3 py-2 text-sm text-[var(--app-text)]"
               value={elementType}
               onChange={(e) => setElementType(e.target.value)}
             >
@@ -397,31 +397,31 @@ export function ConcreteCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Volume brut:</span> {output.volumeTotalM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume brut:</span> {output.volumeTotalM3} m³
             </div>
             <div>
-              <span className="text-white/55">Volume avec perte:</span> {output.volumeWithWasteM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume avec perte:</span> {output.volumeWithWasteM3} m³
             </div>
             <div>
-              <span className="text-white/55">Ciment:</span> {output.cementBagsCount} sac(s) (~{output.cementEstimateKg} kg)
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Ciment:</span> {output.cementBagsCount} sac(s) (~{output.cementEstimateKg} kg)
             </div>
             <div>
-              <span className="text-white/55">Sable:</span> {output.sandEstimateM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Sable:</span> {output.sandEstimateM3} m³
             </div>
             <div>
-              <span className="text-white/55">Gravier:</span> {output.gravelEstimateM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Gravier:</span> {output.gravelEstimateM3} m³
             </div>
             <div>
-              <span className="text-white/55">Eau indicative:</span> {output.waterEstimateL} L
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Eau indicative:</span> {output.waterEstimateL} L
             </div>
             <div>
-              <span className="text-white/55">Coût estimatif:</span> {output.estimatedCost ? `${output.estimatedCost} FCFA` : "—"}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimatif:</span> {output.estimatedCost ? `${output.estimatedCost} FCFA` : "—"}
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
@@ -434,27 +434,27 @@ export function ConcreteCalculator() {
         </CardHeader>
 
         {historyLoading ? (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">Chargement…</div>
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">Chargement…</div>
         ) : historyError ? (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">{historyError}</div>
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">{historyError}</div>
         ) : history.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Aucun calcul béton sauvegardé pour le moment.
           </div>
         ) : (
           <div className="grid gap-2">
             {history.map((h) => (
-              <div key={h.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+              <div key={h.id} className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-bold text-white">{ELEMENT_LABEL[h.elementType] ?? h.elementType}</div>
-                    <div className="mt-1 text-xs text-white/55">
+                    <div className="truncate text-sm font-bold text-[var(--app-text)]">{ELEMENT_LABEL[h.elementType] ?? h.elementType}</div>
+                    <div className="mt-1 text-xs text-[var(--app-text-muted)]">
                       {new Date(h.createdAt).toLocaleDateString("fr-FR")} • Qté: {h.quantity}
                     </div>
                   </div>
-                  <div className="shrink-0 text-sm font-bold text-white">{String(h.volumeWithWaste)} m³</div>
+                  <div className="shrink-0 text-sm font-bold text-[var(--app-text)]">{String(h.volumeWithWaste)} m³</div>
                 </div>
-                <div className="mt-2 text-xs text-white/55">
+                <div className="mt-2 text-xs text-[var(--app-text-muted)]">
                   Ciment: {String(h.cementEstimateKg)} kg • Sable: {String(h.sandEstimateM3)} m³ • Gravier: {String(h.gravelEstimateM3)} m³
                 </div>
               </div>

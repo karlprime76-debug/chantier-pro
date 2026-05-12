@@ -95,31 +95,33 @@ export function PlasterCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Volume mortier:</span> {output.mortarVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume mortier:</span> {output.mortarVolumeM3} m³
             </div>
             <div>
-              <span className="text-white/55">Volume + perte:</span> {output.mortarVolumeWithWasteM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume + perte:</span> {output.mortarVolumeWithWasteM3} m³
             </div>
             <div>
-              <span className="text-white/55">Ciment:</span> {output.cementEstimateKg} kg ({output.cementBagsCount} sacs)
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Ciment:</span> {output.cementEstimateKg} kg ({output.cementBagsCount} sacs)
             </div>
             <div>
-              <span className="text-white/55">Sable:</span> {output.sandEstimateM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Sable:</span> {output.sandEstimateM3} m³
             </div>
             <div>
-              <span className="text-white/55">Coût estimé:</span> {output.estimatedCost === null ? "—" : `${output.estimatedCost} FCFA`}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimé:</span> {output.estimatedCost === null ? "—" : `${output.estimatedCost} FCFA`}
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="text-xs text-white/50">Dosage et rendements indicatifs : adapte selon le type d’enduit et le support.</div>
+      <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+        Dosage et rendements indicatifs : adapte selon le type d’enduit et le support.
+      </div>
     </div>
   );
 }

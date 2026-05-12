@@ -21,13 +21,13 @@ export function BillingHealthCheck() {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+    <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="text-sm font-semibold text-white">
+          <div className="text-sm font-semibold text-[var(--app-text)]">
             Vérifier la configuration paiement
           </div>
-          <div className="text-xs text-white/60">
+          <div className="text-xs text-[var(--app-text-muted)]">
             Diagnostic côté serveur (sans exposer de secret)
           </div>
         </div>
@@ -72,16 +72,16 @@ export function BillingHealthCheck() {
 
       {data ? (
         <div className="mt-3 grid gap-2 text-sm">
-          <div className="text-white">{data.message}</div>
-          <div className="text-white/70">
-            PayDunya configuré : <span className="text-white">{data.paydunyaConfigured ? "oui" : "non"}</span>
+          <div className="text-[var(--app-text)]">{data.message}</div>
+          <div className="text-[var(--app-text-muted)]">
+            PayDunya configuré : <span className="text-[var(--app-text)]">{data.paydunyaConfigured ? "oui" : "non"}</span>
           </div>
-          <div className="text-white/70">
-            APP_URL détectée : <span className="text-white">{data.appUrlDetected ?? "—"}</span>
+          <div className="text-[var(--app-text-muted)]">
+            APP_URL détectée : <span className="text-[var(--app-text)]">{data.appUrlDetected ?? "—"}</span>
           </div>
           {data.missing.length ? (
-            <div className="text-white/70">
-              Variables manquantes : <span className="text-white">{data.missing.join(", ")}</span>
+            <div className="text-[var(--app-text-muted)]">
+              Variables manquantes : <span className="text-[var(--app-text)]">{data.missing.join(", ")}</span>
             </div>
           ) : null}
         </div>

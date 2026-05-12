@@ -12,8 +12,8 @@ export function CalculatorPageShell({ title, description, children }: Calculator
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">{title}</h1>
-        <p className="mt-1 text-sm text-white/60">{description}</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">{title}</h1>
+        <p className="mt-1 text-sm text-[var(--app-text-muted)]">{description}</p>
       </div>
 
       <Card>
@@ -24,9 +24,9 @@ export function CalculatorPageShell({ title, description, children }: Calculator
 
         <div className="grid gap-4 p-6">{children}</div>
 
-        <div className="border-t border-white/10 p-6">
-          <div className="text-sm font-semibold text-white">Note technique</div>
-          <div className="mt-1 text-sm text-white/60">
+        <div className="border-t border-[var(--app-card-border)] p-6">
+          <div className="text-sm font-semibold text-[var(--app-text)]">Note technique</div>
+          <div className="mt-1 text-sm text-[var(--app-text-muted)]">
             Ces résultats sont estimatifs et doivent être validés par un professionnel selon les plans, les normes
             applicables et les conditions réelles du chantier.
           </div>

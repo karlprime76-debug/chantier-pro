@@ -10,6 +10,21 @@
   --cp-accent-2: #072b5f;
   --cp-card: #ffffff;
   --cp-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+
+  --app-bg: #f7f4ef;
+  --app-bg-soft: #f2eee8;
+  --app-card: rgba(255, 255, 255, 0.86);
+  --app-card-border: rgba(15, 23, 42, 0.12);
+  --app-text: #121212;
+  --app-text-muted: rgba(18, 18, 18, 0.62);
+  --app-primary: var(--cp-accent);
+  --app-primary-soft: rgba(255, 106, 0, 0.14);
+  --app-nav-bg: rgba(255, 255, 255, 0.72);
+  --app-input-bg: rgba(255, 255, 255, 0.7);
+
+  --app-hero-glow-1: rgba(255, 106, 0, 0.18);
+  --app-hero-glow-2: rgba(7, 43, 95, 0.12);
+  --app-hero-glow-3: rgba(0, 0, 0, 0.03);
 }
 
 @keyframes cp-splash-in {
@@ -40,6 +55,21 @@ html[data-theme="dark"] {
   --cp-accent-2: #072b5f;
   --cp-card: rgba(255, 255, 255, 0.06);
   --cp-shadow: 0 12px 42px rgba(0, 0, 0, 0.45);
+
+  --app-bg: #070b10;
+  --app-bg-soft: #0b0f14;
+  --app-card: rgba(18, 22, 28, 0.82);
+  --app-card-border: rgba(255, 255, 255, 0.1);
+  --app-text: #ffffff;
+  --app-text-muted: rgba(255, 255, 255, 0.65);
+  --app-primary: var(--cp-accent);
+  --app-primary-soft: rgba(255, 106, 0, 0.16);
+  --app-nav-bg: rgba(11, 15, 20, 0.84);
+  --app-input-bg: rgba(16, 24, 38, 0.72);
+
+  --app-hero-glow-1: rgba(249, 115, 22, 0.22);
+  --app-hero-glow-2: rgba(11, 42, 82, 0.34);
+  --app-hero-glow-3: rgba(255, 255, 255, 0.06);
 }
 
 @theme inline {
@@ -62,8 +92,8 @@ html[data-theme="dark"] {
 }
 
 body {
-  background: var(--cp-bg);
-  color: var(--cp-text);
+  background: var(--app-bg);
+  color: var(--app-text);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }

@@ -140,30 +140,30 @@ export function AdvancedSlabCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div className="grid gap-2">
               <div>
-                <span className="text-white/55">Surface:</span> {output.areaM2} m²
+                <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface:</span> {output.areaM2} m²
               </div>
               <div>
-                <span className="text-white/55">Volume béton:</span> {output.concreteVolumeM3} m³
+                <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume béton:</span> {output.concreteVolumeM3} m³
               </div>
               <div>
-                <span className="text-white/55">Acier estimé:</span> {output.steelEstimateKg} kg
+                <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Acier estimé:</span> {output.steelEstimateKg} kg
               </div>
               <div>
-                <span className="text-white/55">Coffrage périphérique:</span> {output.edgeFormworkAreaM2} m²
+                <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coffrage périphérique:</span> {output.edgeFormworkAreaM2} m²
               </div>
               <div>
-                <span className="text-white/55">Film polyane:</span> {output.polyaneAreaM2} m²
+                <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Film polyane:</span> {output.polyaneAreaM2} m²
               </div>
               <div>
-                <span className="text-white/55">Coût estimé:</span> {output.estimatedCost === null ? "—" : `${output.estimatedCost} FCFA`}
+                <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimé:</span> {output.estimatedCost === null ? "—" : `${output.estimatedCost} FCFA`}
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-black/10 p-3 text-xs text-white/60">
-              <div className="font-semibold text-white/80">Résumé</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] p-3 text-xs text-[var(--app-text-muted)]">
+              <div className="font-semibold text-[var(--app-text)]">Résumé</div>
               <div>Surface: {output.summary.areaM2} m²</div>
               <div>Épaisseur: {output.summary.thicknessM} m</div>
               <div>Béton: {output.summary.concreteVolumeM3} m³</div>
@@ -191,13 +191,15 @@ export function AdvancedSlabCalculator() {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="text-xs text-white/50">MVP: ordres de grandeur. Pour ferraillage réel et portance, valider avec plans/ingénieur.</div>
+      <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+        MVP: ordres de grandeur. Pour ferraillage réel et portance, valider avec plans/ingénieur.
+      </div>
     </div>
   );
 }

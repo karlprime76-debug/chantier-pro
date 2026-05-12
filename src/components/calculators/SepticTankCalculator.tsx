@@ -109,35 +109,35 @@ export function SepticTankCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Débit journalier:</span> {output.dailyFlowM3} m³/j
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Débit journalier:</span> {output.dailyFlowM3} m³/j
             </div>
             <div>
-              <span className="text-white/55">Volume utile:</span> {output.usefulVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume utile:</span> {output.usefulVolumeM3} m³
             </div>
             <div>
-              <span className="text-white/55">Volume + marge:</span> {output.usefulVolumeWithMarginM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume + marge:</span> {output.usefulVolumeWithMarginM3} m³
             </div>
             <div>
-              <span className="text-white/55">Dimensions proposées:</span> {output.proposedTankLengthM} m × {output.proposedTankWidthM} m × {output.proposedTankDepthM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Dimensions proposées:</span> {output.proposedTankLengthM} m × {output.proposedTankWidthM} m × {output.proposedTankDepthM} m
             </div>
             <div>
-              <span className="text-white/55">Volume proposé:</span> {output.proposedTankVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume proposé:</span> {output.proposedTankVolumeM3} m³
             </div>
             <div>
-              <span className="text-white/55">Volume puisard (approx):</span> {output.soakawayVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume puisard (approx):</span> {output.soakawayVolumeM3} m³
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-xs text-white/60">
-        <div className="font-semibold text-white/80">Avertissement</div>
+      <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-xs text-[var(--app-text-muted)]">
+        <div className="font-semibold text-[var(--app-text)]">Avertissement</div>
         <div>Calcul indicatif. Respecte les normes locales (dimensionnement, ventilation, distances, vidange, perméabilité du sol).</div>
       </div>
     </div>

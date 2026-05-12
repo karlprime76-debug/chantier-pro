@@ -76,7 +76,7 @@ export function MasonryBlocksCalculator() {
 
         <div className="grid gap-4">
           <label className="block">
-            <div className="mb-1 text-sm font-semibold text-white/85">Type de bloc</div>
+            <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Type de bloc</div>
             <select
               value={preset}
               onChange={(e) => {
@@ -91,7 +91,7 @@ export function MasonryBlocksCalculator() {
                   setBlockHeightCm("6");
                 }
               }}
-              className="h-11 w-full rounded-xl bg-white/5 px-3 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+              className="h-11 w-full rounded-xl bg-[var(--app-input-bg)] px-3 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
             >
               <option value="agglos_20">Agglo 40×20</option>
               <option value="brick">Brique 22×6</option>
@@ -145,18 +145,18 @@ export function MasonryBlocksCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Surface mur:</span> {output.wallAreaM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface mur:</span> {output.wallAreaM2} m²
             </div>
             <div>
-              <span className="text-white/55">Blocs:</span> {output.blocksCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Blocs:</span> {output.blocksCount}
             </div>
             <div>
-              <span className="text-white/55">Blocs + perte:</span> {output.blocksWithWaste}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Blocs + perte:</span> {output.blocksWithWaste}
             </div>
             <div>
-              <span className="text-white/55">Mortier (simple):</span> {output.mortarEstimateM3 === null ? "—" : `${output.mortarEstimateM3} m³`}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Mortier (simple):</span> {output.mortarEstimateM3 === null ? "—" : `${output.mortarEstimateM3} m³`}
             </div>
 
             <div className="pt-2">
@@ -178,7 +178,7 @@ export function MasonryBlocksCalculator() {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}

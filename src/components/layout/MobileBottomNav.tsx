@@ -148,7 +148,7 @@ export function MobileBottomNav() {
         <div
           className={cn(
             "mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg backdrop-blur",
-            "bg-[color-mix(in_oklab,var(--cp-card),transparent_10%)] border-[var(--cp-border)]",
+            "bg-[var(--app-nav-bg)] border-[var(--app-card-border)]",
           )}
         >
           {items.map((item) => {
@@ -161,14 +161,14 @@ export function MobileBottomNav() {
                 className={cn(
                   "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",
                   active
-                    ? "bg-[color-mix(in_oklab,var(--cp-accent),transparent_86%)] text-[var(--cp-accent)]"
-                    : "text-[color-mix(in_oklab,var(--cp-text),transparent_40%)] hover:bg-[color-mix(in_oklab,var(--cp-text),transparent_92%)]",
+                    ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] text-[var(--app-primary)]"
+                    : "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 <span
                   className={cn(
                     "grid h-7 w-7 place-items-center",
-                    active ? "text-[var(--cp-accent)]" : "text-[color-mix(in_oklab,var(--cp-text),transparent_40%)]",
+                    active ? "text-[var(--app-primary)]" : "text-[var(--app-text-muted)]",
                   )}
                 >
                   {item.icon({ className: "h-6 w-6" })}

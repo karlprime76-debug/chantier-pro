@@ -272,7 +272,7 @@ export function StraightStairCalculator() {
         </CardHeader>
 
         <label className="block">
-          <div className="mb-1 text-sm font-semibold text-white/85">Choisir un chantier</div>
+          <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Choisir un chantier</div>
           <select
             value={projectId}
             onChange={(e) => {
@@ -280,7 +280,7 @@ export function StraightStairCalculator() {
               setProjectId(nextProjectId);
               void refreshHistory(nextProjectId);
             }}
-            className="h-11 w-full rounded-xl bg-white/5 px-3 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+            className="h-11 w-full rounded-xl bg-[var(--app-input-bg)] px-3 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
           >
             <option value="">—</option>
             {projects.map((p) => (
@@ -289,10 +289,10 @@ export function StraightStairCalculator() {
               </option>
             ))}
           </select>
-          {projectsLoading ? <div className="mt-1 text-xs text-white/55">Chargement…</div> : null}
+          {projectsLoading ? <div className="mt-1 text-xs text-[var(--app-text-muted)]">Chargement…</div> : null}
           {projectsError ? <div className="mt-1 text-xs text-[var(--cp-accent)]">{projectsError}</div> : null}
           {projectPrefilledFromUrl && projectId === projectIdFromUrl ? (
-            <div className="mt-1 text-xs text-white/55">Chantier sélectionné depuis la page projet.</div>
+            <div className="mt-1 text-xs text-[var(--app-text-muted)]">Chantier sélectionné depuis la page projet.</div>
           ) : null}
         </label>
       </Card>
@@ -335,11 +335,11 @@ export function StraightStairCalculator() {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <label className="block">
-          <div className="mb-1 text-sm font-semibold text-white/85">Nombre de marches</div>
+          <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Nombre de marches</div>
           <select
             value={stepsMode}
             onChange={(e) => setStepsMode(e.target.value as StepsMode)}
-            className="h-11 w-full rounded-xl bg-white/5 px-3 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+            className="h-11 w-full rounded-xl bg-[var(--app-input-bg)] px-3 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
           >
             <option value="auto">Automatique</option>
             <option value="manual">Manuel</option>
@@ -395,57 +395,57 @@ export function StraightStairCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
+          <div className="grid gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
             <div className="grid gap-2 sm:grid-cols-2">
-              <div className="text-sm text-white/70">
-                Nombre de marches: <span className="font-semibold text-white">{output.stepsCount}</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Nombre de marches: <span className="font-semibold text-[var(--app-text)]">{output.stepsCount}</span>
               </div>
-              <div className="text-sm text-white/70">
-                Hauteur de marche (H): <span className="font-semibold text-white">{output.riserHeightCm} cm</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Hauteur de marche (H): <span className="font-semibold text-[var(--app-text)]">{output.riserHeightCm} cm</span>
               </div>
-              <div className="text-sm text-white/70">
-                Giron (G): <span className="font-semibold text-white">{output.goingCm} cm</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Giron (G): <span className="font-semibold text-[var(--app-text)]">{output.goingCm} cm</span>
               </div>
-              <div className="text-sm text-white/70">
-                Confort (2H + G): <span className="font-semibold text-white">{output.comfortValueCm} cm</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Confort (2H + G): <span className="font-semibold text-[var(--app-text)]">{output.comfortValueCm} cm</span>
               </div>
             </div>
 
-            <div className="text-sm text-white/70">
-              Conformité: <span className="font-semibold text-white">{comfortLabel}</span>
+            <div className="text-sm text-[var(--app-text-muted)]">
+              Conformité: <span className="font-semibold text-[var(--app-text)]">{comfortLabel}</span>
             </div>
 
             <div className="mt-2 grid gap-2 sm:grid-cols-2">
-              <div className="text-sm text-white/70">
-                Longueur de paillasse: <span className="font-semibold text-white">{output.slabLengthM} m</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Longueur de paillasse: <span className="font-semibold text-[var(--app-text)]">{output.slabLengthM} m</span>
               </div>
-              <div className="text-sm text-white/70">
-                Volume béton: <span className="font-semibold text-white">{output.concreteVolumeM3} m³</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Volume béton: <span className="font-semibold text-[var(--app-text)]">{output.concreteVolumeM3} m³</span>
               </div>
-              <div className="text-sm text-white/70">
-                Volume béton + perte: <span className="font-semibold text-white">{output.concreteVolumeWithWasteM3} m³</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Volume béton + perte: <span className="font-semibold text-[var(--app-text)]">{output.concreteVolumeWithWasteM3} m³</span>
               </div>
-              <div className="text-sm text-white/70">
-                Surface coffrage: <span className="font-semibold text-white">{output.formworkAreaM2} m²</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Surface coffrage: <span className="font-semibold text-[var(--app-text)]">{output.formworkAreaM2} m²</span>
               </div>
-              <div className="text-sm text-white/70">
-                Ciment estimatif: <span className="font-semibold text-white">{output.cementEstimateKg} kg</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Ciment estimatif: <span className="font-semibold text-[var(--app-text)]">{output.cementEstimateKg} kg</span>
               </div>
-              <div className="text-sm text-white/70">
-                Sable estimatif: <span className="font-semibold text-white">{output.sandEstimateM3} m³</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Sable estimatif: <span className="font-semibold text-[var(--app-text)]">{output.sandEstimateM3} m³</span>
               </div>
-              <div className="text-sm text-white/70">
-                Gravier estimatif: <span className="font-semibold text-white">{output.gravelEstimateM3} m³</span>
+              <div className="text-sm text-[var(--app-text-muted)]">
+                Gravier estimatif: <span className="font-semibold text-[var(--app-text)]">{output.gravelEstimateM3} m³</span>
               </div>
               {output.estimatedCost !== null ? (
-                <div className="text-sm text-white/70">
-                  Coût estimatif: <span className="font-semibold text-white">{output.estimatedCost}</span>
+                <div className="text-sm text-[var(--app-text-muted)]">
+                  Coût estimatif: <span className="font-semibold text-[var(--app-text)]">{output.estimatedCost}</span>
                 </div>
               ) : null}
             </div>
           </div>
         ) : (
-          <div className="text-sm text-white/60">Lance un calcul pour afficher les résultats.</div>
+          <div className="text-sm text-[var(--app-text-muted)]">Lance un calcul pour afficher les résultats.</div>
         )}
       </Card>
 
@@ -460,9 +460,9 @@ export function StraightStairCalculator() {
             Sauvegarder dans le chantier
           </Button>
           {saveError ? <div className="text-sm text-[var(--cp-accent)]">{saveError}</div> : null}
-          {saveOk ? <div className="text-sm text-white/70">{saveOk}</div> : null}
+          {saveOk ? <div className="text-sm text-[var(--app-text-muted)]">{saveOk}</div> : null}
 
-          <div className="text-sm text-white/60">
+          <div className="text-sm text-[var(--app-text-muted)]">
             Les calculs sauvegardés restent estimatifs et doivent être validés par un professionnel selon les plans, les
             normes applicables et les conditions réelles du chantier.
           </div>
@@ -476,19 +476,19 @@ export function StraightStairCalculator() {
         </CardHeader>
 
         {historyError ? <div className="text-sm text-[var(--cp-accent)]">{historyError}</div> : null}
-        {historyLoading ? <div className="text-sm text-white/60">Chargement…</div> : null}
+        {historyLoading ? <div className="text-sm text-[var(--app-text-muted)]">Chargement…</div> : null}
 
         {!historyLoading && !historyError ? (
           history.length === 0 ? (
-            <div className="text-sm text-white/60">Aucun calcul sauvegardé.</div>
+            <div className="text-sm text-[var(--app-text-muted)]">Aucun calcul sauvegardé.</div>
           ) : (
             <div className="grid gap-2">
               {history.map((h) => (
-                <div key={h.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-sm font-semibold text-white">
+                <div key={h.id} className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                  <div className="text-sm font-semibold text-[var(--app-text)]">
                     {new Date(h.createdAt).toLocaleDateString("fr-FR")} {new Date(h.createdAt).toLocaleTimeString("fr-FR")}
                   </div>
-                  <div className="mt-1 text-xs text-white/55">
+                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">
                     Marches: {h.stepsCount} • Confort: {h.comfortStatus}
                   </div>
                 </div>

@@ -88,11 +88,11 @@ export function FormworkCalculator() {
 
         <div className="grid gap-4">
           <label className="block">
-            <div className="mb-1 text-sm font-semibold text-white/85">Type d’élément</div>
+            <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Type d’élément</div>
             <select
               value={elementType}
               onChange={(e) => setElementType(e.target.value)}
-              className="h-11 w-full rounded-xl bg-white/5 px-3 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+              className="h-11 w-full rounded-xl bg-[var(--app-input-bg)] px-3 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
             >
               {ELEMENT_TYPES.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -139,31 +139,33 @@ export function FormworkCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Surface coffrage:</span> {output.formworkSurfaceM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface coffrage:</span> {output.formworkSurfaceM2} m²
             </div>
             <div>
-              <span className="text-white/55">Surface + perte:</span> {output.formworkSurfaceWithWasteM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface + perte:</span> {output.formworkSurfaceWithWasteM2} m²
             </div>
             <div>
-              <span className="text-white/55">Panneaux:</span> {output.panelsCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Panneaux:</span> {output.panelsCount}
             </div>
             <div>
-              <span className="text-white/55">Étais (estimation):</span> {output.propsEstimate}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Étais (estimation):</span> {output.propsEstimate}
             </div>
             <div>
-              <span className="text-white/55">Coût estimé:</span> {output.estimatedCost === null ? "—" : `${output.estimatedCost} FCFA`}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimé:</span> {output.estimatedCost === null ? "—" : `${output.estimatedCost} FCFA`}
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="text-xs text-white/50">Modèle simplifié (MVP) pour obtenir un ordre de grandeur rapide.</div>
+      <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+        Modèle simplifié (MVP) pour obtenir un ordre de grandeur rapide.
+      </div>
     </div>
   );
 }

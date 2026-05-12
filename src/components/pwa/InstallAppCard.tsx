@@ -129,7 +129,7 @@ export function InstallAppCard({ className, hideWhenInstalled = true }: InstallA
           ) : null}
 
           {statusMessage ? (
-            <div className="rounded-2xl border border-[var(--cp-border)] bg-[color-mix(in_oklab,var(--cp-accent),transparent_88%)] p-4 text-sm text-white">
+            <div className="rounded-2xl border border-[var(--cp-border)] bg-[color-mix(in_oklab,var(--cp-accent),transparent_88%)] p-4 text-sm text-[var(--app-text)]">
               {statusMessage}
             </div>
           ) : null}

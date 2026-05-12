@@ -89,11 +89,11 @@ export function AdvancedMasonryCalculator() {
             <Input label="Épaisseur (cm)" value={thicknessCm} onChange={(e) => setThicknessCm(e.target.value)} />
 
             <label className="block">
-              <div className="mb-1 text-sm font-semibold text-white/85">Type bloc</div>
+              <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Type bloc</div>
               <select
                 value={blockType}
                 onChange={(e) => setBlockType(e.target.value)}
-                className="h-11 w-full rounded-xl bg-white/5 px-3 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+                className="h-11 w-full rounded-xl bg-[var(--app-input-bg)] px-3 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
               >
                 {BLOCK_TYPES.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -130,31 +130,31 @@ export function AdvancedMasonryCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Surface brute:</span> {output.grossAreaM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface brute:</span> {output.grossAreaM2} m²
             </div>
             <div>
-              <span className="text-white/55">Surface nette:</span> {output.netAreaM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface nette:</span> {output.netAreaM2} m²
             </div>
             <div>
-              <span className="text-white/55">Nombre de blocs:</span> {output.blocksCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Nombre de blocs:</span> {output.blocksCount}
             </div>
             <div>
-              <span className="text-white/55">Mortier estimé:</span> {output.mortarEstimateM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Mortier estimé:</span> {output.mortarEstimateM3} m³
             </div>
             <div>
-              <span className="text-white/55">Ciment (sacs 50kg):</span> {output.mortarBagsCement50Kg}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Ciment (sacs 50kg):</span> {output.mortarBagsCement50Kg}
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="text-xs text-white/50">
+      <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
         Estimations indicatives (mortier/ciment) : à ajuster selon le chantier, le type de bloc et la qualité de pose.
       </div>
     </div>

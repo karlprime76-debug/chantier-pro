@@ -108,31 +108,33 @@ export function LandingStairCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Nombre de marches:</span> {output.stepsCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Nombre de marches:</span> {output.stepsCount}
             </div>
             <div>
-              <span className="text-white/55">Hauteur marche:</span> {output.riserHeightM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Hauteur marche:</span> {output.riserHeightM} m
             </div>
             <div>
-              <span className="text-white/55">Longueur développée:</span> {output.runLengthM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Longueur développée:</span> {output.runLengthM} m
             </div>
             <div>
-              <span className="text-white/55">Volume béton:</span> {output.concreteVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume béton:</span> {output.concreteVolumeM3} m³
             </div>
             <div>
-              <span className="text-white/55">Surface coffrage:</span> {output.formworkSurfaceM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface coffrage:</span> {output.formworkSurfaceM2} m²
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="text-xs text-white/50">Approximations pour un ordre de grandeur. Pour exécution, valider sur plans et normes.</div>
+      <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+        Approximations pour un ordre de grandeur. Pour exécution, valider sur plans et normes.
+      </div>
     </div>
   );
 }

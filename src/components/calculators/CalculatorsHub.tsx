@@ -100,10 +100,10 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Centre de calculs Chantier Pro</h1>
-        <p className="mt-1 text-sm text-white/60">Tous vos outils de calcul BTP selon votre plan.</p>
-        <div className="mt-2 text-xs font-semibold text-white/45">
-          Plan actuel: <span className="text-white/70">{planLabel(userPlan)}</span> · {visibleCountLabel}
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Centre de calculs Chantier Pro</h1>
+        <p className="mt-1 text-sm text-[var(--app-text-muted)]">Tous vos outils de calcul BTP selon votre plan.</p>
+        <div className="mt-2 text-xs font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+          Plan actuel: <span className="text-[var(--app-text)]">{planLabel(userPlan)}</span> · {visibleCountLabel}
         </div>
       </div>
 
@@ -125,8 +125,11 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                   type="button"
                   onClick={() => setPlanFilter(f.id)}
                   className={cn(
-                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 ring-white/10 transition",
-                    active ? "bg-white/10 text-white" : "bg-black/20 text-white/70 hover:bg-black/30 hover:text-white",
+                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 transition",
+                    "ring-[var(--app-card-border)]",
+                    active
+                      ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                      : "bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                   )}
                 >
                   {f.label}
@@ -144,8 +147,11 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                   type="button"
                   onClick={() => setCategoryFilter(f.id)}
                   className={cn(
-                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 ring-white/10 transition",
-                    active ? "bg-white/10 text-white" : "bg-black/20 text-white/70 hover:bg-black/30 hover:text-white",
+                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 transition",
+                    "ring-[var(--app-card-border)]",
+                    active
+                      ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                      : "bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                   )}
                 >
                   {f.label}
@@ -179,17 +185,17 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                     <CardDescription>{c.description}</CardDescription>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center rounded-full bg-black/20 px-2 py-1 text-[11px] font-bold text-white/65 ring-1 ring-white/10">
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
                         {c.category}
                       </span>
-                      <span className="inline-flex items-center rounded-full bg-black/20 px-2 py-1 text-[11px] font-bold text-white/65 ring-1 ring-white/10">
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
                         {planLabel(c.plan)}
                       </span>
                     </div>
                   </div>
                   <div className="grid justify-items-end gap-2">
                     {c.plan === "FREE" ? <PlanBadge variant="free" /> : <PlanBadge variant="premium" />}
-                    <span className="text-[11px] font-bold text-white/55">{statusLabel(c)}</span>
+                    <span className="text-[11px] font-bold text-[var(--app-text-muted)]">{statusLabel(c)}</span>
                   </div>
                 </div>
               </CardHeader>
@@ -238,37 +244,39 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
         </CardHeader>
 
         <div className="grid gap-3 px-6 pb-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-bold text-white">Calculs sauvegardés par chantier</div>
-            <div className="mt-1 text-sm text-white/60">Retrouve tous tes calculs par projet, au même endroit.</div>
+          <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Calculs sauvegardés par chantier</div>
+            <div className="mt-1 text-sm text-[var(--app-text-muted)]">Retrouve tous tes calculs par projet, au même endroit.</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-bold text-white">Export PDF professionnel</div>
-            <div className="mt-1 text-sm text-white/60">Transforme tes calculs en fiches propres à partager.</div>
+          <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Export PDF professionnel</div>
+            <div className="mt-1 text-sm text-[var(--app-text-muted)]">Transforme tes calculs en fiches propres à partager.</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-bold text-white">Devis depuis les calculs</div>
-            <div className="mt-1 text-sm text-white/60">Génère rapidement un devis à partir des quantités.</div>
+          <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Devis depuis les calculs</div>
+            <div className="mt-1 text-sm text-[var(--app-text-muted)]">Génère rapidement un devis à partir des quantités.</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-bold text-white">Suivi budget chantier</div>
-            <div className="mt-1 text-sm text-white/60">Compare budget prévu, dépenses réelles et reste à engager.</div>
+          <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Suivi budget chantier</div>
+            <div className="mt-1 text-sm text-[var(--app-text-muted)]">Compare budget prévu, dépenses réelles et reste à engager.</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-bold text-white">Rapports journaliers</div>
-            <div className="mt-1 text-sm text-white/60">Prépare tes rapports (photos, avancement, observations).</div>
+          <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Rapports journaliers</div>
+            <div className="mt-1 text-sm text-[var(--app-text-muted)]">Prépare tes rapports (photos, avancement, observations).</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-            <div className="text-sm font-bold text-white">Bibliothèque de dosages</div>
-            <div className="mt-1 text-sm text-white/60">Accès rapide aux repères terrain et dosages pratiques.</div>
+          <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Bibliothèque de dosages</div>
+            <div className="mt-1 text-sm text-[var(--app-text-muted)]">Accès rapide aux repères terrain et dosages pratiques.</div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 px-6 py-4">
-          <div className="text-sm text-white/60">
-            <Link href="/pricing" className="font-semibold text-white hover:underline">
+        <div className="border-t border-[var(--app-card-border)] px-6 py-4">
+          <div className="text-sm text-[var(--app-text-muted)]">
+            <Link href="/pricing" className="font-semibold text-[var(--app-text)] hover:underline">
               Voir les plans
             </Link>
+            <span className="mx-2 text-[color-mix(in_oklab,var(--app-text),transparent_70%)]">·</span>
+            <span className="text-[var(--app-text-muted)]">Passe au niveau pro pour débloquer tous les outils.</span>
           </div>
         </div>
       </Card>

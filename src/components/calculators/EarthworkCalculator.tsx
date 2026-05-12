@@ -95,25 +95,27 @@ export function EarthworkCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Volume déblais:</span> {output.excavationVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume déblais:</span> {output.excavationVolumeM3} m³
             </div>
             <div>
-              <span className="text-white/55">Volume à évacuer:</span> {output.volumeToEvacuateM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume à évacuer:</span> {output.volumeToEvacuateM3} m³
             </div>
             <div>
-              <span className="text-white/55">Coût transport:</span> {output.estimatedTransportCost === null ? "—" : `${output.estimatedTransportCost} FCFA`}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût transport:</span> {output.estimatedTransportCost === null ? "—" : `${output.estimatedTransportCost} FCFA`}
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="text-xs text-white/50">Le foisonnement dépend du sol (argile, sable, latérite…). Ajuste selon tes habitudes.</div>
+      <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+        Le foisonnement dépend du sol (argile, sable, latérite…). Ajuste selon tes habitudes.
+      </div>
     </div>
   );
 }

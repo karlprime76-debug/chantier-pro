@@ -20,19 +20,19 @@ export default async function Home() {
       <AppShell className={isAuthenticated ? "pb-[calc(104px+env(safe-area-inset-bottom))]" : "pb-16"}>
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-7">
-            <div className="cp-animate-in inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/75">
+            <div className="cp-animate-in inline-flex items-center gap-2 rounded-full border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-3 py-1 text-xs font-semibold text-[var(--app-text-muted)]">
               SaaS mobile-first pour le BTP
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--cp-accent)]" />
               MVP
             </div>
-            <h1 className="cp-animate-in mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h1 className="cp-animate-in mt-4 text-3xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-4xl">
               Pilote tes chantiers.
               <br />
               Calcule vite.
               <br />
               Suis tes dépenses.
             </h1>
-            <p className="cp-animate-in mt-4 max-w-xl text-base leading-7 text-white/65">
+            <p className="cp-animate-in mt-4 max-w-xl text-base leading-7 text-[var(--app-text-muted)]">
               Chantier Pro aide les professionnels du BTP à centraliser les chantiers, enregistrer les
               calculs béton/acier, suivre les dépenses et produire des rapports journaliers.
             </p>
@@ -47,43 +47,43 @@ export default async function Home() {
                 href="/calculs"
                 aria-label="Ouvrir les calculateurs"
                 className={cn(
-                  "cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4 transition",
-                  "cursor-pointer hover:bg-white/10",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(11,15,20)]",
+                  "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
+                  "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
                 )}
               >
-                <div className="text-sm font-bold text-white">Calculs</div>
-                <div className="mt-1 text-xs text-white/55">Béton & acier</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Calculs</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Béton & acier</div>
               </Link>
 
               <Link
                 href="/dashboard"
                 aria-label="Ouvrir le suivi sur le dashboard"
                 className={cn(
-                  "cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4 transition",
-                  "cursor-pointer hover:bg-white/10",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(11,15,20)]",
+                  "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
+                  "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
                 )}
               >
-                <div className="text-sm font-bold text-white">Suivi</div>
-                <div className="mt-1 text-xs text-white/55">Budget vs réel</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Suivi</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Budget vs réel</div>
               </Link>
 
               <Link
                 href="/dashboard/reports"
                 aria-label="Ouvrir les rapports journaliers"
                 className={cn(
-                  "cp-hover-lift rounded-2xl border border-white/10 bg-white/5 p-4 transition",
-                  "cursor-pointer hover:bg-white/10",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(11,15,20)]",
+                  "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
+                  "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
                 )}
               >
-                <div className="text-sm font-bold text-white">Rapports</div>
-                <div className="mt-1 text-xs text-white/55">Journal chantier</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Rapports</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Journal chantier</div>
               </Link>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
               <PlanTabs defaultTab="free" />
             </div>
           </div>

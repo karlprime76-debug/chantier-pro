@@ -259,16 +259,16 @@ export function SteelCalculator() {
         </CardHeader>
         <div className="grid gap-2">
           {projectsLoading ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">Chargement…</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">Chargement…</div>
           ) : projectsError ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">{projectsError}</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">{projectsError}</div>
           ) : projects.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
               Aucun chantier. Crée d’abord un chantier pour sauvegarder.
             </div>
           ) : (
             <select
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+              className="w-full rounded-xl border border-[var(--app-card-border)] bg-[var(--app-input-bg)] px-3 py-2 text-sm text-[var(--app-text)]"
               value={projectId}
               onChange={(e) => {
                 const next = e.target.value;
@@ -288,7 +288,7 @@ export function SteelCalculator() {
           )}
 
           {projectPrefilledFromUrl && projectId === projectIdFromUrl ? (
-            <div className="text-xs text-white/55">Chantier sélectionné depuis la page projet.</div>
+            <div className="text-xs text-[var(--app-text-muted)]">Chantier sélectionné depuis la page projet.</div>
           ) : null}
         </div>
       </Card>
@@ -301,9 +301,9 @@ export function SteelCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <label className="text-sm font-semibold text-white">Diamètre</label>
+            <label className="text-sm font-semibold text-[var(--app-text)]">Diamètre</label>
             <select
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+              className="w-full rounded-xl border border-[var(--app-card-border)] bg-[var(--app-input-bg)] px-3 py-2 text-sm text-[var(--app-text)]"
               value={diameter}
               onChange={(e) => setDiameter(e.target.value)}
             >
@@ -370,28 +370,28 @@ export function SteelCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Diamètre:</span> {output.diameterMm} mm • {output.kgPerM} kg/m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Diamètre:</span> {output.diameterMm} mm • {output.kgPerM} kg/m
             </div>
             <div>
-              <span className="text-white/55">Longueur totale:</span> {output.totalLengthM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Longueur totale:</span> {output.totalLengthM} m
             </div>
             <div>
-              <span className="text-white/55">Longueur avec perte:</span> {output.totalLengthWithLossM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Longueur avec perte:</span> {output.totalLengthWithLossM} m
             </div>
             <div>
-              <span className="text-white/55">Poids total:</span> {output.totalWeightKg} kg
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Poids total:</span> {output.totalWeightKg} kg
             </div>
             <div>
-              <span className="text-white/55">Barres 12m:</span> {output.bars12mCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Barres 12m:</span> {output.bars12mCount}
             </div>
             <div>
-              <span className="text-white/55">Coût estimatif:</span> {output.estimatedCost ? `${output.estimatedCost} FCFA` : "—"}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimatif:</span> {output.estimatedCost ? `${output.estimatedCost} FCFA` : "—"}
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
@@ -404,25 +404,25 @@ export function SteelCalculator() {
         </CardHeader>
 
         {historyLoading ? (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">Chargement…</div>
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">Chargement…</div>
         ) : historyError ? (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">{historyError}</div>
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">{historyError}</div>
         ) : history.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Aucun calcul acier sauvegardé pour le moment.
           </div>
         ) : (
           <div className="grid gap-2">
             {history.map((h) => (
-              <div key={h.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+              <div key={h.id} className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-bold text-white">HA{h.diameterMm}</div>
-                    <div className="mt-1 text-xs text-white/55">{new Date(h.createdAt).toLocaleDateString("fr-FR")}</div>
+                    <div className="truncate text-sm font-bold text-[var(--app-text)]">HA{h.diameterMm}</div>
+                    <div className="mt-1 text-xs text-[var(--app-text-muted)]">{new Date(h.createdAt).toLocaleDateString("fr-FR")}</div>
                   </div>
-                  <div className="shrink-0 text-sm font-bold text-white">{String(h.totalWeightKg)} kg</div>
+                  <div className="shrink-0 text-sm font-bold text-[var(--app-text)]">{String(h.totalWeightKg)} kg</div>
                 </div>
-                <div className="mt-2 text-xs text-white/55">
+                <div className="mt-2 text-xs text-[var(--app-text-muted)]">
                   Longueur: {String(h.totalLengthM)} m • Barres 12m: {h.bars12mCount ?? "—"} • Coût: {h.estimatedCost ? `${String(h.estimatedCost)} FCFA` : "—"}
                 </div>
               </div>

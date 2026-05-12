@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/Input";
 import { SubscriptionCard } from "@/components/settings/SubscriptionCard";
 import { InstallAppCard } from "@/components/settings/InstallAppCard";
 import { HelpSupportCard } from "@/components/settings/HelpSupportCard";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { requireSession } from "@/lib/auth/guards";
 import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
@@ -53,6 +54,14 @@ export default async function SettingsPage() {
             </Button>
           </div>
         </form>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Apparence</CardTitle>
+          <CardDescription>Automatique, clair ou sombre.</CardDescription>
+        </CardHeader>
+        <ThemeToggle />
       </Card>
 
       <InstallAppCard />

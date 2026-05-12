@@ -71,9 +71,9 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
       </Button>
 
       {error ? (
-        <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm">
+        <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm">
           <div className="text-[var(--cp-accent)]">{error.title}</div>
-          {error.details ? <div className="mt-1 text-white/70">Détail serveur : {error.details}</div> : null}
+          {error.details ? <div className="mt-1 text-[var(--app-text-muted)]">Détail serveur : {error.details}</div> : null}
         </div>
       ) : null}
     </div>

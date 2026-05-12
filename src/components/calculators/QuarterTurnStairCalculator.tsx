@@ -112,35 +112,35 @@ export function QuarterTurnStairCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Nombre de marches:</span> {output.stepsCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Nombre de marches:</span> {output.stepsCount}
             </div>
             <div>
-              <span className="text-white/55">Hauteur marche:</span> {output.riserHeightM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Hauteur marche:</span> {output.riserHeightM} m
             </div>
             <div>
-              <span className="text-white/55">Marches balancées:</span> {output.balancedStepsCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Marches balancées:</span> {output.balancedStepsCount}
             </div>
             <div>
-              <span className="text-white/55">Emprise approx.:</span> {output.footprintLengthM} m × {output.footprintWidthM} m
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Emprise approx.:</span> {output.footprintLengthM} m × {output.footprintWidthM} m
             </div>
             <div>
-              <span className="text-white/55">Volume béton:</span> {output.concreteVolumeM3} m³
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume béton:</span> {output.concreteVolumeM3} m³
             </div>
             <div>
-              <span className="text-white/55">Surface coffrage:</span> {output.formworkSurfaceM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface coffrage:</span> {output.formworkSurfaceM2} m²
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
       </Card>
 
-      <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-xs text-white/60">
-        <div className="font-semibold text-white/80">Avertissement</div>
+      <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-xs text-[var(--app-text-muted)]">
+        <div className="font-semibold text-[var(--app-text)]">Avertissement</div>
         <div>
           Calcul indicatif (MVP). Pour exécution, valider l’implantation, la structure et les détails (balancement, reculement,
           ferraillage) avec un ingénieur / BET.

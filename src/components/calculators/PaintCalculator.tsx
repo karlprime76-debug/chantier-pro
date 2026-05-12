@@ -110,21 +110,21 @@ export function PaintCalculator() {
         </CardHeader>
 
         {output ? (
-          <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/70">
+          <div className="grid gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Surface murs brute:</span> {output.wallsAreaM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface murs brute:</span> {output.wallsAreaM2} m²
             </div>
             <div>
-              <span className="text-white/55">Surface à peindre (couches):</span> {output.paintAreaM2} m²
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Surface à peindre (couches):</span> {output.paintAreaM2} m²
             </div>
             <div>
-              <span className="text-white/55">Litres nécessaires:</span> {output.litersNeeded} L
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Litres nécessaires:</span> {output.litersNeeded} L
             </div>
             <div>
-              <span className="text-white/55">Litres + perte:</span> {output.litersWithWaste} L
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Litres + perte:</span> {output.litersWithWaste} L
             </div>
             <div>
-              <span className="text-white/55">Nombre de pots:</span> {output.potsCount === null ? "—" : output.potsCount}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Nombre de pots:</span> {output.potsCount === null ? "—" : output.potsCount}
             </div>
 
             <div className="pt-2">
@@ -146,7 +146,7 @@ export function PaintCalculator() {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+          <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
             Renseigne les paramètres puis clique sur “Calculer”.
           </div>
         )}
