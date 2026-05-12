@@ -6,9 +6,32 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Chantier Pro",
-  description: "Application de gestion de chantiers, calculs BTP et documents professionnels.",
+  title: {
+    default: "Chantier Pro",
+    template: "%s | Chantier Pro",
+  },
+  applicationName: "Chantier Pro",
+  description: "Application mobile-first pour gérer les chantiers BTP : calculs béton/acier, dépenses, rapports et documents.",
+  keywords: [
+    "chantier",
+    "BTP",
+    "gestion de chantier",
+    "calcul béton",
+    "calcul acier",
+    "devis",
+    "rapport journalier",
+    "Bénin",
+  ],
+  authors: [{ name: "Chantier Pro" }],
+  creator: "Chantier Pro",
   metadataBase: new URL("https://chantier-pro-snowy.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -20,7 +43,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Chantier Pro",
-    description: "Application de gestion de chantiers, calculs BTP et documents professionnels.",
+    description: "Application mobile-first pour gérer les chantiers BTP : calculs béton/acier, dépenses, rapports et documents.",
     url: "https://chantier-pro-snowy.vercel.app",
     siteName: "Chantier Pro",
     locale: "fr_FR",
@@ -37,7 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Chantier Pro",
-    description: "Application de gestion de chantiers, calculs BTP et documents professionnels.",
+    description: "Application mobile-first pour gérer les chantiers BTP : calculs béton/acier, dépenses, rapports et documents.",
     images: ["/twitter-image"],
   },
 };

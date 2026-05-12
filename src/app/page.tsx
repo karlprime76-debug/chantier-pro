@@ -1,4 +1,5 @@
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
+import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/Button";
@@ -112,6 +113,7 @@ export default async function Home() {
         </div>
       </AppShell>
       {isAuthenticated ? <MobileBottomNav /> : null}
+      <MarketingFooter />
     </div>
   );
 }

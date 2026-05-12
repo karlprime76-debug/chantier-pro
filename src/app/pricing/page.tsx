@@ -1,4 +1,5 @@
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
+import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { PlanBadge } from "@/components/ui/PlanBadge";
@@ -239,6 +240,7 @@ export default async function PricingPage() {
           {canSeeBillingHealth ? <BillingHealthCheck /> : null}
         </div>
       </AppShell>
+      <MarketingFooter />
     </div>
   );
 }
