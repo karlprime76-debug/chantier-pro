@@ -2,9 +2,8 @@ import Link from "next/link";
 
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-
-const CONTACT_EMAIL = "chantierprobj@gmail.com";
-const CONTACT_WHATSAPP = null as string | null;
+import { Button } from "@/components/ui/Button";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function ContactPage() {
   return (
@@ -27,14 +26,22 @@ export default function ContactPage() {
             <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
               <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Email</div>
               <div className="mt-1 text-sm font-bold text-[var(--app-text)]">
-                <a className="text-[var(--app-primary)] underline" href={`mailto:${CONTACT_EMAIL}`}>
-                  {CONTACT_EMAIL}
+                <a className="text-[var(--app-primary)] underline" href={`mailto:${SITE_CONFIG.email}`}>
+                  {SITE_CONFIG.email}
                 </a>
               </div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                Téléphone / WhatsApp : {CONTACT_WHATSAPP ? CONTACT_WHATSAPP : "À définir"}
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">WhatsApp : {SITE_CONFIG.whatsappDisplay}</div>
+              <div className="mt-2">
+                <Button href={SITE_CONFIG.whatsappUrl} size="sm" target="_blank" rel="noreferrer">
+                  Écrire sur WhatsApp
+                </Button>
               </div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">Ville : Cotonou, Bénin</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Localisation : {SITE_CONFIG.city}, {SITE_CONFIG.country}
+              </div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Support disponible pour les questions liées à l’utilisation de Chantier Pro, aux abonnements et aux comptes utilisateurs.
+              </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">

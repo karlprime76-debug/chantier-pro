@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function ConditionsPage() {
   return (
@@ -34,7 +35,8 @@ export default function ConditionsPage() {
             </div>
             <div>
               <div className="font-bold text-[var(--app-text)]">Contact</div>
-              <div className="mt-1">chantierprobj@gmail.com</div>
+              <div className="mt-1">{SITE_CONFIG.email}</div>
+              <div className="mt-1">WhatsApp : {SITE_CONFIG.whatsappDisplay}</div>
             </div>
           </div>
         </Card>

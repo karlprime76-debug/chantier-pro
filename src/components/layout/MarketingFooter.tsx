@@ -1,13 +1,30 @@
 import Link from "next/link";
 
 import { AppShell } from "@/components/layout/AppShell";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export function MarketingFooter() {
   return (
     <footer className="border-t border-[var(--app-card-border)] bg-[var(--app-nav-bg)] supports-[backdrop-filter]:backdrop-blur">
       <AppShell className="py-6">
         <div className="grid gap-4 sm:grid-cols-2 sm:items-center">
-          <div className="text-sm text-[var(--app-text-muted)]">© {new Date().getFullYear()} Chantier Pro • Bénin</div>
+          <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
+            <div>
+              © {new Date().getFullYear()} {SITE_CONFIG.name} • {SITE_CONFIG.country}
+            </div>
+            <div>
+              Contact :{" "}
+              <a className="hover:text-[var(--app-text)]" href={`mailto:${SITE_CONFIG.email}`}>
+                {SITE_CONFIG.email}
+              </a>
+            </div>
+            <div>
+              WhatsApp :{" "}
+              <a className="hover:text-[var(--app-text)]" href={SITE_CONFIG.whatsappUrl} target="_blank" rel="noreferrer">
+                {SITE_CONFIG.whatsappDisplay}
+              </a>
+            </div>
+          </div>
           <nav className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 sm:justify-end">
             <Link className="text-sm text-[var(--app-text-muted)] hover:text-[var(--app-text)]" href="/pricing">
               Tarifs

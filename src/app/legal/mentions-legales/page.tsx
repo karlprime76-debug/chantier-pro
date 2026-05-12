@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function MentionsLegalesPage() {
   return (
@@ -21,10 +22,19 @@ export default function MentionsLegalesPage() {
               <span className="font-bold text-[var(--app-text)]">Nom du service :</span> Chantier Pro
             </div>
             <div>
-              <span className="font-bold text-[var(--app-text)]">Contact :</span> chantierprobj@gmail.com
+              <span className="font-bold text-[var(--app-text)]">Éditeur / responsable du service :</span> {SITE_CONFIG.editor}
             </div>
             <div>
-              <span className="font-bold text-[var(--app-text)]">Pays :</span> Bénin
+              <span className="font-bold text-[var(--app-text)]">Contact :</span> {SITE_CONFIG.email}
+            </div>
+            <div>
+              <span className="font-bold text-[var(--app-text)]">WhatsApp :</span> {SITE_CONFIG.whatsappDisplay}
+            </div>
+            <div>
+              <span className="font-bold text-[var(--app-text)]">Localisation :</span> {SITE_CONFIG.city}, {SITE_CONFIG.country}
+            </div>
+            <div>
+              <span className="font-bold text-[var(--app-text)]">Pays :</span> {SITE_CONFIG.country}
             </div>
             <div>
               <span className="font-bold text-[var(--app-text)]">Hébergement :</span> Vercel (États‑Unis / UE selon région)

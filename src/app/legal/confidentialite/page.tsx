@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function ConfidentialitePage() {
   return (
@@ -47,7 +48,10 @@ export default function ConfidentialitePage() {
             <CardTitle>Contact</CardTitle>
             <CardDescription>Exercer vos droits (accès / rectification / suppression).</CardDescription>
           </CardHeader>
-          <div className="text-sm text-[var(--app-text-muted)]">chantierprobj@gmail.com</div>
+          <div className="grid gap-1 text-sm text-[var(--app-text-muted)]">
+            <div>{SITE_CONFIG.email}</div>
+            <div>WhatsApp : {SITE_CONFIG.whatsappDisplay}</div>
+          </div>
         </Card>
       </div>
     </AppShell>
