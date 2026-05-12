@@ -47,9 +47,9 @@ export function ForgotPasswordForm() {
       />
 
       {submitted ? (
-        <div className="text-sm text-white/70">{GENERIC_MESSAGE}</div>
+        <div className="text-sm text-[var(--app-text-muted)]">{GENERIC_MESSAGE}</div>
       ) : error ? (
-        <div className="text-sm text-[var(--cp-accent)]">{error}</div>
+        <div className="text-sm text-[var(--app-primary)]">{error}</div>
       ) : null}
 
       <Button type="submit" size="lg" disabled={loading || submitted}>

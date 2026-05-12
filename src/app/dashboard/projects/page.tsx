@@ -27,8 +27,8 @@ export default async function ProjectsPage() {
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">Chantiers</h1>
-          <p className="mt-1 text-sm text-white/60">Tous tes projets en cours et terminés.</p>
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Chantiers</h1>
+          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Tous tes projets en cours et terminés.</p>
         </div>
         <Button href="/dashboard/projects/new" variant="secondary">
           Nouveau
@@ -42,9 +42,9 @@ export default async function ProjectsPage() {
         </CardHeader>
         <div className="grid gap-3">
           {projects.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <div className="text-sm font-semibold text-white">Aucun chantier</div>
-              <div className="mt-1 text-sm text-white/60">
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+              <div className="text-sm font-semibold text-[var(--app-text)]">Aucun chantier</div>
+              <div className="mt-1 text-sm text-[var(--app-text-muted)]">
                 Crée ton premier chantier pour commencer le suivi.
               </div>
               <div className="mt-4">
@@ -55,11 +55,14 @@ export default async function ProjectsPage() {
             </div>
           ) : (
             projects.map((p) => (
-              <div key={p.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+              <div
+                key={p.id}
+                className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4"
+              >
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-bold text-white">{p.name}</div>
-                    <div className="mt-1 text-xs text-white/55">
+                    <div className="truncate text-sm font-bold text-[var(--app-text)]">{p.name}</div>
+                    <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
                       Statut: {p.status} • Avancement: {p.progress}%
                       {p.clientName ? ` • Client: ${p.clientName}` : ""}
                     </div>

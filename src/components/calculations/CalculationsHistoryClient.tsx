@@ -64,8 +64,8 @@ export function CalculationsHistoryClient() {
     <div className="grid gap-4">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <div className="text-sm font-semibold text-white/80">Calculs sauvegardés</div>
-          <div className="mt-1 text-xs text-white/55">Béton / Acier / Escalier droit (MVP).</div>
+          <div className="text-sm font-semibold text-[var(--app-text)]">Calculs sauvegardés</div>
+          <div className="mt-1 text-xs text-[var(--app-text-muted)]">Béton / Acier / Escalier droit (MVP).</div>
         </div>
         <Button type="button" variant="secondary" size="sm" onClick={() => void refresh()} disabled={loading}>
           Actualiser
@@ -73,7 +73,9 @@ export function CalculationsHistoryClient() {
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">{emptyLabel}</div>
+        <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
+          {emptyLabel}
+        </div>
       ) : (
         <div className="grid gap-3">
           {items.map((it) => (
@@ -115,8 +117,8 @@ export function CalculationsHistoryClient() {
         </div>
       )}
 
-      <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-xs text-white/60">
-        <div className="font-semibold text-white/80">Limites MVP</div>
+      <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-xs text-[var(--app-text-muted)]">
+        <div className="font-semibold text-[var(--app-text)]">Limites MVP</div>
         <div>
           L’historique global n’affiche pas encore les calculateurs blocs/peinture/carrelage/dalle avancée (ils seront ajoutés ensuite).
         </div>

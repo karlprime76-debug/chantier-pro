@@ -20,7 +20,7 @@ type CommonProps = {
 
 function styles({ variant, size }: { variant: ButtonVariant; size: ButtonSize }) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.98] active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cp-bg)] disabled:opacity-60 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.98] active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)] disabled:opacity-60 disabled:pointer-events-none";
 
   const sizes: Record<ButtonSize, string> = {
     sm: "h-9 px-3 text-sm",
@@ -30,11 +30,11 @@ function styles({ variant, size }: { variant: ButtonVariant; size: ButtonSize })
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      "bg-[var(--cp-accent)] text-white hover:bg-[color-mix(in_oklab,var(--cp-accent),black_14%)] focus-visible:ring-[var(--cp-accent)]",
+      "bg-[var(--app-primary)] text-[var(--app-on-primary)] hover:bg-[color-mix(in_oklab,var(--app-primary),black_14%)] focus-visible:ring-[var(--app-primary)]",
     secondary:
-      "bg-[color-mix(in_oklab,var(--cp-accent-2),white_92%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--cp-border)] hover:bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] focus-visible:ring-[var(--cp-accent-2)]",
+      "bg-[var(--app-primary-soft)] text-[var(--app-primary)] ring-1 ring-[var(--app-card-border)] hover:bg-[color-mix(in_oklab,var(--app-primary-soft),black_4%)] focus-visible:ring-[var(--app-primary)]",
     ghost:
-      "bg-transparent text-[color-mix(in_oklab,var(--cp-text),transparent_15%)] hover:bg-[color-mix(in_oklab,var(--cp-text),transparent_92%)] ring-1 ring-transparent hover:ring-[var(--cp-border)] focus-visible:ring-[var(--cp-accent-2)]",
+      "bg-transparent text-[color-mix(in_oklab,var(--app-text),transparent_15%)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] ring-1 ring-transparent hover:ring-[var(--app-card-border)] focus-visible:ring-[var(--app-primary)]",
   };
 
   return cn(base, sizes[size], variants[variant]);

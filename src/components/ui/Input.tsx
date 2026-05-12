@@ -17,7 +17,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <label className="block">
         {label ? (
-          <div className="mb-1 text-sm font-semibold text-white/85">{label}</div>
+          <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">{label}</div>
         ) : null}
         <input
           ref={ref}
@@ -25,7 +25,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           aria-describedby={describedBy}
           aria-invalid={Boolean(error) || undefined}
           className={cn(
-            "h-11 w-full rounded-xl bg-white/5 px-3 text-sm text-white placeholder:text-white/35 ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]",
+            "h-11 w-full rounded-xl bg-[var(--app-input-bg)] px-3 text-sm text-[var(--app-text)] placeholder:text-[color-mix(in_oklab,var(--app-text),transparent_65%)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]",
             error ? "ring-[color-mix(in_oklab,var(--cp-accent),white_10%)]" : "",
             className,
           )}
@@ -36,7 +36,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {error}
           </div>
         ) : hint ? (
-          <div id={`${inputId}-hint`} className="mt-1 text-xs text-white/55">
+          <div id={`${inputId}-hint`} className="mt-1 text-xs text-[var(--app-text-muted)]">
             {hint}
           </div>
         ) : null}

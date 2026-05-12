@@ -44,14 +44,14 @@ type DashboardSidebarProps = {
 export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
   return (
     <aside className="hidden w-64 shrink-0 sm:block">
-      <div className="sticky top-6 rounded-2xl border border-white/10 bg-white/5 p-3">
+      <div className="sticky top-6 rounded-2xl border border-[var(--app-card-border)] bg-[var(--app-card)] p-3">
         <div className="mb-3 flex items-center gap-3 px-3 py-2">
-          <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-white/5 ring-1 ring-white/10">
+          <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] ring-1 ring-[var(--app-card-border)]">
             <Image src="/logo.png" alt="Chantier Pro" width={40} height={40} className="h-10 w-10 object-contain" />
           </div>
           <div>
-            <div className="text-sm font-bold text-white">Chantier Pro</div>
-            <div className="text-xs text-white/55">MVP</div>
+            <div className="text-sm font-bold text-[var(--app-text)]">Chantier Pro</div>
+            <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">MVP</div>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
             href="/"
             className={cn(
               "rounded-xl px-3 py-2 text-sm font-semibold transition",
-              "text-white/70 hover:bg-white/5 hover:text-white",
+              "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
             )}
           >
             Accueil
@@ -74,7 +74,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
                 href={item.href}
                 className={cn(
                   "rounded-xl px-3 py-2 text-sm font-semibold transition",
-                  active ? "bg-white/10 text-white" : "text-white/70 hover:bg-white/5 hover:text-white",
+                  active
+                    ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                    : "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 {item.label}
@@ -83,7 +85,7 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
           })}
 
           <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
-            <div className="text-xs font-bold uppercase tracking-wide text-white/40">Calculateurs</div>
+            <div className="text-xs font-bold uppercase tracking-wide text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Calculateurs</div>
             <PlanBadge variant="free" />
           </div>
           {calculatorFreeItems.map((item) => {
@@ -94,7 +96,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
                 href={item.href}
                 className={cn(
                   "rounded-xl px-3 py-2 text-sm font-semibold transition",
-                  active ? "bg-white/10 text-white" : "text-white/70 hover:bg-white/5 hover:text-white",
+                  active
+                    ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                    : "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 {item.label}
@@ -103,7 +107,7 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
           })}
 
           <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
-            <div className="text-xs font-bold uppercase tracking-wide text-white/40">Calculateurs</div>
+            <div className="text-xs font-bold uppercase tracking-wide text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Calculateurs</div>
             <PlanBadge variant="premium" />
           </div>
           {calculatorProItems.map((item) => {
@@ -114,7 +118,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
                 href={item.href}
                 className={cn(
                   "rounded-xl px-3 py-2 text-sm font-semibold transition",
-                  active ? "bg-white/10 text-white" : "text-white/70 hover:bg-white/5 hover:text-white",
+                  active
+                    ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                    : "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 {item.label}
@@ -123,7 +129,7 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
           })}
 
           <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
-            <div className="text-xs font-bold uppercase tracking-wide text-white/40">Entreprise</div>
+            <div className="text-xs font-bold uppercase tracking-wide text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Entreprise</div>
             <PlanBadge variant="premium" />
           </div>
           {calculatorEnterpriseItems.map((item) => {
@@ -134,7 +140,9 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
                 href={item.href}
                 className={cn(
                   "rounded-xl px-3 py-2 text-sm font-semibold transition",
-                  active ? "bg-white/10 text-white" : "text-white/70 hover:bg-white/5 hover:text-white",
+                  active
+                    ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                    : "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 {item.label}

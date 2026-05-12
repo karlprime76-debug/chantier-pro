@@ -48,8 +48,8 @@ export default async function MorePage() {
       <AppShell className="pb-[calc(104px+env(safe-area-inset-bottom))] sm:pb-10">
         <div className="grid gap-6">
           <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-white">Plus</h1>
-            <p className="mt-1 text-sm text-white/60">Accès rapide aux sections secondaires.</p>
+            <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Plus</h1>
+            <p className="mt-1 text-sm text-[var(--app-text-muted)]">Accès rapide aux sections secondaires.</p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">

@@ -9,9 +9,9 @@ type PlanBadgeProps = {
 
 export function PlanBadge({ variant, className }: PlanBadgeProps) {
   const styles: Record<PlanBadgeVariant, string> = {
-    free: "bg-white/5 text-white/75 ring-1 ring-white/10",
-    premium: "bg-[var(--cp-accent)] text-white ring-1 ring-[color-mix(in_oklab,var(--cp-accent),black_18%)]",
-    soon: "bg-white/5 text-white/70 ring-1 ring-white/10",
+    free: "bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]",
+    premium: "bg-[var(--cp-accent)] text-[var(--app-on-primary)] ring-1 ring-[color-mix(in_oklab,var(--cp-accent),black_18%)]",
+    soon: "bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]",
   };
 
   const labels: Record<PlanBadgeVariant, string> = {

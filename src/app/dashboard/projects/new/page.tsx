@@ -5,8 +5,8 @@ export default function NewProjectPage() {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Nouveau chantier</h1>
-        <p className="mt-1 text-sm text-white/60">Crée un projet et commence le suivi.</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Nouveau chantier</h1>
+        <p className="mt-1 text-sm text-[var(--app-text-muted)]">Crée un projet et commence le suivi.</p>
       </div>
 
       <Card>

@@ -94,12 +94,12 @@ export function ResetPasswordForm({ token }: { token: string }) {
         placeholder="••••••••"
       />
 
-      {validationError ? <div className="text-sm text-[var(--cp-accent)]">{validationError}</div> : null}
-      {error ? <div className="text-sm text-[var(--cp-accent)]">{error}</div> : null}
+      {validationError ? <div className="text-sm text-[var(--app-primary)]">{validationError}</div> : null}
+      {error ? <div className="text-sm text-[var(--app-primary)]">{error}</div> : null}
 
       {success ? (
         <>
-          <div className="text-sm text-white/70">Votre mot de passe a été réinitialisé.</div>
+          <div className="text-sm text-[var(--app-text-muted)]">Votre mot de passe a été réinitialisé.</div>
           <Button href="/login" size="lg">
             Se connecter
           </Button>

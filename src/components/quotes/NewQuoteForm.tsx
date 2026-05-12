@@ -137,13 +137,13 @@ export function NewQuoteForm({ userPlan }: NewQuoteFormProps) {
         onChange={(e) => setClientName(e.target.value)}
       />
 
-      <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
+      <div className="grid gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="text-sm font-bold text-white">Modèles rapides</div>
-            <div className="mt-1 text-xs text-white/55">Clique pour pré-remplir une ligne.</div>
+            <div className="text-sm font-bold text-[var(--app-text)]">Modèles rapides</div>
+            <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Clique pour pré-remplir une ligne.</div>
           </div>
-          <div className="text-xs font-semibold text-white/55">Plan: {userPlan}</div>
+          <div className="text-xs font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Plan: {userPlan}</div>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -171,12 +171,12 @@ export function NewQuoteForm({ userPlan }: NewQuoteFormProps) {
         </div>
 
         {!canAccessFeature(userPlan, "quote_templates") ? (
-          <div className="text-xs text-white/55">Certains modèles sont Premium.</div>
+          <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Certains modèles sont Premium.</div>
         ) : null}
       </div>
 
-      <div className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
-        <div className="text-sm font-bold text-white">Ligne 1</div>
+      <div className="grid gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+        <div className="text-sm font-bold text-[var(--app-text)]">Ligne 1</div>
         <Input
           label="Libellé"
           name="itemLabel"

@@ -20,12 +20,12 @@ export function PremiumLock({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
 
-      <div className="rounded-2xl border border-white/10 bg-black/20 p-6">
-        <div className="text-sm font-semibold text-white">Accès restreint</div>
-        <div className="mt-1 text-sm text-white/60">
+      <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-6">
+        <div className="text-sm font-semibold text-[var(--app-text)]">Accès restreint</div>
+        <div className="mt-1 text-sm text-[var(--app-text-muted)]">
           Passez au plan Premium pour activer cette fonctionnalité.
         </div>
-        <div className="mt-3 text-xs text-white/55">
+        <div className="mt-3 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
           Si tu penses avoir déjà accès, vérifie que tu es connecté avec le bon compte.
         </div>
       </div>

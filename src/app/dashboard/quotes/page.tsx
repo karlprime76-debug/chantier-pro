@@ -37,8 +37,8 @@ export default async function QuotesPage() {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Devis</h1>
-        <p className="mt-1 text-sm text-white/60">Devis simple (PDF plus tard).</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Devis</h1>
+        <p className="mt-1 text-sm text-[var(--app-text-muted)]">Devis simple (PDF plus tard).</p>
       </div>
 
       <Card>
@@ -57,20 +57,23 @@ export default async function QuotesPage() {
         </CardHeader>
         <div className="grid gap-2">
           {quotes.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
               Aucun devis.
             </div>
           ) : (
             quotes.map((q) => (
-              <div key={q.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+              <div
+                key={q.id}
+                className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-bold text-white">{q.title}</div>
-                    <div className="mt-1 text-xs text-white/55">
+                    <div className="truncate text-sm font-bold text-[var(--app-text)]">{q.title}</div>
+                    <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
                       {q.project.name} • {q.status} • {new Date(q.createdAt).toLocaleDateString("fr-FR")}
                     </div>
                   </div>
-                  <div className="shrink-0 text-sm font-bold text-white">{String(q.total)} FCFA</div>
+                  <div className="shrink-0 text-sm font-bold text-[var(--app-text)]">{String(q.total)} FCFA</div>
                 </div>
               </div>
             ))

@@ -40,7 +40,7 @@ export function CalculationsPrintClient() {
 
   return (
     <div className="grid gap-4">
-      <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+      <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
         MVP: pour exporter un calcul en PDF, utilise une page “imprimable” puis “Enregistrer en PDF”.
       </div>
 
@@ -55,20 +55,20 @@ export function CalculationsPrintClient() {
           <Input label="Avertissement technique" value={warning} onChange={(e) => setWarning(e.target.value)} />
 
           <label className="block">
-            <div className="mb-1 text-sm font-semibold text-white/85">Entrées (JSON)</div>
+            <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Entrées (JSON)</div>
             <textarea
               value={inputJson}
               onChange={(e) => setInputJson(e.target.value)}
-              className="min-h-[120px] w-full rounded-xl bg-white/5 px-3 py-2 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+              className="min-h-[120px] w-full rounded-xl bg-[var(--app-input-bg)] px-3 py-2 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
             />
           </label>
 
           <label className="block">
-            <div className="mb-1 text-sm font-semibold text-white/85">Résultats (JSON)</div>
+            <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Résultats (JSON)</div>
             <textarea
               value={outputJson}
               onChange={(e) => setOutputJson(e.target.value)}
-              className="min-h-[120px] w-full rounded-xl bg-white/5 px-3 py-2 text-sm text-white ring-1 ring-white/10 outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
+              className="min-h-[120px] w-full rounded-xl bg-[var(--app-input-bg)] px-3 py-2 text-sm text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] outline-none transition focus:ring-2 focus:ring-[var(--cp-accent)]"
             />
           </label>
 

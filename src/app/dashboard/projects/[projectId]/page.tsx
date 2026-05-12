@@ -34,12 +34,12 @@ function Badge({
 }) {
   const cls =
     tone === "success"
-      ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-200"
+      ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-200"
       : tone === "warning"
-        ? "border-amber-400/20 bg-amber-500/10 text-amber-200"
+        ? "border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-200"
         : tone === "danger"
-          ? "border-rose-400/20 bg-rose-500/10 text-rose-200"
-          : "border-white/10 bg-white/5 text-white/70";
+          ? "border-rose-500/20 bg-rose-500/10 text-rose-700 dark:text-rose-200"
+          : "border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text-muted)]";
 
   return (
     <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold ${cls}`}>
@@ -94,8 +94,8 @@ export default async function ProjectDetailsPage({
       <div className="grid gap-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-white">Chantier introuvable</h1>
-            <p className="mt-1 text-sm text-white/60">Projet inaccessible ou supprimé.</p>
+            <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Chantier introuvable</h1>
+            <p className="mt-1 text-sm text-[var(--app-text-muted)]">Projet inaccessible ou supprimé.</p>
           </div>
           <Button href="/dashboard/projects" variant="ghost">
             Retour
@@ -213,7 +213,7 @@ export default async function ProjectDetailsPage({
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h1 className="truncate text-2xl font-extrabold tracking-tight text-white">{project.name}</h1>
+          <h1 className="truncate text-2xl font-extrabold tracking-tight text-[var(--app-text)]">{project.name}</h1>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <Badge
               tone={
@@ -232,7 +232,7 @@ export default async function ProjectDetailsPage({
             {project.clientName ? <Badge tone="neutral">Client {project.clientName}</Badge> : null}
           </div>
 
-          <div className="mt-2 text-sm text-white/60">
+          <div className="mt-2 text-sm text-[var(--app-text-muted)]">
             {project.location ? project.location : "Localisation non définie"}
             {project.projectType ? ` • ${project.projectType}` : ""}
           </div>
@@ -248,28 +248,28 @@ export default async function ProjectDetailsPage({
             <CardTitle>Header chantier</CardTitle>
             <CardDescription>Informations principales du chantier.</CardDescription>
           </CardHeader>
-          <div className="grid gap-2 text-sm text-white/70">
+          <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="text-white/55">Statut:</span> {project.status}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Statut:</span> {project.status}
             </div>
             <div>
-              <span className="text-white/55">Avancement:</span> {project.progress}%
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Avancement:</span> {project.progress}%
             </div>
             <div>
-              <span className="text-white/55">Client:</span> {project.clientName ?? "—"}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Client:</span> {project.clientName ?? "—"}
             </div>
             <div>
-              <span className="text-white/55">Type:</span> {project.projectType ?? "—"}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Type:</span> {project.projectType ?? "—"}
             </div>
             <div>
-              <span className="text-white/55">Budget estimé:</span>{" "}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Budget estimé:</span>{" "}
               {budget !== null ? formatFcfa(budget) : "—"}
             </div>
             <div>
-              <span className="text-white/55">Début:</span> {formatDateFr(project.startDate)}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Début:</span> {formatDateFr(project.startDate)}
             </div>
             <div>
-              <span className="text-white/55">Fin prévue:</span> {formatDateFr(project.plannedEndDate)}
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Fin prévue:</span> {formatDateFr(project.plannedEndDate)}
             </div>
           </div>
         </Card>
@@ -279,30 +279,30 @@ export default async function ProjectDetailsPage({
             <CardTitle>Résumé financier</CardTitle>
             <CardDescription>Budget vs dépenses (estimation).</CardDescription>
           </CardHeader>
-          <div className="grid gap-2 text-sm text-white/70">
+          <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
             <div className="flex items-center justify-between gap-4">
-              <span className="text-white/55">Dépenses totales</span>
-              <span className="font-semibold text-white">{formatFcfa(totalExpenses)}</span>
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Dépenses totales</span>
+              <span className="font-semibold text-[var(--app-text)]">{formatFcfa(totalExpenses)}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-white/55">Reste théorique</span>
-              <span className="font-semibold text-white">{formatFcfa(remaining)}</span>
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Reste théorique</span>
+              <span className="font-semibold text-[var(--app-text)]">{formatFcfa(remaining)}</span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-white/55">Écart budget</span>
-              <span className={`font-semibold ${overBudget ? "text-rose-200" : "text-white"}`}>
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Écart budget</span>
+              <span className={`font-semibold ${overBudget ? "text-rose-700 dark:text-rose-200" : "text-[var(--app-text)]"}`}>
                 {formatFcfa(delta)}
               </span>
             </div>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-white/55">% consommé</span>
-              <span className={`font-semibold ${overBudget ? "text-rose-200" : "text-white"}`}>
+              <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">% consommé</span>
+              <span className={`font-semibold ${overBudget ? "text-rose-700 dark:text-rose-200" : "text-[var(--app-text)]"}`}>
                 {consumedPct !== null ? `${consumedPct}%` : "—"}
               </span>
             </div>
 
             {overBudget ? (
-              <div className="mt-2 rounded-xl border border-rose-400/20 bg-rose-500/10 p-3 text-sm text-rose-200">
+              <div className="mt-2 rounded-xl border border-rose-500/20 bg-rose-500/10 p-3 text-sm text-rose-700 dark:text-rose-200">
                 Alerte: les dépenses dépassent le budget estimé.
               </div>
             ) : null}
@@ -344,52 +344,55 @@ export default async function ProjectDetailsPage({
             <CardDescription>Derniers calculs liés au chantier.</CardDescription>
           </CardHeader>
           <div className="grid gap-3">
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
-                  <div className="text-sm font-bold text-white">Escalier droit</div>
-                  <div className="mt-1 text-xs text-white/55">{project._count.straightStairCalculations} calcul(s)</div>
+                  <div className="text-sm font-bold text-[var(--app-text)]">Escalier droit</div>
+                  <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">{project._count.straightStairCalculations} calcul(s)</div>
                 </div>
                 <Badge tone="neutral">PRO</Badge>
               </div>
 
               {recentStraightStair.length === 0 ? (
-                <div className="mt-3 text-sm text-white/60">Aucun calcul escalier sauvegardé pour le moment.</div>
+                <div className="mt-3 text-sm text-[var(--app-text-muted)]">Aucun calcul escalier sauvegardé pour le moment.</div>
               ) : (
                 <div className="mt-3 grid gap-2">
                   {recentStraightStair.map((c) => (
-                    <div key={c.id} className="rounded-xl border border-white/10 bg-black/20 p-3">
+                    <div
+                      key={c.id}
+                      className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] p-3"
+                    >
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-xs text-white/55">{formatDateFr(c.createdAt)}</div>
+                        <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">{formatDateFr(c.createdAt)}</div>
                         <Badge
                           tone={
                             c.comfortStatus === "ok" || c.comfortStatus === "OK"
                               ? "success"
-                              : c.comfortStatus === "warning" || c.comfortStatus === "WARNING"
-                                ? "warning"
-                                : "neutral"
+                            : c.comfortStatus === "warning" || c.comfortStatus === "WARNING"
+                              ? "warning"
+                              : "neutral"
                           }
                         >
                           {c.comfortStatus}
                         </Badge>
                       </div>
-                      <div className="mt-2 grid gap-1 text-sm text-white/70">
+                      <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                         <div>
-                          <span className="text-white/55">Marches:</span> {c.stepsCount} •{" "}
-                          <span className="text-white/55">H:</span> {formatNumber(parseDecimalToNumber(c.riserHeightCm), 1)} cm •{" "}
-                          <span className="text-white/55">G:</span> {formatNumber(parseDecimalToNumber(c.treadDepthCm), 1)} cm
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Marches:</span> {c.stepsCount} •{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">H:</span> {formatNumber(parseDecimalToNumber(c.riserHeightCm), 1)} cm •{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">G:</span> {formatNumber(parseDecimalToNumber(c.treadDepthCm), 1)} cm
                         </div>
                         <div>
-                          <span className="text-white/55">2H+G:</span>{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">2H+G:</span>{" "}
                           {formatNumber(parseDecimalToNumber(c.comfortFormulaValue), 1)}
                         </div>
                         <div>
-                          <span className="text-white/55">Béton (avec perte):</span>{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Béton (avec perte):</span>{" "}
                           {formatNumber(parseDecimalToNumber(c.concreteVolumeWithLossM3), 3)} m³ •{" "}
-                          <span className="text-white/55">Coffrage:</span> {formatNumber(parseDecimalToNumber(c.formworkAreaM2), 2)} m²
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coffrage:</span> {formatNumber(parseDecimalToNumber(c.formworkAreaM2), 2)} m²
                         </div>
                         <div>
-                          <span className="text-white/55">Coût estimatif:</span>{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimatif:</span>{" "}
                           {formatFcfa(parseDecimalToNumber(c.estimatedCost))}
                         </div>
                       </div>
@@ -399,29 +402,32 @@ export default async function ProjectDetailsPage({
               )}
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <div className="text-sm font-bold text-white">Béton</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+              <div className="text-sm font-bold text-[var(--app-text)]">Béton</div>
               {recentConcrete.length === 0 ? (
-                <div className="mt-1 text-sm text-white/60">Aucun calcul béton sauvegardé pour le moment.</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Aucun calcul béton sauvegardé pour le moment.</div>
               ) : (
                 <div className="mt-3 grid gap-2">
                   {recentConcrete.map((c) => (
-                    <div key={c.id} className="rounded-xl border border-white/10 bg-black/20 p-3">
+                    <div
+                      key={c.id}
+                      className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] p-3"
+                    >
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-xs text-white/55">{formatDateFr(c.createdAt)}</div>
+                        <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">{formatDateFr(c.createdAt)}</div>
                         <Badge tone="neutral">{c.elementType}</Badge>
                       </div>
-                      <div className="mt-2 grid gap-1 text-sm text-white/70">
+                      <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                         <div>
-                          <span className="text-white/55">Volume (avec perte):</span>{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Volume (avec perte):</span>{" "}
                           {formatNumber(parseDecimalToNumber(c.volumeWithWaste), 3)} m³
                         </div>
                         <div>
-                          <span className="text-white/55">Ciment:</span> {formatNumber(parseDecimalToNumber(c.cementEstimateKg), 0)} kg
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Ciment:</span> {formatNumber(parseDecimalToNumber(c.cementEstimateKg), 0)} kg
                         </div>
                         <div>
-                          <span className="text-white/55">Sable:</span> {formatNumber(parseDecimalToNumber(c.sandEstimateM3), 3)} m³ •{" "}
-                          <span className="text-white/55">Gravier:</span> {formatNumber(parseDecimalToNumber(c.gravelEstimateM3), 3)} m³
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Sable:</span> {formatNumber(parseDecimalToNumber(c.sandEstimateM3), 3)} m³ •{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Gravier:</span> {formatNumber(parseDecimalToNumber(c.gravelEstimateM3), 3)} m³
                         </div>
                       </div>
                     </div>
@@ -430,28 +436,31 @@ export default async function ProjectDetailsPage({
               )}
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <div className="text-sm font-bold text-white">Acier</div>
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+              <div className="text-sm font-bold text-[var(--app-text)]">Acier</div>
               {recentSteel.length === 0 ? (
-                <div className="mt-1 text-sm text-white/60">Aucun calcul acier sauvegardé pour le moment.</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Aucun calcul acier sauvegardé pour le moment.</div>
               ) : (
                 <div className="mt-3 grid gap-2">
                   {recentSteel.map((s) => (
-                    <div key={s.id} className="rounded-xl border border-white/10 bg-black/20 p-3">
+                    <div
+                      key={s.id}
+                      className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] p-3"
+                    >
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-xs text-white/55">{formatDateFr(s.createdAt)}</div>
+                        <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">{formatDateFr(s.createdAt)}</div>
                         <Badge tone="neutral">HA{s.diameterMm}</Badge>
                       </div>
-                      <div className="mt-2 grid gap-1 text-sm text-white/70">
+                      <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                         <div>
-                          <span className="text-white/55">Longueur:</span> {formatNumber(parseDecimalToNumber(s.totalLengthM), 3)} m
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Longueur:</span> {formatNumber(parseDecimalToNumber(s.totalLengthM), 3)} m
                         </div>
                         <div>
-                          <span className="text-white/55">Poids:</span> {formatNumber(parseDecimalToNumber(s.totalWeightKg), 3)} kg •{" "}
-                          <span className="text-white/55">Barres 12m:</span> {s.bars12mCount ?? "—"}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Poids:</span> {formatNumber(parseDecimalToNumber(s.totalWeightKg), 3)} kg •{" "}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Barres 12m:</span> {s.bars12mCount ?? "—"}
                         </div>
                         <div>
-                          <span className="text-white/55">Coût estimatif:</span> {formatFcfa(parseDecimalToNumber(s.estimatedCost))}
+                          <span className="text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Coût estimatif:</span> {formatFcfa(parseDecimalToNumber(s.estimatedCost))}
                         </div>
                       </div>
                     </div>
@@ -469,16 +478,16 @@ export default async function ProjectDetailsPage({
           </CardHeader>
           <div className="grid gap-2">
             {recentExpenses.length === 0 ? (
-              <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
                 Aucune dépense pour le moment.
               </div>
             ) : (
               recentExpenses.map((e) => (
-                <div key={e.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+                <div key={e.id} className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <div className="truncate text-sm font-bold text-white">{e.label}</div>
-                      <div className="mt-1 text-xs text-white/55">
+                      <div className="truncate text-sm font-bold text-[var(--app-text)]">{e.label}</div>
+                      <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
                         {formatDateFr(e.date)} • {e.category}
                         {e.supplier ? ` • ${e.supplier}` : ""}
                       </div>
@@ -486,7 +495,7 @@ export default async function ProjectDetailsPage({
                         <Badge tone={e.status === "VALIDATED" ? "success" : "warning"}>{e.status}</Badge>
                       </div>
                     </div>
-                    <div className="shrink-0 text-sm font-bold text-white">
+                    <div className="shrink-0 text-sm font-bold text-[var(--app-text)]">
                       {formatFcfa(parseDecimalToNumber(e.amount))}
                     </div>
                   </div>
@@ -505,19 +514,19 @@ export default async function ProjectDetailsPage({
           </CardHeader>
           <div className="grid gap-2">
             {recentReports.length === 0 ? (
-              <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
                 Aucun rapport pour le moment.
               </div>
             ) : (
               recentReports.map((r) => (
-                <div key={r.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+                <div key={r.id} className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <div className="text-sm font-bold text-white">{formatDateFr(r.date)}</div>
-                      <div className="mt-1 text-xs text-white/55">
+                      <div className="text-sm font-bold text-[var(--app-text)]">{formatDateFr(r.date)}</div>
+                      <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
                         {r.weather ?? "—"} • Ouvriers: {r.workersCount ?? "—"} • Avancement: {r.progressEst ?? "—"}%
                       </div>
-                      <div className="mt-2 text-sm text-white/70">{r.workDone}</div>
+                      <div className="mt-2 text-sm text-[var(--app-text-muted)]">{r.workDone}</div>
                     </div>
                   </div>
                 </div>
@@ -533,14 +542,14 @@ export default async function ProjectDetailsPage({
           </CardHeader>
           <div className="grid gap-2">
             {recentQuotes.length === 0 ? (
-              <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">Aucun devis.</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">Aucun devis.</div>
             ) : (
               recentQuotes.map((q) => (
-                <div key={q.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+                <div key={q.id} className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <div className="truncate text-sm font-bold text-white">{q.title}</div>
-                      <div className="mt-1 text-xs text-white/55">
+                      <div className="truncate text-sm font-bold text-[var(--app-text)]">{q.title}</div>
+                      <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
                         {q.clientName ?? project.clientName ?? "—"} • {formatDateFr(q.createdAt)}
                       </div>
                       <div className="mt-2">
@@ -549,7 +558,7 @@ export default async function ProjectDetailsPage({
                         </Badge>
                       </div>
                     </div>
-                    <div className="shrink-0 text-sm font-bold text-white">
+                    <div className="shrink-0 text-sm font-bold text-[var(--app-text)]">
                       {formatFcfa(parseDecimalToNumber(q.total))}
                     </div>
                   </div>

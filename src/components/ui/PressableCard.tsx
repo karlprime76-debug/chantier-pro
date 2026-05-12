@@ -64,7 +64,11 @@ export function PressableCard({
       }}
     >
       {children}
-      {isPending ? <div className="mt-3 text-xs font-semibold text-white/55">{loadingText}</div> : null}
+      {isPending ? (
+        <div className="mt-3 text-xs font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+          {loadingText}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -38,8 +38,8 @@ export default async function ReportsPage() {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Rapports journaliers</h1>
-        <p className="mt-1 text-sm text-white/60">Traçabilité quotidienne par chantier.</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Rapports journaliers</h1>
+        <p className="mt-1 text-sm text-[var(--app-text-muted)]">Traçabilité quotidienne par chantier.</p>
       </div>
 
       <Card>
@@ -58,20 +58,23 @@ export default async function ReportsPage() {
         </CardHeader>
         <div className="grid gap-2">
           {reports.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm text-white/60">
+            <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
               Aucun rapport.
             </div>
           ) : (
             reports.map((r) => (
-              <div key={r.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
+              <div
+                key={r.id}
+                className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4"
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-bold text-white">{r.project.name}</div>
-                    <div className="mt-1 text-xs text-white/55">
+                    <div className="truncate text-sm font-bold text-[var(--app-text)]">{r.project.name}</div>
+                    <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
                       {new Date(r.date).toLocaleDateString("fr-FR")} • {r.weather ?? "—"} • Ouvriers:{" "}
                       {r.workersCount ?? "—"} • Avancement: {r.progressEst ?? "—"}%
                     </div>
-                    <div className="mt-2 text-sm text-white/70">{r.workDone}</div>
+                    <div className="mt-2 text-sm text-[var(--app-text-muted)]">{r.workDone}</div>
                   </div>
                   <Button href={`/dashboard/projects/${r.project.id}`} variant="ghost" size="sm">
                     Chantier

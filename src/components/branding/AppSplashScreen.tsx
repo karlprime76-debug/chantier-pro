@@ -33,7 +33,7 @@ export function AppSplashScreen({ durationMs = 1200 }: AppSplashScreenProps) {
     <div
       className={cn(
         "fixed inset-0 z-[70] grid place-items-center",
-        "bg-[var(--cp-bg)]",
+        "bg-[var(--app-bg)]",
       )}
       aria-label="Chargement Chantier Pro"
       role="status"
@@ -51,14 +51,14 @@ export function AppSplashScreen({ durationMs = 1200 }: AppSplashScreenProps) {
       >
         <div className="relative grid h-24 w-24 place-items-center">
           <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle,rgba(249,115,22,0.35),transparent_60%)] blur-xl" />
-          <div className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg">
+          <div className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] shadow-lg">
             <Image src="/logo.png" alt="Chantier Pro" width={80} height={80} className="h-14 w-14 object-contain" priority />
           </div>
         </div>
 
         <div className="text-center">
-          <div className="text-lg font-extrabold tracking-tight text-white">Chantier Pro</div>
-          <div className="mt-1 text-xs font-semibold text-white/55">Calculs · Chantiers · Documents</div>
+          <div className="text-lg font-extrabold tracking-tight text-[var(--app-text)]">Chantier Pro</div>
+          <div className="mt-1 text-xs font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Calculs · Chantiers · Documents</div>
         </div>
       </div>
     </div>
