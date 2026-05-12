@@ -11,8 +11,7 @@ export function MarketingHeaderAuth() {
     return (
       <div className="flex items-center gap-2">
         <Button href="/dashboard" variant="secondary" size="sm">
-          <span className="sm:hidden">Dash</span>
-          <span className="hidden sm:inline">Dashboard</span>
+          Ouvrir mon tableau de bord
         </Button>
         <Button
           type="button"
@@ -22,8 +21,7 @@ export function MarketingHeaderAuth() {
             void signOut({ callbackUrl: "/" });
           }}
         >
-          <span className="sm:hidden">Sortir</span>
-          <span className="hidden sm:inline">Se déconnecter</span>
+          Se déconnecter
         </Button>
       </div>
     );
@@ -32,12 +30,10 @@ export function MarketingHeaderAuth() {
   return (
     <div className="flex items-center gap-2">
       <Button href="/login" variant="secondary" size="sm">
-        <span className="sm:hidden">Login</span>
-        <span className="hidden sm:inline">Connexion</span>
+        Connexion
       </Button>
       <Button href="/register" size="sm">
-        <span className="sm:hidden">Créer</span>
-        <span className="hidden sm:inline">Créer un compte gratuit</span>
+        Créer un compte gratuit
       </Button>
     </div>
   );

@@ -4,6 +4,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 
 const CONTACT_EMAIL = "chantierprobj@gmail.com";
+const CONTACT_WHATSAPP = null as string | null;
 
 export default function ContactPage() {
   return (
@@ -26,6 +27,9 @@ export default function ContactPage() {
             <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
               <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Email</div>
               <div className="mt-1 text-sm font-bold text-[var(--app-text)]">{CONTACT_EMAIL}</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Téléphone / WhatsApp : {CONTACT_WHATSAPP ? CONTACT_WHATSAPP : "À définir"}
+              </div>
               <div className="mt-2 text-sm text-[var(--app-text-muted)]">Ville : Cotonou, Bénin</div>
             </div>
 

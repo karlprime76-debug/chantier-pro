@@ -4,6 +4,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { HomeClientExtras } from "@/components/home/HomeClientExtras";
 import { HomePublicCtas } from "@/components/home/HomePublicCtas";
+import { HomeProtectedCardLink } from "@/components/home/HomeProtectedCardLink";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
@@ -71,9 +72,11 @@ export default function Home() {
                 <div className="mt-1 text-xs text-[var(--app-text-muted)]">Béton & acier</div>
               </Link>
 
-              <Link
-                href="/dashboard"
-                aria-label="Ouvrir le suivi sur le dashboard"
+              <HomeProtectedCardLink
+                hrefAuthenticated="/dashboard"
+                hrefUnauthenticated="/register"
+                ariaLabelAuthenticated="Ouvrir le suivi sur le dashboard"
+                ariaLabelUnauthenticated="Créer un compte pour accéder au suivi"
                 className={cn(
                   "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
                   "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
@@ -82,11 +85,13 @@ export default function Home() {
               >
                 <div className="text-sm font-bold text-[var(--app-text)]">Suivi</div>
                 <div className="mt-1 text-xs text-[var(--app-text-muted)]">Budget vs réel</div>
-              </Link>
+              </HomeProtectedCardLink>
 
-              <Link
-                href="/dashboard/reports"
-                aria-label="Ouvrir les rapports journaliers"
+              <HomeProtectedCardLink
+                hrefAuthenticated="/dashboard/reports"
+                hrefUnauthenticated="/register"
+                ariaLabelAuthenticated="Ouvrir les rapports journaliers"
+                ariaLabelUnauthenticated="Créer un compte pour accéder aux rapports journaliers"
                 className={cn(
                   "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
                   "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
@@ -95,7 +100,7 @@ export default function Home() {
               >
                 <div className="text-sm font-bold text-[var(--app-text)]">Rapports</div>
                 <div className="mt-1 text-xs text-[var(--app-text-muted)]">Journal chantier</div>
-              </Link>
+              </HomeProtectedCardLink>
             </div>
 
           </div>

@@ -11,7 +11,7 @@ export function MarketingHeaderNavDashboard() {
 
   return (
     <Button href="/dashboard" variant="ghost" size="sm">
-      Dashboard
+      Tableau de bord
     </Button>
   );
 }
