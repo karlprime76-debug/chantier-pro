@@ -6,7 +6,7 @@ import { MarketingHeaderAuth } from "@/components/layout/MarketingHeaderAuth";
 
 export function MarketingHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--app-card-border)] bg-[var(--app-nav-bg)] backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[var(--app-card-border)] bg-[var(--app-nav-bg)] supports-[backdrop-filter]:backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Link href="/" className="flex items-center gap-2">
           <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] ring-1 ring-[var(--app-card-border)]">

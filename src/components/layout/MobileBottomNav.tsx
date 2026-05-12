@@ -147,7 +147,7 @@ export function MobileBottomNav() {
       >
         <div
           className={cn(
-            "mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg backdrop-blur",
+            "mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg supports-[backdrop-filter]:backdrop-blur",
             "bg-[var(--app-nav-bg)] border-[var(--app-card-border)]",
           )}
         >

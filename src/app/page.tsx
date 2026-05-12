@@ -1,47 +1,45 @@
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
-import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { HomeHeroCta } from "@/components/home/HomeHeroCta";
-import { InstallAppCard } from "@/components/pwa/InstallAppCard";
-import { PlanTabs } from "@/components/subscription/PlanTabs";
-import { requireSession } from "@/lib/auth/guards";
+import { HomeClientExtras } from "@/components/home/HomeClientExtras";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
-export default async function Home() {
-  const session = await requireSession();
-  const isAuthenticated = Boolean(session);
-
+export default function Home() {
   return (
     <div className="min-h-full">
       <MarketingHeader />
-      <AppShell className={isAuthenticated ? "pb-[calc(104px+env(safe-area-inset-bottom))]" : "pb-16"}>
+      <AppShell className="pb-[calc(104px+env(safe-area-inset-bottom))]">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-7">
-            <div className="cp-animate-in inline-flex items-center gap-2 rounded-full border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-3 py-1 text-xs font-semibold text-[var(--app-text-muted)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-3 py-1 text-xs font-semibold text-[var(--app-text-muted)]">
               SaaS mobile-first pour le BTP
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--cp-accent)]" />
               MVP
             </div>
-            <h1 className="cp-animate-in mt-4 text-3xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-4xl">
+            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-4xl">
               Pilote tes chantiers.
               <br />
               Calcule vite.
               <br />
               Suis tes dépenses.
             </h1>
-            <p className="cp-animate-in mt-4 max-w-xl text-base leading-7 text-[var(--app-text-muted)]">
+            <p className="mt-4 max-w-xl text-base leading-7 text-[var(--app-text-muted)]">
               Chantier Pro aide les professionnels du BTP à centraliser les chantiers, enregistrer les
               calculs béton/acier, suivre les dépenses et produire des rapports journaliers.
             </p>
-            <HomeHeroCta />
-
-            <div className="mt-6">
-              <InstallAppCard />
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Button href="/register" size="lg">
+                Créer un compte
+              </Button>
+              <Button href="/dashboard" variant="secondary" size="lg">
+                Voir le dashboard
+              </Button>
             </div>
+
+            <HomeClientExtras />
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <Link
@@ -84,9 +82,6 @@ export default async function Home() {
               </Link>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <PlanTabs defaultTab="free" />
-            </div>
           </div>
 
           <div className="lg:col-span-5">
@@ -112,7 +107,6 @@ export default async function Home() {
           </div>
         </div>
       </AppShell>
-      {isAuthenticated ? <MobileBottomNav /> : null}
       <MarketingFooter />
     </div>
   );

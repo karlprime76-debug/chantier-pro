@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/auth/Providers";
 import { AppSplashScreen } from "@/components/branding/AppSplashScreen";
 import { HomeButton } from "@/components/navigation/HomeButton";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import "./globals.css";
+
+const fontSans = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-sans",
+});
+
+const fontMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -77,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className="h-full antialiased"
+      className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Providers>
@@ -86,8 +99,8 @@ export default function RootLayout({
               <AppSplashScreen />
               <HomeButton />
               <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute -top-48 left-1/2 h-[680px] w-[680px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,var(--app-hero-glow-1),transparent_62%)] blur-3xl" />
-                <div className="absolute -bottom-72 right-[-180px] h-[720px] w-[720px] rounded-full bg-[radial-gradient(circle,var(--app-hero-glow-2),transparent_60%)] blur-3xl" />
+                <div className="absolute -top-48 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,var(--app-hero-glow-1),transparent_62%)] blur-2xl sm:h-[680px] sm:w-[680px] sm:blur-3xl" />
+                <div className="absolute -bottom-72 right-[-180px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,var(--app-hero-glow-2),transparent_60%)] blur-2xl sm:h-[720px] sm:w-[720px] sm:blur-3xl" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,var(--app-hero-glow-3),transparent_55%)]" />
               </div>
               {children}

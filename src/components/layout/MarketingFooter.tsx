@@ -4,7 +4,7 @@ import { AppShell } from "@/components/layout/AppShell";
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t border-[var(--app-card-border)] bg-[var(--app-nav-bg)] backdrop-blur">
+    <footer className="border-t border-[var(--app-card-border)] bg-[var(--app-nav-bg)] supports-[backdrop-filter]:backdrop-blur">
       <AppShell className="py-6">
         <div className="grid gap-4 sm:grid-cols-2 sm:items-center">
           <div className="text-sm text-[var(--app-text-muted)]">© {new Date().getFullYear()} Chantier Pro • Bénin</div>
