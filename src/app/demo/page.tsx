@@ -3,8 +3,11 @@ import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { getSession } from "@/lib/auth/session";
 
-export default function DemoPage() {
+export default async function DemoPage() {
+  const session = await getSession();
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
@@ -63,9 +66,15 @@ export default function DemoPage() {
                 <Button href="/pricing" variant="ghost" size="lg">
                   Voir les tarifs
                 </Button>
-                <Button href="/register" size="lg">
-                  Créer un compte
-                </Button>
+                {session ? (
+                  <Button href="/dashboard" size="lg">
+                    Tableau de bord
+                  </Button>
+                ) : (
+                  <Button href="/register" size="lg">
+                    Créer un compte
+                  </Button>
+                )}
               </div>
             </Card>
           </div>

@@ -128,7 +128,7 @@ export default async function FeaturesPage() {
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Dois-je créer un compte pour découvrir ?</div>
-                <div className="mt-1">Tu peux lire les pages fonctionnalités, puis créer un compte quand tu es prêt à démarrer.</div>
+                <div className="mt-1">Tu peux lire les pages fonctionnalités, puis démarrer quand tu es prêt.</div>
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Quel plan choisir ?</div>

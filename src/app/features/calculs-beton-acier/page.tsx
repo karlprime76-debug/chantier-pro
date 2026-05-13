@@ -3,8 +3,11 @@ import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { getSession } from "@/lib/auth/session";
 
-export default function FeatureCalculsBetonAcierPage() {
+export default async function FeatureCalculsBetonAcierPage() {
+  const session = await getSession();
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
@@ -82,9 +85,15 @@ export default function FeatureCalculsBetonAcierPage() {
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Button href="/register" size="lg">
-              Créer un compte gratuit
-            </Button>
+            {session ? (
+              <Button href="/dashboard" size="lg">
+                Tableau de bord
+              </Button>
+            ) : (
+              <Button href="/register" size="lg">
+                Créer un compte gratuit
+              </Button>
+            )}
             <Button href="/pricing" variant="secondary" size="lg">
               Voir les tarifs
             </Button>
@@ -134,9 +143,15 @@ export default function FeatureCalculsBetonAcierPage() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href="/register" size="lg">
-              Créer un compte
-            </Button>
+            {session ? (
+              <Button href="/dashboard" size="lg">
+                Tableau de bord
+              </Button>
+            ) : (
+              <Button href="/register" size="lg">
+                Créer un compte
+              </Button>
+            )}
             <Button href="/pricing" variant="secondary" size="lg">
               Voir les tarifs
             </Button>

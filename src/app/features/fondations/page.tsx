@@ -3,6 +3,7 @@ import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { getSession } from "@/lib/auth/session";
 
 type MiniDiagramVariant =
   | "implantation"
@@ -310,7 +311,9 @@ function FoundationVisualCard({
   );
 }
 
-export default function FeatureFondationsPage() {
+export default async function FeatureFondationsPage() {
+  const session = await getSession();
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
@@ -542,9 +545,15 @@ export default function FeatureFondationsPage() {
             <Button href="/pricing" variant="secondary" size="lg">
               Voir l’offre Entreprise
             </Button>
-            <Button href="/register" size="lg">
-              Créer un compte
-            </Button>
+            {session ? (
+              <Button href="/dashboard" size="lg">
+                Tableau de bord
+              </Button>
+            ) : (
+              <Button href="/register" size="lg">
+                Créer un compte
+              </Button>
+            )}
           </div>
 
           <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
