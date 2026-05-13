@@ -15,7 +15,7 @@ import {
   type CalculatorCategory,
 } from "@/lib/calculators/catalog";
 import { cn } from "@/lib/cn";
-import { canAccessFeature, canAccessPlan, type UserPlan } from "@/lib/subscription/access";
+import { FEATURE_MIN_PLAN, canAccessFeature, canAccessPlan, type UserPlan } from "@/lib/subscription/access";
 
 type PlanFilter = "ALL" | UserPlan;
 
@@ -46,7 +46,22 @@ function planLabel(plan: UserPlan): string {
 }
 
 function statusLabel(item: CalculatorCatalogItem): string {
-  return item.status === "AVAILABLE" ? "Disponible" : "Bientôt";
+  if (item.status !== "AVAILABLE") return "Bientôt";
+  const requiredPlan = requiredPlanForItem(item);
+  if (requiredPlan === "ENTERPRISE") return "Inclus Enterprise";
+  if (requiredPlan === "PREMIUM") return "Inclus Premium";
+  return "Inclus";
+}
+
+function badgeForPlan(plan: UserPlan) {
+  if (plan === "FREE") return <PlanBadge variant="free" />;
+  if (plan === "PREMIUM") return <PlanBadge variant="premium" />;
+  return <PlanBadge variant="free">Entreprise</PlanBadge>;
+}
+
+function requiredPlanForItem(item: CalculatorCatalogItem): UserPlan {
+  if (item.featureKey) return FEATURE_MIN_PLAN[item.featureKey];
+  return item.plan;
 }
 
 type CalculatorsHubProps = {
@@ -88,7 +103,8 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
     const q = query.trim().toLowerCase();
 
     return CALCULATORS_CATALOG.filter((c) => {
-      if (planFilter !== "ALL" && c.plan !== planFilter) return false;
+      const requiredPlan = requiredPlanForItem(c);
+      if (planFilter !== "ALL" && requiredPlan !== planFilter) return false;
       if (categoryFilter !== "ALL" && c.category !== categoryFilter) return false;
       if (!q) return true;
       return (c.title + " " + c.description).toLowerCase().includes(q);
@@ -164,11 +180,13 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {filtered.map((c) => {
-          const requiredPlanOk = canAccessPlan(userPlan, c.plan);
+          const requiredPlan = requiredPlanForItem(c);
+          const requiredPlanOk = canAccessPlan(userPlan, requiredPlan);
           const featureOk = c.featureKey ? canAccessFeature(userPlan, c.featureKey) : true;
           const canAccess = requiredPlanOk && featureOk;
 
-          const isEnterpriseLocked = c.plan === "ENTERPRISE" && !canAccessPlan(userPlan, "ENTERPRISE");
+          const needsEnterprise = requiredPlan === "ENTERPRISE";
+          const isEnterpriseLocked = needsEnterprise && !canAccessPlan(userPlan, "ENTERPRISE");
           const shouldShowUpgrade = !isEnterpriseLocked && !canAccess;
 
           return (
@@ -189,12 +207,12 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                         {c.category}
                       </span>
                       <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                        {planLabel(c.plan)}
+                        {planLabel(requiredPlan)}
                       </span>
                     </div>
                   </div>
                   <div className="grid justify-items-end gap-2">
-                    {c.plan === "FREE" ? <PlanBadge variant="free" /> : <PlanBadge variant="premium" />}
+                    {badgeForPlan(requiredPlan)}
                     <span className="text-[11px] font-bold text-[var(--app-text-muted)]">{statusLabel(c)}</span>
                   </div>
                 </div>
@@ -217,12 +235,18 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                   </ResponsiveButton>
                 ) : isEnterpriseLocked ? (
                   <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
-                    Contacter pour Entreprise
+                    Passer à Entreprise
                   </ResponsiveButton>
                 ) : shouldShowUpgrade ? (
-                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
-                    Passer Premium
-                  </ResponsiveButton>
+                  needsEnterprise ? (
+                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
+                      Passer à Entreprise
+                    </ResponsiveButton>
+                  ) : (
+                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
+                      Passer à Premium
+                    </ResponsiveButton>
+                  )
                 ) : (
                   <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
                     Voir les offres

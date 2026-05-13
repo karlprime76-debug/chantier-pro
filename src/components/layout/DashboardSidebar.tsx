@@ -132,7 +132,7 @@ export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
 
           <div className="mt-3 flex items-center justify-between gap-3 px-3 py-2">
             <div className="text-xs font-bold uppercase tracking-wide text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Entreprise</div>
-            <PlanBadge variant="premium" />
+            <PlanBadge variant="free">Entreprise</PlanBadge>
           </div>
           {calculatorEnterpriseItems.map((item) => {
             const active = activeHref ? activeHref === item.href : false;

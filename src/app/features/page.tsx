@@ -4,8 +4,11 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { PlanBadge } from "@/components/ui/PlanBadge";
+import { getSession } from "@/lib/auth/session";
 
-export default function FeaturesPage() {
+export default async function FeaturesPage() {
+  const session = await getSession();
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
@@ -135,9 +138,15 @@ export default function FeaturesPage() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href="/register" size="lg">
-              Créer un compte
-            </Button>
+            {session ? (
+              <Button href="/dashboard" size="lg">
+                Ouvrir mon tableau de bord
+              </Button>
+            ) : (
+              <Button href="/register" size="lg">
+                Créer un compte
+              </Button>
+            )}
             <Button href="/pricing" variant="secondary" size="lg">
               Voir les tarifs
             </Button>

@@ -8,9 +8,10 @@ import { SITE_CONFIG } from "@/lib/site-config";
 type SubscribeButtonProps = {
   plan: "PREMIUM" | "ENTERPRISE";
   children: string;
+  className?: string;
 };
 
-export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
+export function SubscribeButton({ plan, children, className }: SubscribeButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ title: string; details?: string } | null>(null);
 
@@ -21,6 +22,7 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
       <Button
         type="button"
         size="lg"
+        className={className}
         disabled={loading}
         onClick={async () => {
           try {

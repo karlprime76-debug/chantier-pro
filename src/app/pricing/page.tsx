@@ -26,7 +26,7 @@ export default async function PricingPage() {
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <Card>
+            <Card className="h-full">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Gratuit</CardTitle>
@@ -34,7 +34,7 @@ export default async function PricingPage() {
                 </div>
                 <CardDescription>Pour tester Chantier Pro avec les calculateurs de base.</CardDescription>
               </CardHeader>
-              <div className="grid gap-3">
+              <div className="flex h-full flex-col gap-3 px-6 pb-6">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">0 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
@@ -43,15 +43,19 @@ export default async function PricingPage() {
                     <div>Calculateurs de base</div>
                     <div>Accès limité aux historiques</div>
                     <div>Découverte du suivi chantier</div>
+                    <div>Démo chantier exemple</div>
+                    <div>Support standard</div>
                   </div>
                 </div>
-                <Button href={freeCtaHref} size="lg">
-                  Commencer gratuitement
-                </Button>
+                <div className="mt-auto pt-1">
+                  <Button href={freeCtaHref} size="lg" className="w-full justify-center">
+                    Commencer gratuitement
+                  </Button>
+                </div>
               </div>
             </Card>
 
-            <Card className="ring-1 ring-[var(--cp-accent)]/20">
+            <Card className="h-full ring-1 ring-[var(--cp-accent)]/20">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Premium</CardTitle>
@@ -61,17 +65,33 @@ export default async function PricingPage() {
                   Pour les pros : calculs + suivi budget/dépenses + rapports.
                 </CardDescription>
               </CardHeader>
-              <div className="grid gap-3">
+              <div className="flex h-full flex-col gap-3 px-6 pb-6">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">15 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
                   Premium recommandé
                 </div>
-                <SubscribeButton plan="PREMIUM">S&apos;abonner</SubscribeButton>
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
+                  <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
+                  <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                    <div>Calculs béton & acier avancés</div>
+                    <div>Historique par chantier</div>
+                    <div>Suivi dépenses & budget</div>
+                    <div>Rapports journaliers</div>
+                    <div>Export PDF (si disponible)</div>
+                    <div>Support prioritaire (léger)</div>
+                  </div>
+                </div>
+
+                <div className="mt-auto pt-1">
+                  <SubscribeButton plan="PREMIUM" className="w-full justify-center">
+                    S&apos;abonner
+                  </SubscribeButton>
+                </div>
               </div>
             </Card>
 
-            <Card>
+            <Card className="h-full">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Entreprise</CardTitle>
@@ -81,7 +101,7 @@ export default async function PricingPage() {
                   Pour travailler en équipe avec accès multi-utilisateurs.
                 </CardDescription>
               </CardHeader>
-              <div className="grid gap-3">
+              <div className="flex h-full flex-col gap-3 px-6 pb-6">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">25 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
@@ -90,52 +110,88 @@ export default async function PricingPage() {
                     <div>Multi-utilisateurs</div>
                     <div>Validation des dépenses</div>
                     <div>Exports avancés</div>
-                    <div>Formulation de béton (dosage indicatif)</div>
-                    <div className="mt-1 grid gap-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">
-                      <div>Ciment • Eau • Sable • Gravier • Adjuvant (si utilisé)</div>
-                      <div>Correction humidité / absorption sable & gravier</div>
+                    <div>Support prioritaire WhatsApp</div>
+                  </div>
+
+                  <div className="mt-3">
+                    <div className="text-xs font-bold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Modules inclus</div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Fondations
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Formulation béton
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Checklists chantier
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Rapports de contrôle
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Exports avancés
+                      </span>
                     </div>
-                    <div>Module Fondations complet</div>
-                    <div className="mt-1 grid gap-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">
-                      <div>Semelles isolées • Semelles filantes • Longrines • Radiers</div>
-                      <div>Puits • Pieux • Fouilles & terrassement • Béton de propreté</div>
-                      <div>Ferraillage • Volume béton • Quantitatif acier • Coffrage</div>
-                      <div>Remblai • Étapes d’exécution • Export / rapport (si disponible)</div>
-                    </div>
-                    <div className="mt-2">Checklists chantier (avancées)</div>
-                    <div>Rapports de contrôle</div>
-                    <div>Démo / modèles chantier</div>
                   </div>
                 </div>
-                <SubscribeButton plan="ENTERPRISE">S&apos;abonner</SubscribeButton>
+
+                <div className="text-sm text-[var(--app-text-muted)]">
+                  Pour les entreprises BTP qui gèrent plusieurs chantiers, équipes et rapports.
+                </div>
+
+                <div className="mt-auto pt-1">
+                  <SubscribeButton plan="ENTERPRISE" className="w-full justify-center">
+                    S&apos;abonner
+                  </SubscribeButton>
+                </div>
               </div>
             </Card>
           </div>
 
-          <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
-            <div className="text-sm font-bold text-[var(--app-text)]">Pourquoi choisir l’offre Enterprise ?</div>
-            <div className="mt-2 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                Multi-chantiers et collaboration multi-utilisateurs.
+          <div className="mt-6 grid gap-4">
+            <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+              <div className="text-sm font-bold text-[var(--app-text)]">Pourquoi choisir l’offre Enterprise ?</div>
+              <div className="mt-1 text-sm text-[var(--app-text-muted)]">
+                Des modules avancés pour piloter plusieurs chantiers avec une traçabilité plus propre.
               </div>
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                Exports avancés et outils de pilotage pour équipes BTP.
-              </div>
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                Module Fondations complet : schémas d’exécution + quantitatifs.
-              </div>
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                Formulation de béton : dosage indicatif + correction humidité sable/gravier.
-              </div>
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                Checklists chantier avancées : suivi des étapes critiques par phase.
-              </div>
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                Rapports de contrôle : points sensibles (coffrage, ferraillage, avant bétonnage, cure).
-              </div>
-              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3 sm:col-span-2">
-                Support prioritaire WhatsApp et accompagnement pour entreprises BTP.
-              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Module Fondations complet</CardTitle>
+                  <CardDescription>
+                    Calculs, étapes et quantitatifs pour semelles, longrines, radiers, puits et pieux.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Formulation de béton</CardTitle>
+                  <CardDescription>
+                    Dosage indicatif, corrections d’humidité, quantités par m³ et coût estimatif.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Rapports de contrôle</CardTitle>
+                  <CardDescription>
+                    Contrôle coffrage, ferraillage, bétonnage, cure, réserves et non-conformités.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Checklists chantier avancées</CardTitle>
+                  <CardDescription>
+                    Suivi des étapes critiques du chantier, du terrassement à la réception.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             </div>
           </div>
 
