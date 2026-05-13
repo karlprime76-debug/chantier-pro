@@ -5,12 +5,25 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/Button";
 
 type HomePublicCtasProps = {
-  variant?: "hero" | "quickstart";
+  variant?: "hero" | "quickstart" | "pair";
 };
 
 export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
   const { status } = useSession();
   const isAuthenticated = status === "authenticated";
+
+  if (variant === "pair") {
+    return (
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Button href={isAuthenticated ? "/dashboard/projects" : "/register"} size="lg" variant="secondary">
+          {isAuthenticated ? "Accéder à mes chantiers" : "Créer un compte gratuit"}
+        </Button>
+        <Button href="/pricing" size="lg" variant="ghost">
+          Voir les tarifs
+        </Button>
+      </div>
+    );
+  }
 
   if (isAuthenticated) {
     return (

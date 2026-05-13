@@ -30,6 +30,27 @@ export default function FeatureSuiviBudgetPage() {
                 <CardDescription>Visualise rapidement si tu es dans le budget ou si ça dérive.</CardDescription>
               </CardHeader>
             </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Bénéfices concrets</CardTitle>
+                <CardDescription>
+                  <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                    <div>Moins de dépenses oubliées (carburant, location, petits achats).</div>
+                    <div>Prévu vs réel plus lisible pour anticiper les dépassements.</div>
+                    <div>Historique par chantier pour justifier et mieux piloter.</div>
+                  </div>
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Exemple terrain</CardTitle>
+                <CardDescription>
+                  Tu enregistres les dépenses au fil de la journée (matériaux, main d’œuvre, transport) et tu compares le total au budget
+                  prévu du chantier pour corriger tôt.
+                </CardDescription>
+              </CardHeader>
+            </Card>
             <Card className="sm:col-span-2">
               <CardHeader>
                 <CardTitle>Aperçu</CardTitle>

@@ -18,13 +18,13 @@ export default function ConfidentialitePage() {
           </CardHeader>
           <div className="grid gap-3 text-sm text-[var(--app-text-muted)]">
             <div>
-              <span className="font-bold text-[var(--app-text)]">Compte :</span> email, informations d’authentification.
+              <span className="font-bold text-[var(--app-text)]">Compte :</span> nom, email, société (si fournie), informations d’authentification.
             </div>
             <div>
               <span className="font-bold text-[var(--app-text)]">Chantiers :</span> projets, dépenses, rapports, calculs.
             </div>
             <div>
-              <span className="font-bold text-[var(--app-text)]">Techniques :</span> données de diagnostic (logs) pour la sécurité et la maintenance.
+              <span className="font-bold text-[var(--app-text)]">Techniques :</span> logs et données de diagnostic pour la sécurité et la maintenance.
             </div>
           </div>
         </Card>
@@ -35,11 +35,66 @@ export default function ConfidentialitePage() {
             <CardDescription>Pourquoi ces données sont nécessaires.</CardDescription>
           </CardHeader>
           <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
-            <div>Fournir l’application, sécuriser l’accès, améliorer l’expérience et prévenir les abus.</div>
+            <div>
+              Finalités principales : création de compte, gestion de chantier, suivi budget/dépenses, génération et consultation des
+              rapports, amélioration du service et sécurité.
+            </div>
             <div>
               Les calculateurs et estimations fournis dans l’application sont des outils d’aide et ne remplacent pas l’expertise
               d’un professionnel qualifié.
             </div>
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Durée de conservation</CardTitle>
+            <CardDescription>Combien de temps nous conservons les données.</CardDescription>
+          </CardHeader>
+          <div className="text-sm text-[var(--app-text-muted)]">
+            Les données sont conservées tant que le compte est actif, sauf demande de suppression ou obligations légales spécifiques.
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Suppression de compte</CardTitle>
+            <CardDescription>Exercer vos droits.</CardDescription>
+          </CardHeader>
+          <div className="text-sm text-[var(--app-text-muted)]">
+            Vous pouvez demander la suppression de votre compte et de vos données par email. Nous répondrons dans un délai raisonnable.
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Sécurité</CardTitle>
+            <CardDescription>Protection des données.</CardDescription>
+          </CardHeader>
+          <div className="text-sm text-[var(--app-text-muted)]">
+            Nous mettons en place des mesures raisonnables pour protéger les données (contrôle d’accès, sécurité applicative, surveillance
+            et maintenance).
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Prestataires techniques</CardTitle>
+            <CardDescription>Services utilisés pour fournir l’application.</CardDescription>
+          </CardHeader>
+          <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
+            <div>Hébergement (ex: Vercel), base de données, email, et paiement si activé.</div>
+            <div>Ces prestataires traitent uniquement les données nécessaires à l’exécution du service.</div>
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Cookies / stockage local</CardTitle>
+            <CardDescription>Fonctionnement du site.</CardDescription>
+          </CardHeader>
+          <div className="text-sm text-[var(--app-text-muted)]">
+            Le site peut utiliser des cookies ou un stockage local pour la session, la sécurité et l’amélioration de l’expérience.
           </div>
         </Card>
 

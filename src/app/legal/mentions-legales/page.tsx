@@ -44,6 +44,19 @@ export default function MentionsLegalesPage() {
 
         <Card>
           <CardHeader>
+            <CardTitle>Informations complémentaires</CardTitle>
+            <CardDescription>Transparence sur l’activité.</CardDescription>
+          </CardHeader>
+          <div className="grid gap-2 text-sm text-[var(--app-text-muted)]">
+            <div>
+              Chantier Pro est un service en cours d’évolution. Les informations juridiques pourront être complétées après formalisation
+              de l’activité.
+            </div>
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <CardTitle>Responsabilité</CardTitle>
             <CardDescription>Cadre d’utilisation et limites.</CardDescription>
           </CardHeader>

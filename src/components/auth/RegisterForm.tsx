@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -13,6 +14,7 @@ export function RegisterForm() {
   const [company, setCompany] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [acceptedLegal, setAcceptedLegal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,6 +28,12 @@ export function RegisterForm() {
 
         if (password !== confirmPassword) {
           setError("Les mots de passe ne correspondent pas.");
+          setLoading(false);
+          return;
+        }
+
+        if (!acceptedLegal) {
+          setError("Veuillez accepter les Conditions d’utilisation et la Politique de confidentialité.");
           setLoading(false);
           return;
         }
@@ -135,6 +143,26 @@ export function RegisterForm() {
           setConfirmPassword(suggestion);
         }}
       />
+
+      <label className="flex items-start gap-3 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4 text-sm">
+        <input
+          type="checkbox"
+          checked={acceptedLegal}
+          onChange={(e) => setAcceptedLegal(e.target.checked)}
+          className="mt-0.5 h-4 w-4 rounded border border-[var(--app-card-border)] bg-[var(--app-input-bg)]"
+        />
+        <span className="text-[var(--app-text-muted)]">
+          J’accepte les{" "}
+          <Link className="text-[var(--app-primary)] underline" href="/legal/conditions">
+            Conditions d’utilisation
+          </Link>
+          {" "}et la{" "}
+          <Link className="text-[var(--app-primary)] underline" href="/legal/confidentialite">
+            Politique de confidentialité
+          </Link>
+          .
+        </span>
+      </label>
 
       {error ? <div className="text-sm text-[var(--cp-accent)]">{error}</div> : null}
 

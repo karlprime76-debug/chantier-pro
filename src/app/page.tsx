@@ -77,6 +77,45 @@ export default function Home() {
               </div>
             </div>
 
+            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+              <div className="text-sm font-bold text-[var(--app-text)]">Preuve produit</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Exemple : calculez rapidement le volume de béton, estimez les quantités d’acier, puis rattachez le calcul à un chantier.
+              </div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                  <div className="text-xs text-[var(--app-text-muted)]">Étape 1</div>
+                  <div className="mt-1 text-sm font-bold text-[var(--app-text)]">Calcul béton</div>
+                  <div className="mt-2 grid gap-2">
+                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
+                      Dalle : 12 m × 8 m × 0,12 m
+                    </div>
+                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
+                      <div className="text-xs text-[var(--app-text-muted)]">Résultat</div>
+                      <div className="mt-1 text-lg font-extrabold text-[var(--app-text)]">11,52 m³</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                  <div className="text-xs text-[var(--app-text-muted)]">Étape 2</div>
+                  <div className="mt-1 text-sm font-bold text-[var(--app-text)]">Rattacher au chantier</div>
+                  <div className="mt-2 grid gap-2">
+                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
+                      Chantier : Villa Cotonou — Dalle RDC
+                    </div>
+                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
+                      Historique : calcul sauvegardé, partage et réutilisation.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <HomePublicCtas variant="pair" />
+              </div>
+            </div>
+
             <HomeClientExtras />
 
             <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
@@ -122,10 +161,10 @@ export default function Home() {
               <div className="text-sm font-bold text-[var(--app-text)]">Pour qui ?</div>
               <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
                 <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Techniciens génie civil</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Chefs chantier</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Conducteurs travaux</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Petites entreprises BTP</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3 sm:col-span-2">Responsables de suivi chantier</div>
+                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Chefs chantier bâtiments</div>
+                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Conducteurs de travaux</div>
+                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">PME BTP</div>
+                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3 sm:col-span-2">Responsables de projet</div>
               </div>
             </div>
 

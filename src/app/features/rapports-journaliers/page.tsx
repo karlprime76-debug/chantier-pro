@@ -30,6 +30,27 @@ export default function FeatureRapportsJournaliersPage() {
                 <CardDescription>Retrouve rapidement un ancien rapport sans fouiller dans WhatsApp.</CardDescription>
               </CardHeader>
             </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Bénéfices concrets</CardTitle>
+                <CardDescription>
+                  <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                    <div>Meilleure traçabilité (avancement, incidents, décisions).</div>
+                    <div>Communication plus claire avec le bureau, le client ou le patron.</div>
+                    <div>Historique par chantier pour comparer semaine après semaine.</div>
+                  </div>
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Exemple terrain</CardTitle>
+                <CardDescription>
+                  En fin de journée, tu notes l’avancement, l’équipe présente et les incidents. Le lendemain, tu repars avec un historique
+                  clair et tu évites les malentendus.
+                </CardDescription>
+              </CardHeader>
+            </Card>
             <Card className="sm:col-span-2">
               <CardHeader>
                 <CardTitle>Aperçu</CardTitle>

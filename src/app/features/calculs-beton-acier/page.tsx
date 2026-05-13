@@ -30,6 +30,27 @@ export default function FeatureCalculsBetonAcierPage() {
                 <CardDescription>Réduit les oublis et les approximations quand tu commandes sur le terrain.</CardDescription>
               </CardHeader>
             </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Bénéfices concrets</CardTitle>
+                <CardDescription>
+                  <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                    <div>Quantités plus fiables pour commander ciment, gravier et fer.</div>
+                    <div>Historique par chantier pour réutiliser un calcul similaire.</div>
+                    <div>Résultats rapides à partager avec l’équipe.</div>
+                  </div>
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Exemple terrain</CardTitle>
+                <CardDescription>
+                  Dalle, poteaux ou poutres : tu saisis les dimensions, tu obtiens le volume, puis tu rattaches le calcul au chantier
+                  pour garder la trace et éviter les erreurs lors de la commande.
+                </CardDescription>
+              </CardHeader>
+            </Card>
             <Card className="sm:col-span-2">
               <CardHeader>
                 <CardTitle>Aperçu</CardTitle>
