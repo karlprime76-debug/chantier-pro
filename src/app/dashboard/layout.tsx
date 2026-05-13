@@ -8,6 +8,10 @@ import { requireSession } from "@/lib/auth/guards";
 
 export const metadata: Metadata = {
   title: "Dashboard | Chantier Pro",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function DashboardLayout({
