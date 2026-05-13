@@ -47,19 +47,24 @@ export default function Home() {
 
                     <div className="mt-3 grid gap-3">
                       <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                        <div className="text-xs text-[var(--app-text-muted)]">Calcul béton</div>
-                        <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">Volume : 12,5 m³</div>
+                        <div className="text-xs text-[var(--app-text-muted)]">Chantier</div>
+                        <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">Villa Akpakpa</div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                          <div className="text-xs text-[var(--app-text-muted)]">Dépenses</div>
-                          <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">420 000 FCFA</div>
+                          <div className="text-xs text-[var(--app-text-muted)]">Avancement</div>
+                          <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">68 %</div>
                         </div>
                         <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                          <div className="text-xs text-[var(--app-text-muted)]">Budget</div>
-                          <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">Prévu vs réel</div>
+                          <div className="text-xs text-[var(--app-text-muted)]">Budget utilisé</div>
+                          <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">420 000 FCFA</div>
                         </div>
+                      </div>
+
+                      <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
+                        <div className="text-xs text-[var(--app-text-muted)]">Calcul béton</div>
+                        <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">Volume : 12,5 m³</div>
                       </div>
 
                       <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
@@ -110,10 +115,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <HomePublicCtas variant="pair" />
               </div>
             </div>
 
