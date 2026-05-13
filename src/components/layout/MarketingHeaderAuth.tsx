@@ -63,7 +63,7 @@ export function MarketingHeaderAuth({ compact, variant = "header", onAction }: M
     return (
       <div className="flex items-center gap-2">
         <Button href="/dashboard" variant={compact ? undefined : "secondary"} size="sm" className="whitespace-nowrap">
-          Tableau de bord
+          {compact ? "Tableau de bord" : "Ouvrir mon tableau de bord"}
         </Button>
         {!compact && (
           <Button href="/dashboard/settings" variant="ghost" size="sm" className="whitespace-nowrap">
