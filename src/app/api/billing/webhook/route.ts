@@ -32,7 +32,24 @@ export async function POST(req: Request) {
 
   logInfo("billing.webhook.params_received", { requestId, paymentId });
 
-  const payment = await getPaymentDelegate().findUnique({
+  const paymentDelegate = getPaymentDelegate();
+  if (!paymentDelegate || typeof paymentDelegate.findUnique !== "function" || typeof paymentDelegate.update !== "function") {
+    logError("billing.webhook.server_misconfigured", { requestId, paymentId });
+    return withRequestIdHeaders(
+      NextResponse.json(
+        {
+          ok: false,
+          error: "server_misconfigured",
+          message: "Le modèle Payment n’est pas disponible côté serveur.",
+          requestId,
+        },
+        { status: 500 },
+      ),
+      requestId,
+    );
+  }
+
+  const payment = await paymentDelegate.findUnique({
     where: { id: paymentId },
     select: { id: true, userId: true, plan: true },
   });
@@ -49,7 +66,7 @@ export async function POST(req: Request) {
     const status = String(confirmation.status ?? "").toLowerCase();
 
     if (status === "completed" || status === "paid" || status === "successful" || status === "success") {
-      await getPaymentDelegate().update({
+      await paymentDelegate.update({
         where: { id: payment.id },
         data: {
           status: "paid",
@@ -66,7 +83,7 @@ export async function POST(req: Request) {
       return withRequestIdHeaders(NextResponse.json({ ok: true, requestId }), requestId);
     }
 
-    await getPaymentDelegate().update({
+    await paymentDelegate.update({
       where: { id: payment.id },
       data: {
         status: status || "failed",
@@ -77,9 +94,15 @@ export async function POST(req: Request) {
 
     logInfo("billing.webhook.payment_marked_non_success", { requestId, paymentId, status: status || "failed" });
     return withRequestIdHeaders(NextResponse.json({ ok: true, requestId }), requestId);
-  } catch {
-    await getPaymentDelegate().update({ where: { id: payment.id }, data: { status: "error" } });
-    logError("billing.webhook.provider_error", { requestId, paymentId });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    try {
+      await paymentDelegate.update({ where: { id: payment.id }, data: { status: "error" } });
+    } catch (updateErr) {
+      const updateMessage = updateErr instanceof Error ? updateErr.message : "unknown";
+      logError("billing.webhook.db_mark_error_failed", { requestId, paymentId, message: updateMessage });
+    }
+    logError("billing.webhook.provider_error", { requestId, paymentId, message });
     return withRequestIdHeaders(
       NextResponse.json({ ok: false, error: "provider_error", requestId }, { status: 502 }),
       requestId,

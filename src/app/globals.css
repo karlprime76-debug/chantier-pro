@@ -100,6 +100,11 @@ body {
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .cp-animate-in {
     animation: cp-fade-up 520ms ease-out both;

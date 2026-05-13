@@ -22,8 +22,10 @@ export function LoginForm({ nextUrl }: { nextUrl?: string }) {
         setLoading(true);
         setError(null);
 
+        const normalizedEmail = email.trim().toLowerCase();
+
         const res = await signIn("credentials", {
-          email,
+          email: normalizedEmail,
           password,
           redirect: true,
           callbackUrl: next,

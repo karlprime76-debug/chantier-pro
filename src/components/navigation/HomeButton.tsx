@@ -40,7 +40,7 @@ export function HomeButton() {
     >
       <Link
         href={href}
-        prefetch
+        prefetch={false}
         aria-label="Accueil"
         className={cn(
           "grid h-11 w-11 place-items-center rounded-full border border-[var(--app-card-border)]",

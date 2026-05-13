@@ -1,22 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/auth/Providers";
 import { AppSplashScreen } from "@/components/branding/AppSplashScreen";
 import { HomeButton } from "@/components/navigation/HomeButton";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { getSiteUrl } from "@/lib/config/site";
 import "./globals.css";
-
-const fontSans = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-geist-sans",
-});
-
-const fontMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-geist-mono",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +25,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Chantier Pro" }],
   creator: "Chantier Pro",
-  metadataBase: new URL("https://chantier-pro-snowy.vercel.app"),
+  metadataBase: new URL(getSiteUrl()),
   alternates: {
     canonical: "/",
   },
@@ -57,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Chantier Pro",
     description: "Application mobile-first pour gérer les chantiers BTP : calculs béton/acier, dépenses, rapports et documents.",
-    url: "https://chantier-pro-snowy.vercel.app",
+    url: getSiteUrl(),
     siteName: "Chantier Pro",
     locale: "fr_FR",
     type: "website",
@@ -79,7 +67,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0f172a",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#ff6a00",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -90,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col">
         <Providers>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rapports journaliers",
+  title: "Rapports journaliers chantier — Suivi terrain BTP",
   description: "Créez des rapports journaliers propres et gardez un historique par chantier. Simple, mobile-first.",
   alternates: {
     canonical: "/features/rapports-journaliers",
@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "Rapports journaliers | Chantier Pro",
+    title: "Rapports journaliers chantier — Suivi terrain BTP",
     description: "Journal chantier clair : rapports journaliers et historique par projet.",
     url: "/features/rapports-journaliers",
   },
   twitter: {
-    title: "Rapports journaliers | Chantier Pro",
+    title: "Rapports journaliers chantier — Suivi terrain BTP",
     description: "Rapports journaliers et historique par chantier.",
   },
 };

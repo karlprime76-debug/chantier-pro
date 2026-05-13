@@ -140,7 +140,7 @@ export function MobileBottomNav() {
   });
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden" aria-label="Navigation principale">
       <div
         className="mx-auto w-full max-w-6xl px-3"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
@@ -157,7 +157,8 @@ export function MobileBottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                prefetch
+                prefetch={false}
+                aria-current={active ? "page" : undefined}
                 className={cn(
                   "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",
                   active

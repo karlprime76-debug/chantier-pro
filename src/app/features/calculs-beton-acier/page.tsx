@@ -89,6 +89,34 @@ export default function FeatureCalculsBetonAcierPage() {
               Voir les tarifs
             </Button>
           </div>
+
+          <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">Pour qui ?</div>
+            <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Techniciens génie civil</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Chefs de chantier</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Conducteurs de travaux</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Entrepreneurs BTP</div>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">FAQ</div>
+            <div className="mt-3 grid gap-3 text-sm text-[var(--app-text-muted)]">
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Les calculs remplacent-ils un ingénieur ?</div>
+                <div className="mt-1">Non. Ils aident à estimer rapidement, mais ne remplacent pas une validation technique.</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Puis-je sauvegarder mes calculs ?</div>
+                <div className="mt-1">Oui, l’objectif est de garder un historique par chantier pour réutiliser et comparer.</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Est-ce utilisable sur téléphone sur le terrain ?</div>
+                <div className="mt-1">Oui, l’interface est pensée pour des saisies rapides et des résultats lisibles.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </AppShell>
       <MarketingFooter />

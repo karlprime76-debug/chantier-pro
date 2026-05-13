@@ -2,6 +2,7 @@ import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { HomeClientExtras } from "@/components/home/HomeClientExtras";
 import { HomePublicCtas } from "@/components/home/HomePublicCtas";
 import { HomeProtectedCardLink } from "@/components/home/HomeProtectedCardLink";
@@ -225,6 +226,56 @@ export default function Home() {
                 <div className="text-sm font-bold text-[var(--app-text)]">Rapports</div>
                 <div className="mt-1 text-xs text-[var(--app-text-muted)]">Journal chantier</div>
               </HomeProtectedCardLink>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+              <div className="text-sm font-bold text-[var(--app-text)]">Tarifs (aperçu)</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">Démarre gratuitement, puis active le plan adapté à ton équipe.</div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                  <div className="text-sm font-bold text-[var(--app-text)]">Gratuit</div>
+                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">Pour tester les calculateurs de base.</div>
+                </div>
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                  <div className="text-sm font-bold text-[var(--app-text)]">Premium</div>
+                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">Calculs + suivi budget/dépenses + rapports.</div>
+                </div>
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                  <div className="text-sm font-bold text-[var(--app-text)]">Entreprise</div>
+                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">Multi-utilisateurs et collaboration.</div>
+                </div>
+              </div>
+              <div className="mt-4">
+                <Button href="/pricing" variant="secondary">Voir les tarifs</Button>
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+              <div className="text-sm font-bold text-[var(--app-text)]">FAQ</div>
+              <div className="mt-3 grid gap-3 text-sm text-[var(--app-text-muted)]">
+                <div>
+                  <div className="font-bold text-[var(--app-text)]">Chantier Pro fonctionne-t-il sur mobile ?</div>
+                  <div className="mt-1">Oui. L’interface est pensée mobile-first pour saisir rapidement sur le terrain.</div>
+                </div>
+                <div>
+                  <div className="font-bold text-[var(--app-text)]">Puis-je démarrer gratuitement ?</div>
+                  <div className="mt-1">Oui, avec le plan Gratuit pour tester les bases avant de passer au suivi complet.</div>
+                </div>
+                <div>
+                  <div className="font-bold text-[var(--app-text)]">Est-ce adapté aux chantiers au Bénin ?</div>
+                  <div className="mt-1">Oui. Chantier Pro est conçu pour les besoins BTP du terrain, avec un support local.</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+              <div className="text-sm font-bold text-[var(--app-text)]">Prêt à gagner du temps sur tes chantiers ?</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Crée un compte en quelques minutes et commence à centraliser tes calculs, dépenses et rapports.
+              </div>
+              <div className="mt-4">
+                <HomePublicCtas variant="pair" />
+              </div>
             </div>
 
           </div>

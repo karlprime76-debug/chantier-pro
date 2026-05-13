@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 type SubscribeButtonProps = {
   plan: "PREMIUM" | "ENTERPRISE";
@@ -33,7 +34,7 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
             });
 
             if (res.status === 401) {
-              window.location.href = "/login?callbackUrl=/pricing";
+              window.location.href = "/login?next=/pricing";
               return;
             }
 
@@ -46,7 +47,12 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
               const fallbackTitle = "Impossible de créer le paiement. Veuillez réessayer dans un instant.";
 
               if (data && "ok" in data && data.ok === false) {
-                const title = fallbackTitle;
+                const title =
+                  data.error === "provider_not_configured"
+                    ? "Paiement indisponible pour le moment. Contacte-nous pour activer ton abonnement."
+                    : data.error === "server_misconfigured"
+                      ? "Paiement indisponible pour le moment. Contacte-nous pour finaliser l’activation."
+                      : fallbackTitle;
                 const details =
                   showTechnicalDetails && typeof data.details === "string" && data.details.trim()
                     ? data.details.trim()
@@ -74,6 +80,14 @@ export function SubscribeButton({ plan, children }: SubscribeButtonProps) {
         <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm">
           <div className="text-[var(--cp-accent)]">{error.title}</div>
           {error.details ? <div className="mt-1 text-[var(--app-text-muted)]">Détail serveur : {error.details}</div> : null}
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+            <Button href={SITE_CONFIG.whatsappUrl} target="_blank" rel="noreferrer" size="sm" variant="secondary">
+              WhatsApp
+            </Button>
+            <Button href={`mailto:${SITE_CONFIG.email}`} size="sm" variant="ghost">
+              Email
+            </Button>
+          </div>
         </div>
       ) : null}
     </div>

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl, getSiteUrl } from "@/lib/config/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,13 +9,13 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         "/api/",
         "/dashboard/",
-        "/login",
-        "/register",
-        "/forgot-password",
-        "/reset-password",
+        "/admin/",
+        "/account/",
+        "/billing/",
+        "/auth/",
       ],
     },
-    sitemap: "https://chantier-pro-snowy.vercel.app/sitemap.xml",
-    host: "https://chantier-pro-snowy.vercel.app",
+    sitemap: absoluteUrl("/sitemap.xml"),
+    host: getSiteUrl(),
   };
 }

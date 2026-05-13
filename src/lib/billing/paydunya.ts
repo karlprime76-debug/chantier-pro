@@ -158,7 +158,8 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
 
   logInfo("billing.paydunya.create_invoice.request", {
     url,
-    body,
+    amount: input.amount,
+    itemKey,
   });
 
   const res = await fetch(url, {

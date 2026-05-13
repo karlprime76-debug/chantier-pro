@@ -19,14 +19,14 @@ export async function FeatureGate({
 }: FeatureGateProps) {
   const session = await requireSession();
   if (!session) {
-    redirect("/login");
+    redirect("/login?next=/dashboard");
   }
 
   const plan = await getEffectiveUserPlan(session);
   const ok = canAccessFeature(plan, featureKey);
 
   if (!ok) {
-    redirect("/pricing");
+    redirect(`/pricing?locked=${encodeURIComponent(featureKey)}`);
   }
 
   return <>{children}</>;

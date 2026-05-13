@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { PasswordSuggestion } from "@/components/auth/PasswordSuggestion";
 
-export function RegisterForm() {
+export function RegisterForm({ nextUrl }: { nextUrl?: string }) {
+  const next = nextUrl && nextUrl.startsWith("/") ? nextUrl : "/dashboard";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -95,7 +96,7 @@ export function RegisterForm() {
           return;
         }
 
-        window.location.href = "/dashboard";
+        window.location.href = next;
       }}
     >
       <Input

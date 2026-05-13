@@ -83,6 +83,34 @@ export default function FeatureRapportsJournaliersPage() {
               Voir les tarifs
             </Button>
           </div>
+
+          <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">Pour qui ?</div>
+            <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Chefs de chantier</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Conducteurs de travaux</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Bureaux / responsables projet</div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Entrepreneurs BTP</div>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">FAQ</div>
+            <div className="mt-3 grid gap-3 text-sm text-[var(--app-text-muted)]">
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Pourquoi des rapports journaliers ?</div>
+                <div className="mt-1">Pour garder une trace claire (avancement, incidents, décisions) et mieux communiquer.</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Est-ce que je peux retrouver l’historique par chantier ?</div>
+                <div className="mt-1">Oui, l’objectif est de centraliser l’historique et éviter la perte d’infos.</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Est-ce utilisable directement sur mobile ?</div>
+                <div className="mt-1">Oui, pour saisir en fin de journée et partager facilement.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </AppShell>
       <MarketingFooter />

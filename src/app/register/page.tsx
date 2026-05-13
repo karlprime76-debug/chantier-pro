@@ -4,7 +4,13 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 
-export default function RegisterPage() {
+export default function RegisterPage({
+  searchParams,
+}: {
+  searchParams?: { next?: string | string[] };
+}) {
+  const nextUrl = typeof searchParams?.next === "string" ? searchParams.next : undefined;
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
@@ -16,7 +22,7 @@ export default function RegisterPage() {
               <CardDescription>Crée ton compte pour accéder au dashboard et commencer un chantier.</CardDescription>
             </CardHeader>
 
-            <RegisterForm />
+            <RegisterForm nextUrl={nextUrl} />
           </Card>
         </div>
       </AppShell>
