@@ -49,7 +49,7 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
           Ouvrir mon tableau de bord
         </Button>
         <Button
-          href="#fonctionnalites"
+          href="/features"
           size={variant === "hero" ? "lg" : undefined}
           variant="ghost"
           className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
@@ -74,7 +74,7 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
         Créer un compte gratuit
       </Button>
       <Button
-        href={variant === "hero" ? "/pricing" : "#fonctionnalites"}
+        href={variant === "hero" ? "/pricing" : "/features"}
         size={variant === "hero" ? "lg" : undefined}
         variant="ghost"
         className={variant === "hero" ? "whitespace-nowrap" : undefined}

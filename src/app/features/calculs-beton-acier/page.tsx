@@ -117,6 +117,30 @@ export default function FeatureCalculsBetonAcierPage() {
               </div>
             </div>
           </div>
+
+          <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">Autres fonctionnalités</div>
+            <div className="mt-3 grid gap-2 text-sm">
+              <a className="text-[var(--app-primary)] underline" href="/features/suivi-budget">
+                Suivi budget & dépenses
+              </a>
+              <a className="text-[var(--app-primary)] underline" href="/features/rapports-journaliers">
+                Rapports journaliers
+              </a>
+              <a className="text-[var(--app-primary)] underline" href="/features">
+                Voir toutes les fonctionnalités
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button href="/register" size="lg">
+              Créer un compte
+            </Button>
+            <Button href="/pricing" variant="secondary" size="lg">
+              Voir les tarifs
+            </Button>
+          </div>
         </div>
       </AppShell>
       <MarketingFooter />

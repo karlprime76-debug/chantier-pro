@@ -106,14 +106,14 @@ export default async function PricingPage() {
               </div>
 
               <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                <div className="text-sm font-bold text-[var(--app-text)]">Bientôt</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Disponible selon votre plan</div>
                 <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
-                  <div>Export PDF</div>
-                  <div>Génération de devis depuis les calculs</div>
-                  <div>Templates de devis</div>
-                  <div>Exports avancés</div>
+                  <div>Export PDF (Premium / Entreprise)</div>
+                  <div>Devis depuis les calculs (Premium / Entreprise)</div>
+                  <div>Templates de devis (Premium / Entreprise)</div>
+                  <div>Exports avancés (Entreprise)</div>
                 </div>
-                <div className="mt-2 text-xs text-[var(--app-text-muted)]">Ces fonctionnalités ne sont pas encore incluses.</div>
+                <div className="mt-2 text-xs text-[var(--app-text-muted)]">Certaines fonctionnalités avancées nécessitent un upgrade.</div>
               </div>
             </div>
 
@@ -165,29 +165,29 @@ export default async function PricingPage() {
                   <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
                     <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Export PDF</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
                   </div>
                   <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
                     <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Génération de devis depuis les calculs</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
                   </div>
                   <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
                     <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Templates de devis</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
                   </div>
                   <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
                     <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Exports avancés</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
-                    <div className="text-center text-[var(--app-text-muted)]">Bientôt</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
                   </div>
                 </div>
-                <div className="mt-3 text-xs text-[var(--app-text-muted)]">&quot;Bientôt&quot; = fonctionnalité en cours de développement (pas encore incluse).</div>
+                <div className="mt-3 text-xs text-[var(--app-text-muted)]">Les fonctionnalités avancées varient selon le plan choisi.</div>
               </div>
             </div>
           </div>
@@ -205,12 +205,12 @@ export default async function PricingPage() {
               </div>
             </div>
             <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
-              <div className="text-sm font-bold text-[var(--app-text)]">Bientôt</div>
+              <div className="text-sm font-bold text-[var(--app-text)]">Disponible selon votre plan</div>
               <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
-                <div>Export PDF</div>
-                <div>Génération de devis depuis les calculs</div>
-                <div>Templates de devis</div>
-                <div>Exports avancés</div>
+                <div>Export PDF (Premium / Entreprise)</div>
+                <div>Devis depuis les calculs (Premium / Entreprise)</div>
+                <div>Templates de devis (Premium / Entreprise)</div>
+                <div>Exports avancés (Entreprise)</div>
               </div>
             </div>
           </div>
@@ -223,8 +223,8 @@ export default async function PricingPage() {
                 <div className="mt-1">Oui, il permet de tester l’app et les calculateurs de base avant de passer au suivi complet.</div>
               </div>
               <div>
-                <div className="font-bold text-[var(--app-text)]">Les fonctionnalités “Bientôt” sont-elles déjà incluses ?</div>
-                <div className="mt-1">Non. Elles apparaissent ici pour transparence : elles seront ajoutées plus tard.</div>
+                <div className="font-bold text-[var(--app-text)]">Quelles fonctionnalités avancées sont incluses selon le plan ?</div>
+                <div className="mt-1">Certaines fonctionnalités avancées sont disponibles uniquement avec Premium ou Entreprise.</div>
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Quand mon plan payant est-il activé ?</div>

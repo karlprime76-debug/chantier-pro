@@ -239,8 +239,8 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   <div>Tous les calculateurs avancés</div>
                   <div>Historique des calculs</div>
                   <div>Sauvegarde des calculs par chantier</div>
-                  <div>Export PDF (bientôt)</div>
-                  <div>Devis générés depuis les calculs (bientôt)</div>
+                  <div>Export PDF</div>
+                  <div>Devis générés depuis les calculs</div>
                   <div>Rapports journaliers chantier</div>
                   <div>Outils avancés de suivi</div>
                   <div>Support prioritaire</div>
