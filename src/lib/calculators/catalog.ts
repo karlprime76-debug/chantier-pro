@@ -251,6 +251,18 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     isAvailable: true,
   },
   {
+    id: "concrete_mix_design",
+    title: "Formulation de béton",
+    description: "Dosage indicatif : ciment, eau, sable, gravier, adjuvant et corrections d’humidité.",
+    category: "Béton",
+    plan: "ENTERPRISE",
+    href: "/dashboard/calculators/formulation-beton",
+    featureKey: "concrete_mix_design",
+    status: "AVAILABLE",
+    iconName: "🧪",
+    isAvailable: true,
+  },
+  {
     id: "advanced_slab",
     title: "Dalle pleine (avancé)",
     description: "Béton, aciers, pertes et variantes (à venir).",

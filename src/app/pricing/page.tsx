@@ -90,6 +90,11 @@ export default async function PricingPage() {
                     <div>Multi-utilisateurs</div>
                     <div>Validation des dépenses</div>
                     <div>Exports avancés</div>
+                    <div>Formulation de béton (dosage indicatif)</div>
+                    <div className="mt-1 grid gap-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">
+                      <div>Ciment • Eau • Sable • Gravier • Adjuvant (si utilisé)</div>
+                      <div>Correction humidité / absorption sable & gravier</div>
+                    </div>
                     <div>Module Fondations complet</div>
                     <div className="mt-1 grid gap-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">
                       <div>Semelles isolées • Semelles filantes • Longrines • Radiers</div>
@@ -97,11 +102,41 @@ export default async function PricingPage() {
                       <div>Ferraillage • Volume béton • Quantitatif acier • Coffrage</div>
                       <div>Remblai • Étapes d’exécution • Export / rapport (si disponible)</div>
                     </div>
+                    <div className="mt-2">Checklists chantier (avancées)</div>
+                    <div>Rapports de contrôle</div>
+                    <div>Démo / modèles chantier</div>
                   </div>
                 </div>
                 <SubscribeButton plan="ENTERPRISE">S&apos;abonner</SubscribeButton>
               </div>
             </Card>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+            <div className="text-sm font-bold text-[var(--app-text)]">Pourquoi choisir l’offre Enterprise ?</div>
+            <div className="mt-2 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
+                Multi-chantiers et collaboration multi-utilisateurs.
+              </div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
+                Exports avancés et outils de pilotage pour équipes BTP.
+              </div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
+                Module Fondations complet : schémas d’exécution + quantitatifs.
+              </div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
+                Formulation de béton : dosage indicatif + correction humidité sable/gravier.
+              </div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
+                Checklists chantier avancées : suivi des étapes critiques par phase.
+              </div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
+                Rapports de contrôle : points sensibles (coffrage, ferraillage, avant bétonnage, cure).
+              </div>
+              <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3 sm:col-span-2">
+                Support prioritaire WhatsApp et accompagnement pour entreprises BTP.
+              </div>
+            </div>
           </div>
 
           <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
@@ -128,6 +163,10 @@ export default async function PricingPage() {
                   <div>Templates de devis (Premium / Entreprise)</div>
                   <div>Exports avancés (Entreprise)</div>
                   <div>Module Fondations (Entreprise)</div>
+                  <div>Formulation de béton (Entreprise)</div>
+                  <div>Checklists chantier (Entreprise)</div>
+                  <div>Rapports de contrôle (Entreprise)</div>
+                  <div>Démo / modèles chantier (Entreprise)</div>
                 </div>
                 <div className="mt-2 text-xs text-[var(--app-text-muted)]">Certaines fonctionnalités avancées nécessitent un upgrade.</div>
               </div>
@@ -204,6 +243,24 @@ export default async function PricingPage() {
                   </div>
                   <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
                     <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Module Fondations</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
+                    <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Formulation de béton</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
+                    <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Checklists chantier</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
+                    <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Rapports de contrôle</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
                     <div className="text-center text-[var(--app-text-muted)]">Oui</div>

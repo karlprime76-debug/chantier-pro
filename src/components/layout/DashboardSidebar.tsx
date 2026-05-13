@@ -35,6 +35,8 @@ const calculatorEnterpriseItems = [
   { href: "/dashboard/calculators/septic-tank", label: "Fosse septique / Puisard" },
   { href: "/dashboard/calculators/fence", label: "Clôture complète" },
   { href: "/dashboard/calculators/slab/advanced", label: "Dalle pleine avancée" },
+  { href: "/dashboard/calculators/fondations", label: "Fondations" },
+  { href: "/dashboard/calculators/formulation-beton", label: "Formulation béton" },
 ];
 
 type DashboardSidebarProps = {

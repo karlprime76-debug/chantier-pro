@@ -69,12 +69,41 @@ export default function FeaturesPage() {
                 </Button>
               </div>
             </Card>
+
+            <Card className="sm:col-span-2">
+              <CardHeader>
+                <div className="flex items-center justify-between gap-3">
+                  <CardTitle>Formulation de béton</CardTitle>
+                  <PlanBadge variant="free">Enterprise</PlanBadge>
+                </div>
+                <CardDescription>
+                  Dosage indicatif du béton : ciment, eau, sable, gravier, adjuvant, corrections d’humidité et quantités par volume.
+                </CardDescription>
+              </CardHeader>
+              <div className="px-6 pb-6">
+                <Button href="/features/formulation-beton" variant="secondary">
+                  Voir la fonctionnalité
+                </Button>
+              </div>
+            </Card>
           </div>
 
           <div className="mt-6">
             <Button href="/pricing" size="lg">
               Voir les tarifs
             </Button>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">Découvrir</div>
+            <div className="mt-3 grid gap-2 text-sm">
+              <a className="text-[var(--app-primary)] underline" href="/use-cases">
+                Cas d’usage
+              </a>
+              <a className="text-[var(--app-primary)] underline" href="/demo">
+                Démo
+              </a>
+            </div>
           </div>
 
           <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">

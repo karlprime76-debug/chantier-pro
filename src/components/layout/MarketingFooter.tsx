@@ -50,6 +50,12 @@ export function MarketingFooter() {
             <Link className="text-sm text-[var(--app-text-muted)] hover:text-[var(--app-text)]" href="/pricing">
               Tarifs
             </Link>
+            <Link className="text-sm text-[var(--app-text-muted)] hover:text-[var(--app-text)]" href="/use-cases">
+              Cas d’usage
+            </Link>
+            <Link className="text-sm text-[var(--app-text-muted)] hover:text-[var(--app-text)]" href="/demo">
+              Démo
+            </Link>
             <Link className="text-sm text-[var(--app-text-muted)] hover:text-[var(--app-text)]" href="/contact">
               Contact
             </Link>

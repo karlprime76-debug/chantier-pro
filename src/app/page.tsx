@@ -175,6 +175,21 @@ export default function Home() {
               </div>
             </div>
 
+            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+              <div className="text-sm font-bold text-[var(--app-text)]">Tester rapidement</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Explore un chantier exemple (données fictives) pour comprendre Chantier Pro en 2 minutes.
+              </div>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <Button href="/demo" variant="secondary">
+                  Tester avec un chantier exemple
+                </Button>
+                <Button href="/use-cases" variant="ghost">
+                  Voir les cas d’usage
+                </Button>
+              </div>
+            </div>
+
             <div id="pour-qui" className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
               <div className="text-sm font-bold text-[var(--app-text)]">Pour qui ?</div>
               <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">

@@ -3,6 +3,7 @@ export type UserPlan = "FREE" | "PREMIUM" | "ENTERPRISE";
 export type FeatureKey =
   | "concrete_basic"
   | "steel_basic"
+  | "concrete_mix_design"
   | "stair_straight"
   | "stair_landing"
   | "stair_quarter_turn"
@@ -22,6 +23,8 @@ export type FeatureKey =
   | "quote_templates"
   | "quote_pdf"
   | "report_pdf"
+  | "site_checklists"
+  | "control_reports"
   | "team_management"
   | "client_access"
   | "dosage_library"
@@ -42,6 +45,8 @@ export const PLAN_ORDER: Record<UserPlan, number> = {
 export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   concrete_basic: "FREE",
   steel_basic: "FREE",
+
+  concrete_mix_design: "ENTERPRISE",
 
   stair_straight: "PREMIUM",
   stair_landing: "PREMIUM",
@@ -64,6 +69,9 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
 
   quote_pdf: "PREMIUM",
   report_pdf: "PREMIUM",
+
+  site_checklists: "ENTERPRISE",
+  control_reports: "ENTERPRISE",
   team_management: "ENTERPRISE",
   client_access: "PREMIUM",
 
