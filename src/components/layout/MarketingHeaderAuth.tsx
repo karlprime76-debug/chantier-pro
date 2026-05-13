@@ -6,10 +6,58 @@ import { Button } from "@/components/ui/Button";
 
 type MarketingHeaderAuthProps = {
   compact?: boolean;
+  variant?: "header" | "mobile_menu";
+  onAction?: () => void;
 };
 
-export function MarketingHeaderAuth({ compact }: MarketingHeaderAuthProps) {
+export function MarketingHeaderAuth({ compact, variant = "header", onAction }: MarketingHeaderAuthProps) {
   const { status } = useSession();
+
+  if (variant === "mobile_menu") {
+    if (status !== "authenticated") return null;
+
+    return (
+      <div className="grid gap-2">
+        <Button
+          href="/dashboard"
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start"
+          onClick={() => {
+            onAction?.();
+          }}
+        >
+          Tableau de bord
+        </Button>
+        <Button
+          href="/dashboard/settings"
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start"
+          onClick={() => {
+            onAction?.();
+          }}
+        >
+          Mon compte
+        </Button>
+
+        <div className="pt-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start text-[var(--cp-accent)]"
+            onClick={() => {
+              onAction?.();
+              void signOut({ callbackUrl: "/" });
+            }}
+          >
+            Se déconnecter
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (status === "authenticated") {
     return (

@@ -111,6 +111,15 @@ export function MarketingHeader() {
               >
                 Contact
               </Button>
+
+              <div className="pt-2">
+                <MarketingHeaderAuth
+                  variant="mobile_menu"
+                  onAction={() => {
+                    setIsMobileMenuOpen(false);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
