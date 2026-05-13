@@ -27,12 +27,16 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
 
   if (isAuthenticated) {
     return (
-      <div className={variant === "hero" ? "mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap" : "grid gap-3"}>
+      <div
+        className={
+          variant === "hero" ? "mt-6 flex flex-row flex-wrap items-center gap-3 sm:gap-4" : "grid gap-3"
+        }
+      >
         <Button
           href="/dashboard/projects"
           size={variant === "hero" ? "lg" : undefined}
           variant="secondary"
-          className={variant === "hero" ? "whitespace-nowrap" : undefined}
+          className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
         >
           Accéder à mes chantiers
         </Button>
@@ -40,7 +44,7 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
           href="/dashboard"
           size={variant === "hero" ? "lg" : undefined}
           variant="ghost"
-          className={variant === "hero" ? "whitespace-nowrap" : undefined}
+          className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
         >
           Ouvrir mon tableau de bord
         </Button>
@@ -48,7 +52,7 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
           href="#fonctionnalites"
           size={variant === "hero" ? "lg" : undefined}
           variant="ghost"
-          className={variant === "hero" ? "whitespace-nowrap" : undefined}
+          className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
         >
           Découvrir les fonctionnalités
         </Button>
