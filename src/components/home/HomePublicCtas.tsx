@@ -14,11 +14,11 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
 
   if (variant === "pair") {
     return (
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Button href={isAuthenticated ? "/dashboard/projects" : "/register"} size="lg" variant="secondary">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Button href={isAuthenticated ? "/dashboard/projects" : "/register"} size="lg" variant="secondary" className="whitespace-nowrap">
           {isAuthenticated ? "Accéder à mes chantiers" : "Créer un compte gratuit"}
         </Button>
-        <Button href="/pricing" size="lg" variant="ghost">
+        <Button href="/pricing" size="lg" variant="ghost" className="whitespace-nowrap">
           Voir les tarifs
         </Button>
       </div>
@@ -27,14 +27,29 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
 
   if (isAuthenticated) {
     return (
-      <div className={variant === "hero" ? "mt-6 flex flex-col gap-3 sm:flex-row" : "grid gap-3"}>
-        <Button href="/dashboard/projects" size={variant === "hero" ? "lg" : undefined} variant="secondary">
+      <div className={variant === "hero" ? "mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap" : "grid gap-3"}>
+        <Button
+          href="/dashboard/projects"
+          size={variant === "hero" ? "lg" : undefined}
+          variant="secondary"
+          className={variant === "hero" ? "whitespace-nowrap" : undefined}
+        >
           Accéder à mes chantiers
         </Button>
-        <Button href="/dashboard" size={variant === "hero" ? "lg" : undefined} variant="ghost">
+        <Button
+          href="/dashboard"
+          size={variant === "hero" ? "lg" : undefined}
+          variant="ghost"
+          className={variant === "hero" ? "whitespace-nowrap" : undefined}
+        >
           Ouvrir mon tableau de bord
         </Button>
-        <Button href="#fonctionnalites" size={variant === "hero" ? "lg" : undefined} variant="ghost">
+        <Button
+          href="#fonctionnalites"
+          size={variant === "hero" ? "lg" : undefined}
+          variant="ghost"
+          className={variant === "hero" ? "whitespace-nowrap" : undefined}
+        >
           Découvrir les fonctionnalités
         </Button>
       </div>
@@ -42,14 +57,24 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
   }
 
   return (
-    <div className={variant === "hero" ? "mt-6 flex flex-col gap-3 sm:flex-row" : "grid gap-3"}>
-      <Button href="/login" size={variant === "hero" ? "lg" : undefined} variant={variant === "hero" ? "secondary" : "ghost"}>
+    <div className={variant === "hero" ? "mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap" : "grid gap-3"}>
+      <Button
+        href="/login"
+        size={variant === "hero" ? "lg" : undefined}
+        variant={variant === "hero" ? "secondary" : "ghost"}
+        className={variant === "hero" ? "whitespace-nowrap" : undefined}
+      >
         Connexion
       </Button>
-      <Button href="/register" size={variant === "hero" ? "lg" : undefined}>
+      <Button href="/register" size={variant === "hero" ? "lg" : undefined} className={variant === "hero" ? "whitespace-nowrap" : undefined}>
         Créer un compte gratuit
       </Button>
-      <Button href={variant === "hero" ? "/pricing" : "#fonctionnalites"} size={variant === "hero" ? "lg" : undefined} variant="ghost">
+      <Button
+        href={variant === "hero" ? "/pricing" : "#fonctionnalites"}
+        size={variant === "hero" ? "lg" : undefined}
+        variant="ghost"
+        className={variant === "hero" ? "whitespace-nowrap" : undefined}
+      >
         {variant === "hero" ? "Voir les tarifs" : "Découvrir les fonctionnalités"}
       </Button>
     </div>
