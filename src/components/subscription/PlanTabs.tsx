@@ -323,7 +323,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
               </div>
               <div className="mt-3">
-                <SubscribeButton plan="ENTERPRISE">Demander une offre</SubscribeButton>
+                <SubscribeButton plan="ENTERPRISE">Passer à Entreprise</SubscribeButton>
               </div>
             </div>
           </div>

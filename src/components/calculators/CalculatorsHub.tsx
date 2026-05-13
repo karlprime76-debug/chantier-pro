@@ -48,7 +48,7 @@ function planLabel(plan: UserPlan): string {
 function statusLabel(item: CalculatorCatalogItem): string {
   if (item.status !== "AVAILABLE") return "Bientôt";
   const requiredPlan = requiredPlanForItem(item);
-  if (requiredPlan === "ENTERPRISE") return "Inclus Enterprise";
+  if (requiredPlan === "ENTERPRISE") return "Inclus Entreprise";
   if (requiredPlan === "PREMIUM") return "Inclus Premium";
   return "Inclus";
 }

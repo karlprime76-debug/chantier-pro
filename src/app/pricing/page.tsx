@@ -150,7 +150,7 @@ export default async function PricingPage() {
 
           <div className="mt-6 grid gap-4">
             <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
-              <div className="text-sm font-bold text-[var(--app-text)]">Pourquoi choisir l’offre Enterprise ?</div>
+              <div className="text-sm font-bold text-[var(--app-text)]">Pourquoi choisir l’offre Entreprise ?</div>
               <div className="mt-1 text-sm text-[var(--app-text-muted)]">
                 Des modules avancés pour piloter plusieurs chantiers avec une traçabilité plus propre.
               </div>
@@ -323,29 +323,6 @@ export default async function PricingPage() {
                   </div>
                 </div>
                 <div className="mt-3 text-xs text-[var(--app-text-muted)]">Les fonctionnalités avancées varient selon le plan choisi.</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
-              <div className="text-sm font-bold text-[var(--app-text)]">Disponible maintenant</div>
-              <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
-                <div>Calculs béton & acier</div>
-                <div>Historique par chantier</div>
-                <div>Suivi dépenses & budget</div>
-                <div>Rapports journaliers</div>
-                <div>Gestion de projets</div>
-                <div>Accès multi-utilisateurs (Entreprise)</div>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
-              <div className="text-sm font-bold text-[var(--app-text)]">Disponible selon votre plan</div>
-              <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
-                <div>Export PDF (Premium / Entreprise)</div>
-                <div>Devis depuis les calculs (Premium / Entreprise)</div>
-                <div>Templates de devis (Premium / Entreprise)</div>
-                <div>Exports avancés (Entreprise)</div>
               </div>
             </div>
           </div>

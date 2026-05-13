@@ -394,7 +394,7 @@ export function FoundationsCalculator() {
               <CardDescription>Choisis le type, renseigne les dimensions, puis calcule les quantitatifs.</CardDescription>
             </div>
             <div className="rounded-full border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-3 py-2 text-xs font-bold text-[var(--app-text-muted)]">
-              Enterprise
+              Entreprise
             </div>
           </div>
         </CardHeader>

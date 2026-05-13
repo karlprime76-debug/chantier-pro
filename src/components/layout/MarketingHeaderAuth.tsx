@@ -15,8 +15,13 @@ export function MarketingHeaderAuth({ compact }: MarketingHeaderAuthProps) {
     return (
       <div className="flex items-center gap-2">
         <Button href="/dashboard" variant={compact ? undefined : "secondary"} size="sm" className="whitespace-nowrap">
-          Ouvrir mon tableau de bord
+          Tableau de bord
         </Button>
+        {!compact && (
+          <Button href="/dashboard/settings" variant="ghost" size="sm" className="whitespace-nowrap">
+            Mon compte
+          </Button>
+        )}
         {!compact && (
           <Button
             type="button"
@@ -36,11 +41,9 @@ export function MarketingHeaderAuth({ compact }: MarketingHeaderAuthProps) {
 
   return (
     <div className="flex items-center gap-2">
-      {!compact && (
-        <Button href="/login" variant="secondary" size="sm" className="whitespace-nowrap">
-          Connexion
-        </Button>
-      )}
+      <Button href="/login" variant={compact ? "ghost" : "secondary"} size="sm" className="whitespace-nowrap">
+        Connexion
+      </Button>
       <Button href="/register" size="sm" className="whitespace-nowrap">
         Créer un compte
       </Button>
