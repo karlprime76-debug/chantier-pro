@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { requireApiSession } from "@/lib/auth/api";
+import { requireApiAdmin } from "@/lib/auth/api";
 import { sendEmail } from "@/lib/email/sendEmail";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
@@ -16,8 +16,10 @@ export async function POST(req: Request) {
 
   const secretRequired = (process.env.EMAIL_TEST_SECRET ?? "").trim();
   if (process.env.NODE_ENV === "production" && !secretRequired) {
-    const session = await requireApiSession();
-    if (session.role !== "ADMIN") {
+    try {
+      await requireApiAdmin();
+    } catch (e) {
+      if (e instanceof Response) return withRequestIdHeaders(e, requestId);
       return withRequestIdHeaders(
         NextResponse.json({ ok: false, error: "forbidden", message: "Accès refusé.", requestId }, { status: 403 }),
         requestId,

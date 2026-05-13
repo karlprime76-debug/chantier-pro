@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { requireApiSession } from "@/lib/auth/api";
+import { requireApiAdmin } from "@/lib/auth/api";
 import { logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -44,12 +44,11 @@ export async function GET(req: Request) {
   logInfo("billing.health.request_received", { requestId });
 
   if (process.env.NODE_ENV === "production") {
-    const session = await requireApiSession();
-    if (session.role !== "ADMIN") {
-      return withRequestIdHeaders(
-        NextResponse.json({ ok: false, error: "forbidden", requestId }, { status: 403 }),
-        requestId,
-      );
+    try {
+      await requireApiAdmin();
+    } catch (e) {
+      if (e instanceof Response) return withRequestIdHeaders(e, requestId);
+      return withRequestIdHeaders(NextResponse.json({ ok: false, error: "forbidden", requestId }, { status: 403 }), requestId);
     }
   }
 
