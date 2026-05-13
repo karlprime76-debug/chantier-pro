@@ -24,6 +24,27 @@ export function MarketingFooter() {
                 {SITE_CONFIG.whatsappDisplay}
               </a>
             </div>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <a
+                className="hover:text-[var(--app-text)]"
+                href={SITE_CONFIG.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Suivre Chantier Pro sur Instagram"
+              >
+                Instagram
+              </a>
+              <span aria-hidden="true">•</span>
+              <a
+                className="hover:text-[var(--app-text)]"
+                href={SITE_CONFIG.tiktokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Suivre Chantier Pro sur TikTok"
+              >
+                TikTok
+              </a>
+            </div>
           </div>
           <nav className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 sm:justify-end">
             <Link className="text-sm text-[var(--app-text-muted)] hover:text-[var(--app-text)]" href="/pricing">

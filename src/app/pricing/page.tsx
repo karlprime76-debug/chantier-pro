@@ -84,6 +84,21 @@ export default async function PricingPage() {
               <div className="grid gap-3">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">25 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
+                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
+                  <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
+                  <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
+                    <div>Multi-utilisateurs</div>
+                    <div>Validation des dépenses</div>
+                    <div>Exports avancés</div>
+                    <div>Module Fondations complet</div>
+                    <div className="mt-1 grid gap-1 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">
+                      <div>Semelles isolées • Semelles filantes • Longrines • Radiers</div>
+                      <div>Puits • Pieux • Fouilles & terrassement • Béton de propreté</div>
+                      <div>Ferraillage • Volume béton • Quantitatif acier • Coffrage</div>
+                      <div>Remblai • Étapes d’exécution • Export / rapport (si disponible)</div>
+                    </div>
+                  </div>
+                </div>
                 <SubscribeButton plan="ENTERPRISE">S&apos;abonner</SubscribeButton>
               </div>
             </Card>
@@ -112,6 +127,7 @@ export default async function PricingPage() {
                   <div>Devis depuis les calculs (Premium / Entreprise)</div>
                   <div>Templates de devis (Premium / Entreprise)</div>
                   <div>Exports avancés (Entreprise)</div>
+                  <div>Module Fondations (Entreprise)</div>
                 </div>
                 <div className="mt-2 text-xs text-[var(--app-text-muted)]">Certaines fonctionnalités avancées nécessitent un upgrade.</div>
               </div>
@@ -182,6 +198,12 @@ export default async function PricingPage() {
                   </div>
                   <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
                     <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Exports avancés</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Non</div>
+                    <div className="text-center text-[var(--app-text-muted)]">Oui</div>
+                  </div>
+                  <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] items-center gap-2 rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] px-3 py-2">
+                    <div className="text-[color-mix(in_oklab,var(--app-text),transparent_12%)]">Module Fondations</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
                     <div className="text-center text-[var(--app-text-muted)]">Non</div>
                     <div className="text-center text-[var(--app-text-muted)]">Oui</div>

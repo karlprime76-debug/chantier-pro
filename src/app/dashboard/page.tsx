@@ -157,6 +157,12 @@ export default async function DashboardPage() {
               </span>
               Ferraillage
             </Button>
+            <Button href="/dashboard/calculators/fondations" variant="secondary" className="justify-start">
+              <span className="grid h-9 w-9 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--cp-border)]">
+                <MiniIcon path="M3 20h18 M6 20V9l6-4 6 4v11 M9 20v-6h6v6" className="h-5 w-5" />
+              </span>
+              Fondations
+            </Button>
             <Button href="/calculs" variant="secondary" className="justify-start">
               <span className="grid h-9 w-9 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-text),transparent_92%)] text-[var(--cp-text)] ring-1 ring-[var(--cp-border)]">
                 <MiniIcon path="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2" className="h-5 w-5" />

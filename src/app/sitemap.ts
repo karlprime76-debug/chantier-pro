@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/features/calculs-beton-acier", changeFrequency: "monthly", priority: 0.6 },
     { path: "/features/suivi-budget", changeFrequency: "monthly", priority: 0.6 },
     { path: "/features/rapports-journaliers", changeFrequency: "monthly", priority: 0.6 },
+    { path: "/features/fondations", changeFrequency: "monthly", priority: 0.6 },
     { path: "/legal", changeFrequency: "yearly", priority: 0.3 },
     { path: "/legal/mentions-legales", changeFrequency: "yearly", priority: 0.3 },
     { path: "/legal/confidentialite", changeFrequency: "yearly", priority: 0.3 },

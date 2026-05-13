@@ -159,6 +159,22 @@ export default function Home() {
               </div>
             </div>
 
+            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+              <div className="text-sm font-bold text-[var(--app-text)]">Un module Fondations pour les projets plus complets</div>
+              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+                Avec l’offre Entreprise, Chantier Pro accompagne les équipes BTP dans les étapes clés des fondations : choix du type de
+                fondation, fouilles, béton de propreté, ferraillage, bétonnage, quantitatifs et suivi des travaux.
+              </div>
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                <Button href="/pricing" variant="secondary">
+                  Découvrir l’offre Entreprise
+                </Button>
+                <Button href="/features" variant="ghost">
+                  Voir les fonctionnalités
+                </Button>
+              </div>
+            </div>
+
             <div id="pour-qui" className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
               <div className="text-sm font-bold text-[var(--app-text)]">Pour qui ?</div>
               <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">

@@ -35,6 +35,30 @@ export default function MentionsLegalesPage() {
                 <span className="font-bold text-[var(--app-text)]">WhatsApp :</span> {SITE_CONFIG.whatsappDisplay}
               </div>
               <div>
+                <span className="font-bold text-[var(--app-text)]">Instagram officiel :</span>{" "}
+                <a
+                  className="text-[var(--app-primary)] underline"
+                  href={SITE_CONFIG.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suivre Chantier Pro sur Instagram"
+                >
+                  {SITE_CONFIG.instagramHandle}
+                </a>
+              </div>
+              <div>
+                <span className="font-bold text-[var(--app-text)]">TikTok officiel :</span>{" "}
+                <a
+                  className="text-[var(--app-primary)] underline"
+                  href={SITE_CONFIG.tiktokUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suivre Chantier Pro sur TikTok"
+                >
+                  {SITE_CONFIG.tiktokHandle}
+                </a>
+              </div>
+              <div>
                 <span className="font-bold text-[var(--app-text)]">Localisation :</span> {SITE_CONFIG.city}, {SITE_CONFIG.country}
               </div>
               <div>

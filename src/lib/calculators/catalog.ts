@@ -239,6 +239,18 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     isAvailable: true,
   },
   {
+    id: "foundations",
+    title: "Calculateurs Fondations",
+    description: "Fouilles, propreté, béton, acier, coffrage, remblai et coût estimatif.",
+    category: "Chantier",
+    plan: "ENTERPRISE",
+    href: "/dashboard/calculators/fondations",
+    featureKey: "foundations",
+    status: "AVAILABLE",
+    iconName: "🏗️",
+    isAvailable: true,
+  },
+  {
     id: "advanced_slab",
     title: "Dalle pleine (avancé)",
     description: "Béton, aciers, pertes et variantes (à venir).",

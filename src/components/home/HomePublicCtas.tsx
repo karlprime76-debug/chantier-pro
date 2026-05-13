@@ -29,14 +29,18 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
     return (
       <div
         className={
-          variant === "hero" ? "mt-6 flex flex-row flex-wrap items-center gap-3 sm:gap-4" : "grid gap-3"
+          variant === "hero"
+            ? "mt-6 w-full max-w-sm mx-auto flex flex-col items-stretch gap-3 text-center sm:max-w-none sm:mx-0 sm:flex-row sm:flex-wrap sm:items-center sm:text-left"
+            : "grid gap-3"
         }
       >
         <Button
           href="/dashboard/projects"
           size={variant === "hero" ? "lg" : undefined}
           variant="secondary"
-          className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
+          className={
+            variant === "hero" ? "w-full justify-center whitespace-nowrap sm:w-auto sm:min-w-fit" : undefined
+          }
         >
           Accéder à mes chantiers
         </Button>
@@ -44,7 +48,11 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
           href="/dashboard"
           size={variant === "hero" ? "lg" : undefined}
           variant="ghost"
-          className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
+          className={
+            variant === "hero"
+              ? "w-full justify-center whitespace-nowrap bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] sm:w-auto sm:min-w-fit sm:bg-transparent sm:text-[color-mix(in_oklab,var(--app-text),transparent_15%)] sm:ring-transparent"
+              : undefined
+          }
         >
           Ouvrir mon tableau de bord
         </Button>
@@ -52,7 +60,11 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
           href="/features"
           size={variant === "hero" ? "lg" : undefined}
           variant="ghost"
-          className={variant === "hero" ? "w-auto min-w-fit whitespace-nowrap" : undefined}
+          className={
+            variant === "hero"
+              ? "w-full justify-center whitespace-nowrap bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] sm:w-auto sm:min-w-fit sm:bg-transparent sm:text-[color-mix(in_oklab,var(--app-text),transparent_15%)] sm:ring-transparent"
+              : undefined
+          }
         >
           Découvrir les fonctionnalités
         </Button>

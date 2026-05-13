@@ -4,6 +4,7 @@ import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function LegalPage() {
   return (
@@ -32,13 +33,37 @@ export default function LegalPage() {
                 <span className="font-bold text-[var(--app-text)]">Responsable :</span> TCHONAN Rodolphe Karl
               </div>
               <div>
-                <span className="font-bold text-[var(--app-text)]">Email :</span> chantierprobj@gmail.com
+                <span className="font-bold text-[var(--app-text)]">Email :</span> {SITE_CONFIG.email}
               </div>
               <div>
-                <span className="font-bold text-[var(--app-text)]">WhatsApp :</span> +229 01 58 68 45 48
+                <span className="font-bold text-[var(--app-text)]">WhatsApp :</span> {SITE_CONFIG.whatsappDisplay}
               </div>
               <div>
-                <span className="font-bold text-[var(--app-text)]">Localisation :</span> Cotonou, Bénin
+                <span className="font-bold text-[var(--app-text)]">Instagram officiel :</span>{" "}
+                <a
+                  className="text-[var(--app-primary)] underline"
+                  href={SITE_CONFIG.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suivre Chantier Pro sur Instagram"
+                >
+                  {SITE_CONFIG.instagramHandle}
+                </a>
+              </div>
+              <div>
+                <span className="font-bold text-[var(--app-text)]">TikTok officiel :</span>{" "}
+                <a
+                  className="text-[var(--app-primary)] underline"
+                  href={SITE_CONFIG.tiktokUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suivre Chantier Pro sur TikTok"
+                >
+                  {SITE_CONFIG.tiktokHandle}
+                </a>
+              </div>
+              <div>
+                <span className="font-bold text-[var(--app-text)]">Localisation :</span> {SITE_CONFIG.city}, {SITE_CONFIG.country}
               </div>
             </div>
           </Card>

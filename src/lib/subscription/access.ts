@@ -28,6 +28,7 @@ export type FeatureKey =
   | "price_library"
   | "project_profitability"
   | "expenses_validation"
+  | "foundations"
   | "advanced_exports"
   | "daily_reports"
   | "project_budget";
@@ -70,6 +71,7 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   price_library: "ENTERPRISE",
   project_profitability: "ENTERPRISE",
   expenses_validation: "ENTERPRISE",
+  foundations: "ENTERPRISE",
   advanced_exports: "ENTERPRISE",
   daily_reports: "PREMIUM",
   project_budget: "PREMIUM",

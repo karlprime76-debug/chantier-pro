@@ -70,6 +70,30 @@ export default function ContactPage() {
               </div>
 
               <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Réseaux sociaux</div>
+                <div className="mt-2 grid gap-2 text-sm">
+                  <a
+                    className="text-[var(--app-primary)] underline"
+                    href={SITE_CONFIG.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Suivre Chantier Pro sur Instagram"
+                  >
+                    Instagram : {SITE_CONFIG.instagramHandle}
+                  </a>
+                  <a
+                    className="text-[var(--app-primary)] underline"
+                    href={SITE_CONFIG.tiktokUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Suivre Chantier Pro sur TikTok"
+                  >
+                    TikTok : {SITE_CONFIG.tiktokHandle}
+                  </a>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                 <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Liens utiles</div>
                 <div className="mt-2 grid gap-2 text-sm">
                   <Link className="text-[var(--app-primary)] underline" href="/support">

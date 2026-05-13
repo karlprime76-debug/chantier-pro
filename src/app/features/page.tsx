@@ -3,6 +3,7 @@ import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { PlanBadge } from "@/components/ui/PlanBadge";
 
 export default function FeaturesPage() {
   return (
@@ -49,6 +50,21 @@ export default function FeaturesPage() {
               </CardHeader>
               <div className="px-6 pb-6">
                 <Button href="/features/rapports-journaliers" variant="secondary">
+                  Voir la fonctionnalité
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="sm:col-span-2">
+              <CardHeader>
+                <div className="flex items-center justify-between gap-3">
+                  <CardTitle>Fondations</CardTitle>
+                  <PlanBadge variant="free">Enterprise</PlanBadge>
+                </div>
+                <CardDescription>Étapes, calculs et quantitatifs pour semelles, radiers, longrines, puits et pieux.</CardDescription>
+              </CardHeader>
+              <div className="px-6 pb-6">
+                <Button href="/features/fondations" variant="secondary">
                   Voir la fonctionnalité
                 </Button>
               </div>
