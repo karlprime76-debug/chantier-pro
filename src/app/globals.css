@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --cp-bg: #f6f8fb;
+  --cp-bg: #f8fafc;
   --cp-surface: #ffffff;
-  --cp-text: #0f172a;
-  --cp-muted: rgba(15, 23, 42, 0.62);
-  --cp-border: rgba(15, 23, 42, 0.12);
+  --cp-text: #0b1220;
+  --cp-muted: rgba(11, 18, 32, 0.62);
+  --cp-border: rgba(11, 18, 32, 0.12);
   --cp-accent: #ff6a00;
-  --cp-accent-2: #072b5f;
+  --cp-accent-2: #061b3a;
   --cp-card: #ffffff;
-  --cp-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+  --cp-shadow: 0 10px 26px rgba(6, 27, 58, 0.08);
 
-  --app-bg: #f7f4ef;
-  --app-bg-soft: #f2eee8;
-  --app-card: rgba(255, 255, 255, 0.86);
-  --app-card-border: rgba(15, 23, 42, 0.12);
-  --app-text: #121212;
-  --app-text-muted: rgba(18, 18, 18, 0.62);
+  --app-bg: var(--cp-bg);
+  --app-bg-soft: rgba(6, 27, 58, 0.04);
+  --app-card: rgba(255, 255, 255, 0.92);
+  --app-card-border: rgba(11, 18, 32, 0.1);
+  --app-text: var(--cp-text);
+  --app-text-muted: rgba(11, 18, 32, 0.6);
   --app-primary: var(--cp-accent);
   --app-primary-soft: rgba(255, 106, 0, 0.14);
   --app-on-primary: #ffffff;
-  --app-nav-bg: rgba(255, 255, 255, 0.72);
-  --app-input-bg: rgba(255, 255, 255, 0.7);
+  --app-nav-bg: rgba(6, 27, 58, 0.96);
+  --app-input-bg: rgba(255, 255, 255, 0.9);
 
   --app-hero-glow-1: rgba(255, 106, 0, 0.18);
   --app-hero-glow-2: rgba(7, 43, 95, 0.12);
@@ -53,20 +53,20 @@ html[data-theme="dark"] {
   --cp-muted: rgba(242, 245, 249, 0.62);
   --cp-border: rgba(242, 245, 249, 0.12);
   --cp-accent: #ff6a00;
-  --cp-accent-2: #072b5f;
+  --cp-accent-2: #061b3a;
   --cp-card: rgba(255, 255, 255, 0.06);
   --cp-shadow: 0 12px 42px rgba(0, 0, 0, 0.45);
 
   --app-bg: #070b10;
-  --app-bg-soft: #0b0f14;
-  --app-card: rgba(18, 22, 28, 0.82);
+  --app-bg-soft: rgba(255, 255, 255, 0.04);
+  --app-card: rgba(18, 22, 28, 0.86);
   --app-card-border: rgba(255, 255, 255, 0.1);
   --app-text: #ffffff;
   --app-text-muted: rgba(255, 255, 255, 0.65);
   --app-primary: var(--cp-accent);
   --app-primary-soft: rgba(255, 106, 0, 0.16);
   --app-on-primary: #ffffff;
-  --app-nav-bg: rgba(11, 15, 20, 0.84);
+  --app-nav-bg: rgba(6, 27, 58, 0.92);
   --app-input-bg: rgba(16, 24, 38, 0.72);
 
   --app-hero-glow-1: rgba(249, 115, 22, 0.22);

@@ -35,23 +35,40 @@ export default async function ReportsPage() {
       })
     : [];
 
+  const recentCount = reports.length;
+
   return (
     <div className="grid gap-6">
-      <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Rapports journaliers</h1>
-        <p className="mt-1 text-sm text-[var(--app-text-muted)]">Traçabilité quotidienne par chantier.</p>
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Rapports</h1>
+          <p className="mt-1 text-sm text-[var(--app-text-muted)]">Rapports journaliers et suivi terrain.</p>
+          <div className="mt-2 text-xs font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+            {recentCount} rapport(s) récent(s)
+          </div>
+        </div>
+        <div className="hidden sm:flex gap-2">
+          <Button href="#new-report" variant="primary">
+            Créer un rapport
+          </Button>
+          <Button href="/dashboard/projects" variant="secondary">
+            Voir les chantiers
+          </Button>
+        </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Nouveau rapport</CardTitle>
-          <CardDescription>Météo, ouvriers, travaux réalisés, incidents.</CardDescription>
-        </CardHeader>
+      <div id="new-report">
+        <Card className="cp-hover-lift">
+          <CardHeader>
+            <CardTitle>Nouveau rapport</CardTitle>
+            <CardDescription>Météo, ouvriers, travaux réalisés, incidents.</CardDescription>
+          </CardHeader>
 
-        <NewReportForm />
-      </Card>
+          <NewReportForm />
+        </Card>
+      </div>
 
-      <Card>
+      <Card className="cp-hover-lift">
         <CardHeader>
           <CardTitle>Derniers rapports</CardTitle>
           <CardDescription>{reports.length} rapport(s)</CardDescription>
@@ -65,7 +82,7 @@ export default async function ReportsPage() {
             reports.map((r) => (
               <div
                 key={r.id}
-                className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4"
+                className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
@@ -75,6 +92,16 @@ export default async function ReportsPage() {
                       {r.workersCount ?? "—"} • Avancement: {r.progressEst ?? "—"}%
                     </div>
                     <div className="mt-2 text-sm text-[var(--app-text-muted)]">{r.workDone}</div>
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-primary)] ring-1 ring-[var(--app-card-border)]">
+                        En cours
+                      </span>
+                      {r.weather ? (
+                        <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                          Météo: {r.weather}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                   <Button href={`/dashboard/projects/${r.project.id}`} variant="ghost" size="sm">
                     Chantier

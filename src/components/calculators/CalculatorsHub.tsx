@@ -116,8 +116,12 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">Centre de calculs Chantier Pro</h1>
-        <p className="mt-1 text-sm text-[var(--app-text-muted)]">Tous vos outils de calcul BTP selon votre plan.</p>
+        <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-3xl">
+          Calculs
+        </h1>
+        <p className="mt-1 text-sm text-[var(--app-text-muted)]">
+          Vos modules BTP, organisés par catégorie, selon votre plan.
+        </p>
         <div className="mt-2 text-xs font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
           Plan actuel: <span className="text-[var(--app-text)]">{planLabel(userPlan)}</span> · {visibleCountLabel}
         </div>
@@ -141,10 +145,10 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                   type="button"
                   onClick={() => setPlanFilter(f.id)}
                   className={cn(
-                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 transition",
-                    "ring-[var(--app-card-border)]",
+                    "shrink-0 rounded-full px-4 py-2 text-xs font-extrabold ring-1 transition",
+                    "ring-[var(--app-card-border)] shadow-sm",
                     active
-                      ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                      ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] text-[var(--app-primary)]"
                       : "bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                   )}
                 >
@@ -163,10 +167,10 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                   type="button"
                   onClick={() => setCategoryFilter(f.id)}
                   className={cn(
-                    "shrink-0 rounded-full px-3 py-2 text-xs font-bold ring-1 transition",
-                    "ring-[var(--app-card-border)]",
+                    "shrink-0 rounded-full px-4 py-2 text-xs font-extrabold ring-1 transition",
+                    "ring-[var(--app-card-border)] shadow-sm",
                     active
-                      ? "bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] text-[var(--app-text)]"
+                      ? "bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)]"
                       : "bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                   )}
                 >
@@ -190,27 +194,38 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
           const shouldShowUpgrade = !isEnterpriseLocked && !canAccess;
 
           return (
-            <Card key={c.id}>
-              <CardHeader>
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <CardTitle>
-                      <span className="mr-2" aria-hidden="true">
+            <Card key={c.id} className="cp-hover-lift overflow-hidden">
+              <CardHeader className="mb-0">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 gap-3">
+                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--app-card-border)]">
+                      <span className="text-lg" aria-hidden="true">
                         {c.iconName}
                       </span>
-                      {c.title}
-                    </CardTitle>
-                    <CardDescription>{c.description}</CardDescription>
+                    </div>
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                        {c.category}
-                      </span>
-                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                        {planLabel(requiredPlan)}
-                      </span>
+                    <div className="min-w-0">
+                      <CardTitle className="text-base">
+                        <span className="truncate">{c.title}</span>
+                      </CardTitle>
+                      <CardDescription className="line-clamp-2">{c.description}</CardDescription>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                          {c.category}
+                        </span>
+                        <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                          {planLabel(requiredPlan)}
+                        </span>
+                        {c.status !== "AVAILABLE" ? (
+                          <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                            Bientôt
+                          </span>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
+
                   <div className="grid justify-items-end gap-2">
                     {badgeForPlan(requiredPlan)}
                     <span className="text-[11px] font-bold text-[var(--app-text-muted)]">{statusLabel(c)}</span>
@@ -218,9 +233,9 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                 </div>
               </CardHeader>
 
-              <div className="px-6 pb-6">
+              <div className="mt-4 border-t border-[var(--app-card-border)] px-6 py-4">
                 {c.status !== "AVAILABLE" ? (
-                  <ResponsiveButton type="button" variant="ghost" size="sm" disabled>
+                  <ResponsiveButton type="button" variant="ghost" size="md" disabled className="w-full">
                     Bientôt
                   </ResponsiveButton>
                 ) : canAccess ? (
@@ -229,26 +244,27 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                     prefetch
                     loadingText="Ouverture…"
                     variant="secondary"
-                    size="sm"
+                    size="md"
+                    className="w-full"
                   >
                     Ouvrir
                   </ResponsiveButton>
                 ) : isEnterpriseLocked ? (
-                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
+                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
                     Passer à Entreprise
                   </ResponsiveButton>
                 ) : shouldShowUpgrade ? (
                   needsEnterprise ? (
-                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
+                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
                       Passer à Entreprise
                     </ResponsiveButton>
                   ) : (
-                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
+                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
                       Passer à Premium
                     </ResponsiveButton>
                   )
                 ) : (
-                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="sm">
+                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
                     Voir les offres
                   </ResponsiveButton>
                 )}

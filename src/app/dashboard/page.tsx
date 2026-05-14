@@ -32,9 +32,23 @@ export default async function DashboardPage() {
 
   const companyId = user?.companyId ?? null;
 
+  const profile = session
+    ? await prisma.user.findUnique({ where: { id: session.id }, select: { name: true } })
+    : null;
+
+  const greetingName = profile?.name?.trim() || session?.name?.trim() || "";
+
   const activeProjectsCount = companyId
     ? await prisma.project.count({ where: { companyId, status: "ACTIVE" } })
     : 0;
+
+  const mainProject = companyId
+    ? await prisma.project.findFirst({
+        where: { companyId, status: "ACTIVE" },
+        orderBy: [{ updatedAt: "desc" }, { createdAt: "desc" }],
+        select: { id: true, name: true, progress: true, plannedEndDate: true },
+      })
+    : null;
 
   const expensesAgg = companyId
     ? await prisma.expense.aggregate({
@@ -56,23 +70,88 @@ export default async function DashboardPage() {
     <div className="grid gap-6">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--cp-text),transparent_35%)]">Bonjour,</div>
-          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[var(--cp-text)] sm:text-3xl">
-            Bienvenue sur Chantier Pro
+          <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_35%)]">
+            Bonjour{greetingName ? "," : ""}
+          </div>
+          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-3xl">
+            {greetingName ? `${greetingName} 👋` : "Bienvenue 👋"}
           </h1>
-          <p className="mt-2 text-sm text-[color-mix(in_oklab,var(--cp-text),transparent_45%)]">
-            Ton tableau de bord chantier, calculs et documents — en un coup d’œil.
+          <p className="mt-2 text-sm text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">
+            Voici l’essentiel de vos chantiers.
           </p>
         </div>
-        <div className="hidden sm:flex gap-2">
-          <Button href="/dashboard/projects/new" variant="primary">
-            Nouveau chantier
-          </Button>
-          <Button href="/dashboard/reports" variant="secondary">
-            Nouveau document
-          </Button>
-        </div>
+
+        <button
+          type="button"
+          aria-label="Notifications"
+          className="grid h-11 w-11 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] shadow-[var(--cp-shadow)]"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden="true">
+            <path
+              d="M12 22a2.5 2.5 0 0 0 2.5-2.5h-5A2.5 2.5 0 0 0 12 22Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M18 16v-5a6 6 0 1 0-12 0v5l-2 2h16l-2-2Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
+
+      <Card className="cp-hover-lift overflow-hidden">
+        <CardHeader className="mb-0">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="text-xs font-bold uppercase tracking-wide text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+                Chantier actif
+              </div>
+              <div className="mt-1 truncate text-lg font-extrabold tracking-tight text-[var(--app-text)]">
+                {mainProject?.name ?? "Aucun chantier actif"}
+              </div>
+              <div className="mt-1 text-sm text-[var(--app-text-muted)]">
+                Avancement : <span className="font-bold text-[var(--app-text)]">{mainProject?.progress ?? 0}%</span>
+                {mainProject?.plannedEndDate ? (
+                  <span className="ml-2 text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
+                    • Fin prévue : {new Date(mainProject.plannedEndDate).toLocaleDateString("fr-FR")}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="hidden sm:flex gap-2">
+              <Button href="/dashboard/projects/new" variant="primary">
+                Nouveau chantier
+              </Button>
+              <Button href="/dashboard/reports" variant="secondary">
+                Créer un rapport
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+
+        <div className="mt-4">
+          <div className="h-3 w-full rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] ring-1 ring-[var(--app-card-border)]">
+            <div
+              className="h-3 rounded-full bg-[var(--app-primary)]"
+              style={{ width: `${Math.max(0, Math.min(100, mainProject?.progress ?? 0))}%` }}
+            />
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:hidden">
+            <Button href="/dashboard/projects/new" variant="primary" className="w-full">
+              Nouveau chantier
+            </Button>
+            <Button href="/dashboard/reports" variant="secondary" className="w-full">
+              Créer un rapport
+            </Button>
+          </div>
+        </div>
+      </Card>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="cp-hover-lift">
@@ -200,9 +279,16 @@ export default async function DashboardPage() {
                   key={r.id}
                   className="rounded-2xl border border-[var(--cp-border)] bg-[color-mix(in_oklab,var(--cp-card),transparent_8%)] p-4"
                 >
-                  <div className="text-sm font-semibold text-[var(--cp-text)]">{r.project.name}</div>
-                  <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--cp-text),transparent_45%)]">
-                    Rapport du {new Date(r.date).toLocaleDateString("fr-FR")}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-semibold text-[var(--cp-text)]">{r.project.name}</div>
+                      <div className="mt-1 text-xs text-[color-mix(in_oklab,var(--cp-text),transparent_45%)]">
+                        Rapport du {new Date(r.date).toLocaleDateString("fr-FR")}
+                      </div>
+                    </div>
+                    <span className="shrink-0 inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] px-2 py-1 text-[11px] font-bold text-[var(--app-primary)] ring-1 ring-[var(--app-card-border)]">
+                      À vérifier
+                    </span>
                   </div>
                 </div>
               ))

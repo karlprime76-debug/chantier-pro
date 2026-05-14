@@ -14,6 +14,14 @@ type MobileNavItem = {
   isActive?: (pathname: string) => boolean;
 };
 
+function PlusIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function UserIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
@@ -122,15 +130,15 @@ export function MobileBottomNav() {
     },
     {
       href: "/dashboard/reports",
-      label: "Documents",
+      label: "Rapports",
       icon: ({ className }) => <FileIcon className={className} />,
       isActive: (p) => p.startsWith("/dashboard/reports"),
     },
     {
-      href: "/dashboard/settings",
-      label: "Profil",
+      href: "/more",
+      label: "Plus",
       icon: ({ className }) => <UserIcon className={className} />,
-      isActive: (p) => p.startsWith("/dashboard/settings"),
+      isActive: (p) => p.startsWith("/more") || p.startsWith("/dashboard/settings"),
     },
   ];
 
@@ -142,13 +150,13 @@ export function MobileBottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden" aria-label="Navigation principale">
       <div
-        className="mx-auto w-full max-w-6xl px-3"
+        className="relative mx-auto w-full max-w-6xl px-3"
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
         <div
           className={cn(
-            "mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg supports-[backdrop-filter]:backdrop-blur",
-            "bg-[var(--app-nav-bg)] border-[var(--app-card-border)]",
+            "relative mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg supports-[backdrop-filter]:backdrop-blur",
+            "bg-[var(--app-nav-bg)] border-[color-mix(in_oklab,var(--app-nav-bg),white_12%)]",
           )}
         >
           {items.map((item) => {
@@ -162,14 +170,14 @@ export function MobileBottomNav() {
                 className={cn(
                   "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",
                   active
-                    ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] text-[var(--app-primary)]"
-                    : "text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
+                    ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_82%)] text-[var(--app-primary)]"
+                    : "text-[color-mix(in_oklab,white,transparent_24%)] hover:bg-[color-mix(in_oklab,white,transparent_92%)] hover:text-white",
                 )}
               >
                 <span
                   className={cn(
                     "grid h-7 w-7 place-items-center",
-                    active ? "text-[var(--app-primary)]" : "text-[var(--app-text-muted)]",
+                    active ? "text-[var(--app-primary)]" : "text-[color-mix(in_oklab,white,transparent_24%)]",
                   )}
                 >
                   {item.icon({ className: "h-6 w-6" })}
@@ -179,6 +187,20 @@ export function MobileBottomNav() {
             );
           })}
         </div>
+
+        <Link
+          href="/dashboard/projects/new"
+          prefetch={false}
+          aria-label="Ajouter"
+          className={cn(
+            "absolute left-1/2 -translate-x-1/2",
+            "bottom-[calc(0.75rem+env(safe-area-inset-bottom)+42px)]",
+            "grid h-14 w-14 place-items-center rounded-2xl bg-[var(--app-primary)] text-[var(--app-on-primary)] shadow-[var(--cp-shadow)] ring-1 ring-[color-mix(in_oklab,var(--app-primary),black_18%)]",
+            "active:scale-[0.98] active:opacity-90",
+          )}
+        >
+          <PlusIcon className="h-7 w-7" />
+        </Link>
       </div>
     </nav>
   );
