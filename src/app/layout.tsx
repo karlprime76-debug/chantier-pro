@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Providers } from "@/components/auth/Providers";
 import { AppSplashScreen } from "@/components/branding/AppSplashScreen";
-import { HomeButton } from "@/components/navigation/HomeButton";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { getSiteUrl } from "@/lib/config/site";
 import "./globals.css";
@@ -89,7 +88,6 @@ export default function RootLayout({
           <ThemeProvider>
             <div className="relative flex min-h-full flex-1 flex-col">
               <AppSplashScreen />
-              <HomeButton />
               <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
                 <div className="absolute -top-48 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,var(--app-hero-glow-1),transparent_62%)] blur-2xl sm:h-[680px] sm:w-[680px] sm:blur-3xl" />
                 <div className="absolute -bottom-72 right-[-180px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,var(--app-hero-glow-2),transparent_60%)] blur-2xl sm:h-[720px] sm:w-[720px] sm:blur-3xl" />

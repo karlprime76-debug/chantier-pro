@@ -3,6 +3,10 @@ export type UserPlan = "FREE" | "PREMIUM" | "ENTERPRISE";
 export type FeatureKey =
   | "concrete_basic"
   | "steel_basic"
+  | "concrete_trucks"
+  | "rebar_columns"
+  | "rebar_beams"
+  | "rebar_slab"
   | "concrete_mix_design"
   | "stair_straight"
   | "stair_landing"
@@ -17,6 +21,10 @@ export type FeatureKey =
   | "septic_tank"
   | "fence"
   | "advanced_slab"
+  | "enterprise_estimation"
+  | "enterprise_quote_generator"
+  | "enterprise_smart_report"
+  | "enterprise_price_library"
   | "calc_history"
   | "calc_pdf"
   | "quote_from_calc"
@@ -46,6 +54,11 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   concrete_basic: "FREE",
   steel_basic: "FREE",
 
+  concrete_trucks: "PREMIUM",
+  rebar_columns: "PREMIUM",
+  rebar_beams: "PREMIUM",
+  rebar_slab: "PREMIUM",
+
   concrete_mix_design: "ENTERPRISE",
 
   stair_straight: "PREMIUM",
@@ -61,6 +74,11 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   septic_tank: "ENTERPRISE",
   fence: "ENTERPRISE",
   advanced_slab: "ENTERPRISE",
+
+  enterprise_estimation: "ENTERPRISE",
+  enterprise_quote_generator: "ENTERPRISE",
+  enterprise_smart_report: "ENTERPRISE",
+  enterprise_price_library: "ENTERPRISE",
 
   calc_history: "PREMIUM",
   calc_pdf: "PREMIUM",
