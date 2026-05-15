@@ -126,7 +126,7 @@ export default async function OpenGraphImage() {
             >
               {[
                 "Mobile-first",
-                "Premium",
+                "Pro",
                 "Rapide",
               ].map((t) => (
                 <div

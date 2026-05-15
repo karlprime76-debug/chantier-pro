@@ -19,7 +19,7 @@ export function PlanBadge({ variant, className, children }: PlanBadgeProps) {
 
   const labels: Record<PlanBadgeVariant, string> = {
     free: "Gratuit",
-    premium: "Premium",
+    premium: "Pro",
     soon: "Bientôt",
   };
 

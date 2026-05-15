@@ -20,7 +20,7 @@ type Tab = {
 
 const TABS: Tab[] = [
   { key: "free", label: "Gratuit", badgeVariant: "free" },
-  { key: "premium", label: "Premium", badgeVariant: "premium" },
+  { key: "premium", label: "Pro", badgeVariant: "premium" },
   { key: "enterprise", label: "Entreprise", badgeVariant: "free" },
 ];
 
@@ -47,7 +47,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
           </div>
 
           <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3 text-sm text-[var(--app-text-muted)]">
-            Avec Chantier Pro Premium, l’objectif est simple : moins d’erreurs, moins de temps perdu, plus de contrôle sur chaque chantier.
+            Avec le plan Pro, l’objectif est simple : moins d’erreurs, moins de temps perdu, plus de contrôle sur chaque chantier.
           </div>
         </div>
 
@@ -94,7 +94,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   <div className="text-sm font-bold text-[var(--app-text)]">Calculateurs de base</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                     <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
-                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Pro</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                     <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                   </div>
                 </div>
@@ -103,7 +103,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   <div className="text-sm font-bold text-[var(--app-text)]">Calculateurs avancés</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                     <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-[var(--app-text)]">Limité</span></div>
-                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Pro</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                     <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   <div className="text-sm font-bold text-[var(--app-text)]">Export PDF</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                     <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-[var(--app-text)]">Non</span></div>
-                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Pro</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                     <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   <div className="text-sm font-bold text-[var(--app-text)]">Multi-utilisateurs</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                     <div className="flex items-center justify-between gap-3"><span>Gratuit</span><span className="font-semibold text-[var(--app-text)]">Non</span></div>
-                    <div className="flex items-center justify-between gap-3"><span>Premium</span><span className="font-semibold text-[var(--app-text)]">Non</span></div>
+                    <div className="flex items-center justify-between gap-3"><span>Pro</span><span className="font-semibold text-[var(--app-text)]">Non</span></div>
                     <div className="flex items-center justify-between gap-3"><span>Entreprise</span><span className="font-semibold text-[var(--app-text)]">Oui</span></div>
                   </div>
                 </div>
@@ -132,7 +132,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                   <div className="grid grid-cols-[1.2fr_1fr_1fr_1fr] gap-2 text-xs font-bold text-[var(--app-text-muted)]">
                     <div />
                     <div className="text-center">Gratuit</div>
-                    <div className="text-center">Premium</div>
+                    <div className="text-center">Pro</div>
                     <div className="text-center">Entreprise</div>
                   </div>
                   <div className="mt-2 grid gap-2 text-sm">
@@ -195,7 +195,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                 {isAuthenticated ? "Créer mon chantier" : "Commencer gratuitement"}
               </Button>
               <Button type="button" size="lg" variant="ghost" onClick={() => setActive("premium")}>
-                Voir Premium
+                Voir Pro
               </Button>
             </div>
           </div>
@@ -204,9 +204,9 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
             <div>
               <div className="flex items-center gap-2">
                 <PlanBadge variant="premium" />
-                <div className="text-sm font-extrabold text-[var(--app-text)]">Plan Premium</div>
+                <div className="text-sm font-extrabold text-[var(--app-text)]">Plan Pro</div>
                 <span className="rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
-                  Premium recommandé
+                  Pro recommandé
                 </span>
               </div>
               <div className="mt-1 text-sm text-[var(--app-text-muted)]">
@@ -257,7 +257,7 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                     <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">15 000 FCFA</div>
                     <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                   </div>
-                  <SubscribeButton plan="PREMIUM">Passer à Premium</SubscribeButton>
+                  <SubscribeButton plan="PREMIUM">Passer à Pro</SubscribeButton>
                   <Button href="/pricing" variant="ghost" size="sm">
                     Voir le détail des plans
                   </Button>

@@ -43,7 +43,7 @@ export default function ConditionsPage() {
               <div>
                 <div className="font-bold text-[var(--app-text)]">Abonnements</div>
                 <div className="mt-1">
-                  Le service propose des offres Gratuit, Premium et Entreprise. Certaines fonctionnalités peuvent être réservées aux offres
+                  Le service propose des offres Gratuit, Pro et Entreprise. Certaines fonctionnalités peuvent être réservées aux offres
                   payantes.
                 </div>
                 <div className="mt-1">

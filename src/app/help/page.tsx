@@ -16,8 +16,8 @@ const FAQS = [
     a: "Va dans Calculs, choisis un calculateur, remplis les paramètres puis lance le calcul. Certains calculateurs permettent aussi de sauvegarder l’historique par chantier.",
   },
   {
-    q: "Comment accéder aux outils Premium ?",
-    a: "Les outils Premium/Entreprise apparaissent dans Calculs avec une indication. Tu peux passer Premium depuis la page Tarifs.",
+    q: "Comment accéder aux outils Pro ?",
+    a: "Les outils Pro/Entreprise apparaissent dans Calculateurs avec une indication. Tu peux passer Pro depuis la page Tarifs.",
   },
   {
     q: "Comment changer d’abonnement ?",

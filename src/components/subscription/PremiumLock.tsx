@@ -7,7 +7,7 @@ type PremiumLockProps = {
 };
 
 export function PremiumLock({
-  title = "Fonctionnalité Premium",
+  title = "Fonctionnalité Pro",
   description = "Débloquez ce calculateur pour gagner du temps sur vos estimations chantier.",
 }: PremiumLockProps) {
   return (
@@ -23,7 +23,7 @@ export function PremiumLock({
       <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-6">
         <div className="text-sm font-semibold text-[var(--app-text)]">Accès restreint</div>
         <div className="mt-1 text-sm text-[var(--app-text-muted)]">
-          Passez au plan Premium pour activer cette fonctionnalité.
+          Passez au plan Pro pour activer cette fonctionnalité.
         </div>
         <div className="mt-3 text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">
           Si tu penses avoir déjà accès, vérifie que tu es connecté avec le bon compte.

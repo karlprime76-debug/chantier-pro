@@ -22,7 +22,7 @@ type PlanFilter = "ALL" | UserPlan;
 const PLAN_FILTERS: Array<{ id: PlanFilter; label: string }> = [
   { id: "ALL", label: "Tous" },
   { id: "FREE", label: "Gratuit" },
-  { id: "PREMIUM", label: "Premium" },
+  { id: "PREMIUM", label: "Pro" },
   { id: "ENTERPRISE", label: "Entreprise" },
 ];
 
@@ -31,17 +31,18 @@ type CategoryFilter = "ALL" | CalculatorCategory;
 const CATEGORY_FILTERS: Array<{ id: CategoryFilter; label: string }> = [
   { id: "ALL", label: "Tous" },
   { id: "Béton", label: "Béton" },
-  { id: "Acier", label: "Acier" },
-  { id: "Maçonnerie", label: "Maçonnerie" },
-  { id: "Finition", label: "Finition" },
-  { id: "Devis", label: "Devis" },
-  { id: "Chantier", label: "Chantier" },
-  { id: "Outils Pro", label: "Outils Pro" },
+  { id: "Acier / Ferraillage", label: "Acier / Ferraillage" },
+  { id: "Fondations", label: "Fondations" },
+  { id: "Escaliers", label: "Escaliers" },
+  { id: "Coffrage", label: "Coffrage" },
+  { id: "Terrassement", label: "Terrassement" },
+  { id: "Documents / Rapports", label: "Documents / Rapports" },
+  { id: "Outils Entreprise", label: "Outils Entreprise" },
 ];
 
 function planLabel(plan: UserPlan): string {
   if (plan === "FREE") return "Gratuit";
-  if (plan === "PREMIUM") return "Premium";
+  if (plan === "PREMIUM") return "Pro";
   return "Entreprise";
 }
 
@@ -49,7 +50,7 @@ function statusLabel(item: CalculatorCatalogItem): string {
   if (item.status !== "AVAILABLE") return "Bientôt";
   const requiredPlan = requiredPlanForItem(item);
   if (requiredPlan === "ENTERPRISE") return "Inclus Entreprise";
-  if (requiredPlan === "PREMIUM") return "Inclus Premium";
+  if (requiredPlan === "PREMIUM") return "Inclus Pro";
   return "Inclus";
 }
 
@@ -117,7 +118,7 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
     <div className="grid gap-6">
       <div>
         <h1 className="text-2xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-3xl">
-          Calculs
+          Calculateurs
         </h1>
         <p className="mt-1 text-sm text-[var(--app-text-muted)]">
           Vos modules BTP, organisés par catégorie, selon votre plan.
@@ -260,7 +261,7 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
                     </ResponsiveButton>
                   ) : (
                     <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
-                      Passer à Premium
+                      Passer à Pro
                     </ResponsiveButton>
                   )
                 ) : (
@@ -277,7 +278,7 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between gap-3">
-            <CardTitle>Pourquoi passer à Chantier Pro Premium ?</CardTitle>
+            <CardTitle>Pourquoi passer au plan Pro ?</CardTitle>
             <PlanBadge variant="premium" />
           </div>
           <CardDescription>Des bénéfices concrets pour le terrain et le bureau.</CardDescription>

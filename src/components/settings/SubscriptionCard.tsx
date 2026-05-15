@@ -8,7 +8,7 @@ type SubscriptionCardProps = {
 
 function planLabel(plan: UserPlan) {
   if (plan === "ENTERPRISE") return "Entreprise";
-  if (plan === "PREMIUM") return "Premium";
+  if (plan === "PREMIUM") return "Pro";
   return "Gratuit";
 }
 

@@ -269,7 +269,7 @@ export default function Home() {
                   <div className="mt-1 text-xs text-[var(--app-text-muted)]">Pour tester les calculateurs de base.</div>
                 </div>
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-sm font-bold text-[var(--app-text)]">Premium</div>
+                  <div className="text-sm font-bold text-[var(--app-text)]">Pro</div>
                   <div className="mt-1 text-xs text-[var(--app-text-muted)]">Calculs + suivi budget/dépenses + rapports.</div>
                 </div>
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">

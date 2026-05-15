@@ -5,6 +5,7 @@ import { SubscriptionCard } from "@/components/settings/SubscriptionCard";
 import { InstallAppCard } from "@/components/settings/InstallAppCard";
 import { HelpSupportCard } from "@/components/settings/HelpSupportCard";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import { requireSession } from "@/lib/auth/guards";
 import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
@@ -67,6 +68,17 @@ export default async function SettingsPage() {
       <InstallAppCard />
 
       <HelpSupportCard />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Session</CardTitle>
+          <CardDescription>Gérez votre session actuelle sur Chantier Pro.</CardDescription>
+        </CardHeader>
+
+        <div className="px-6 pb-6">
+          <SignOutButton className="w-full justify-center sm:w-auto" />
+        </div>
+      </Card>
 
       <Card>
         <CardHeader>

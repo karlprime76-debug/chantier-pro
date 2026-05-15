@@ -111,10 +111,10 @@ export function MobileBottomNav() {
 
   const items: MobileNavItem[] = [
     {
-      href: "/",
-      label: "Accueil",
+      href: "/dashboard",
+      label: "Dashboard",
       icon: ({ className }) => <HomeIcon className={className} />,
-      isActive: (p) => p === "/",
+      isActive: (p) => p === "/dashboard",
     },
     {
       href: "/dashboard/projects",
@@ -123,22 +123,22 @@ export function MobileBottomNav() {
       isActive: (p) => p.startsWith("/dashboard/projects"),
     },
     {
-      href: "/calculs",
-      label: "Calculs",
+      href: "/dashboard/calculators",
+      label: "Calculateurs",
       icon: ({ className }) => <CalculatorIcon className={className} />,
-      isActive: (p) => p.startsWith("/dashboard/calculators") || p.startsWith("/calculs"),
+      isActive: (p) => p.startsWith("/dashboard/calculators") || p === "/dashboard/calculators",
     },
     {
       href: "/dashboard/reports",
-      label: "Rapports",
+      label: "Documents",
       icon: ({ className }) => <FileIcon className={className} />,
       isActive: (p) => p.startsWith("/dashboard/reports"),
     },
     {
-      href: "/more",
-      label: "Plus",
+      href: "/dashboard/settings",
+      label: "Compte",
       icon: ({ className }) => <UserIcon className={className} />,
-      isActive: (p) => p.startsWith("/more") || p.startsWith("/dashboard/settings"),
+      isActive: (p) => p.startsWith("/dashboard/settings"),
     },
   ];
 

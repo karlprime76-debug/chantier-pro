@@ -58,7 +58,7 @@ export default async function PricingPage() {
             <Card className="h-full ring-1 ring-[var(--cp-accent)]/20">
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
-                  <CardTitle>Premium</CardTitle>
+                  <CardTitle>Pro</CardTitle>
                   <PlanBadge variant="premium" />
                 </div>
                 <CardDescription>
@@ -69,7 +69,7 @@ export default async function PricingPage() {
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">15 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
-                  Premium recommandé
+                  Pro recommandé
                 </div>
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
                   <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
@@ -214,9 +214,9 @@ export default async function PricingPage() {
               <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
                 <div className="text-sm font-bold text-[var(--app-text)]">Disponible selon votre plan</div>
                 <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
-                  <div>Export PDF (Premium / Entreprise)</div>
-                  <div>Devis depuis les calculs (Premium / Entreprise)</div>
-                  <div>Templates de devis (Premium / Entreprise)</div>
+                  <div>Export PDF (Pro / Entreprise)</div>
+                  <div>Devis depuis les calculs (Pro / Entreprise)</div>
+                  <div>Templates de devis (Pro / Entreprise)</div>
                   <div>Exports avancés (Entreprise)</div>
                   <div>Module Fondations (Entreprise)</div>
                   <div>Formulation de béton (Entreprise)</div>
@@ -233,7 +233,7 @@ export default async function PricingPage() {
                 <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-2 text-xs font-bold text-[var(--app-text-muted)]">
                   <div />
                   <div className="text-center">Gratuit</div>
-                  <div className="text-center">Premium</div>
+                  <div className="text-center">Pro</div>
                   <div className="text-center">Entreprise</div>
                 </div>
                 <div className="mt-2 grid gap-2 text-sm">
@@ -336,7 +336,7 @@ export default async function PricingPage() {
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Quelles fonctionnalités avancées sont incluses selon le plan ?</div>
-                <div className="mt-1">Certaines fonctionnalités avancées sont disponibles uniquement avec Premium ou Entreprise.</div>
+                <div className="mt-1">Certaines fonctionnalités avancées sont disponibles uniquement avec Pro ou Entreprise.</div>
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Quand mon plan payant est-il activé ?</div>

@@ -58,11 +58,11 @@ export default function ContactPage() {
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
                   <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Support abonnement</div>
                   <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                    Questions sur les plans, la facturation, l’activation Premium/Entreprise et l’accès aux fonctionnalités.
+                    Questions sur les plans, la facturation, l’activation Pro/Entreprise et l’accès aux fonctionnalités.
                   </div>
                 </div>
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 sm:col-span-2">
-                  <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Activation Premium / Entreprise</div>
+                  <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--app-text),transparent_45%)]">Activation Pro / Entreprise</div>
                   <div className="mt-2 text-sm text-[var(--app-text-muted)]">
                     Si ton paiement est passé mais que le plan n’est pas activé, envoie-nous ton email de compte et la date du paiement.
                   </div>

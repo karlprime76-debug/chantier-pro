@@ -159,7 +159,7 @@ export async function POST(req: Request) {
   try {
     const invoice = await createPayDunyaInvoice({
       amount,
-      description: plan === "PREMIUM" ? "Abonnement Premium" : "Abonnement Entreprise",
+      description: plan === "PREMIUM" ? "Abonnement Pro" : "Abonnement Entreprise",
       returnUrl: `${appUrl}/dashboard/settings?payment=success`,
       cancelUrl: `${appUrl}/pricing?payment=cancel`,
       callbackUrl: `${appUrl}/api/billing/webhook?paymentId=${encodeURIComponent(payment.id)}`,

@@ -171,7 +171,7 @@ export function NewQuoteForm({ userPlan }: NewQuoteFormProps) {
         </div>
 
         {!canAccessFeature(userPlan, "quote_templates") ? (
-          <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Certains modèles sont Premium.</div>
+          <div className="text-xs text-[color-mix(in_oklab,var(--app-text),transparent_55%)]">Certains modèles sont Pro.</div>
         ) : null}
       </div>
 

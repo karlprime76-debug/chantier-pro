@@ -123,7 +123,7 @@ export async function createPayDunyaInvoice(input: CreateInvoiceInput) {
     invoice: {
       items: {
         [itemKey]: {
-          name: input.description || "Abonnement Premium Chantier Pro",
+          name: input.description || "Abonnement Pro Chantier Pro",
           quantity: 1,
           unit_price: input.amount,
           total_price: input.amount,

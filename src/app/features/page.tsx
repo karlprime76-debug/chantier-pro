@@ -132,7 +132,7 @@ export default async function FeaturesPage() {
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Quel plan choisir ?</div>
-                <div className="mt-1">Commence en Gratuit, puis passe en Premium/Entreprise selon tes besoins de suivi et d’équipe.</div>
+                <div className="mt-1">Commence en Gratuit, puis passe en Pro/Entreprise selon tes besoins de suivi et d’équipe.</div>
               </div>
             </div>
           </div>

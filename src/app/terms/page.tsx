@@ -36,7 +36,7 @@ export default function TermsPage() {
             <div>
               <div className="font-bold text-[var(--cp-text)]">Abonnements</div>
               <div className="mt-1">
-                Certaines fonctionnalités peuvent être accessibles via des offres Premium/Entreprise. Les modalités peuvent
+                Certaines fonctionnalités peuvent être accessibles via des offres Pro/Entreprise. Les modalités peuvent
                 évoluer.
               </div>
             </div>
