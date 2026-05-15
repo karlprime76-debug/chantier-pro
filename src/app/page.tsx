@@ -1,9 +1,6 @@
 import { MarketingHeader } from "@/components/layout/MarketingHeader";
 import { MarketingFooter } from "@/components/layout/MarketingFooter";
 import { AppShell } from "@/components/layout/AppShell";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { HomeClientExtras } from "@/components/home/HomeClientExtras";
 import { HomePublicCtas } from "@/components/home/HomePublicCtas";
 import { HomeProtectedCardLink } from "@/components/home/HomeProtectedCardLink";
 import { cn } from "@/lib/cn";
@@ -13,207 +10,53 @@ export default function Home() {
     <div className="min-h-full">
       <MarketingHeader />
       <AppShell className="pb-[calc(104px+env(safe-area-inset-bottom))]">
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-7">
+        <div className="grid gap-10">
+          <section>
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-3 py-1 text-xs font-semibold text-[var(--app-text-muted)]">
-              SaaS mobile-first pour le BTP
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--cp-accent)]" />
               Chantier Pro
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--cp-accent)]" />
+              Application BTP
             </div>
-            <div className="mt-4 grid gap-6 lg:grid-cols-2 lg:items-start">
+            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-4xl">
+              Gérez vos chantiers plus simplement.
+            </h1>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--app-text-muted)]">
+              Chantier Pro centralise vos projets, vos calculs BTP, vos dépenses et vos documents dans une seule application.
+            </p>
+            <HomePublicCtas variant="hero" />
+          </section>
+
+          <section>
+            <div className="text-sm font-bold text-[var(--app-text)]">Ce que vous pouvez faire</div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Chantiers</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Suivez vos projets, dépenses et avancements.</div>
+              </div>
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Calculateurs</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Calculez béton, acier, fondations, coffrage et plus.</div>
+              </div>
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Dépenses</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Gardez un budget clair, prévu vs réel.</div>
+              </div>
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Documents</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Générez et consultez vos rapports de chantier.</div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
               <div>
-                <h1 className="text-3xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-4xl">
-                  Gère tes chantiers BTP depuis ton téléphone.
-                  <br />
-                  Calcule le béton, l’acier, les dépenses et les rapports journaliers en quelques minutes.
-                  <br />
-                  Un suivi clair, du terrain au bureau.
-                </h1>
-                <p className="mt-4 max-w-xl text-base leading-7 text-[var(--app-text-muted)]">
-                  Chantier Pro centralise tes chantiers, automatise les calculs de quantités et t’aide à suivre les coûts et l’avancement,
-                  directement sur mobile.
-                </p>
-
-                <HomePublicCtas variant="hero" />
-              </div>
-
-              <div className="rounded-3xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4">
-                <div className="mx-auto max-w-sm">
-                  <div className="rounded-[34px] border border-[var(--app-card-border)] bg-[var(--app-bg)] p-3 shadow-[0_14px_40px_-26px_rgba(0,0,0,0.65)]">
-                    <div className="flex items-center justify-between px-1">
-                      <div className="text-xs font-bold text-[var(--app-text)]">Chantier Pro</div>
-                      <div className="text-[11px] text-[var(--app-text-muted)]">Aperçu mobile</div>
-                    </div>
-
-                    <div className="mt-3 grid gap-3">
-                      <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                        <div className="text-xs text-[var(--app-text-muted)]">Chantier</div>
-                        <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">Villa Akpakpa</div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                          <div className="text-xs text-[var(--app-text-muted)]">Avancement</div>
-                          <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">68 %</div>
-                        </div>
-                        <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                          <div className="text-xs text-[var(--app-text-muted)]">Budget utilisé</div>
-                          <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">420 000 FCFA</div>
-                        </div>
-                      </div>
-
-                      <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                        <div className="text-xs text-[var(--app-text-muted)]">Calcul béton</div>
-                        <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">Volume : 12,5 m³</div>
-                      </div>
-
-                      <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-3">
-                        <div className="text-xs text-[var(--app-text-muted)]">Rapport journalier</div>
-                        <div className="mt-1 text-sm font-extrabold text-[var(--app-text)]">3 tâches • 1 incident</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 grid gap-2 text-xs text-[var(--app-text-muted)]">
-                    <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">
-                      Pensé mobile : saisie rapide sur le terrain.
-                    </div>
-                  </div>
-                </div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Calculateurs</div>
+                <div className="mt-1 text-sm text-[var(--app-text-muted)]">Les essentiels pour démarrer rapidement.</div>
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Preuve produit</div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                Exemple : calculez rapidement le volume de béton, estimez les quantités d’acier, puis rattachez le calcul à un chantier.
-              </div>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-xs text-[var(--app-text-muted)]">Étape 1</div>
-                  <div className="mt-1 text-sm font-bold text-[var(--app-text)]">Calcul béton</div>
-                  <div className="mt-2 grid gap-2">
-                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
-                      Dalle : 12 m × 8 m × 0,12 m
-                    </div>
-                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
-                      <div className="text-xs text-[var(--app-text-muted)]">Résultat</div>
-                      <div className="mt-1 text-lg font-extrabold text-[var(--app-text)]">11,52 m³</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-xs text-[var(--app-text-muted)]">Étape 2</div>
-                  <div className="mt-1 text-sm font-bold text-[var(--app-text)]">Rattacher au chantier</div>
-                  <div className="mt-2 grid gap-2">
-                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
-                      Chantier : Villa Cotonou — Dalle RDC
-                    </div>
-                    <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3 text-sm text-[var(--app-text-muted)]">
-                      Historique : calcul sauvegardé, partage et réutilisation.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <HomeClientExtras />
-
-            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Comment ça marche (3 étapes)</div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-xs font-bold text-[var(--cp-accent)]">1</div>
-                  <div className="mt-2 text-sm font-bold text-[var(--app-text)]">Crée ton chantier</div>
-                  <div className="mt-1 text-sm text-[var(--app-text-muted)]">Projet, équipe, infos essentielles.</div>
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-xs font-bold text-[var(--cp-accent)]">2</div>
-                  <div className="mt-2 text-sm font-bold text-[var(--app-text)]">Lance tes calculs</div>
-                  <div className="mt-1 text-sm text-[var(--app-text-muted)]">Béton & acier, résultats clairs.</div>
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-xs font-bold text-[var(--cp-accent)]">3</div>
-                  <div className="mt-2 text-sm font-bold text-[var(--app-text)]">Suis budget & rapports</div>
-                  <div className="mt-1 text-sm text-[var(--app-text-muted)]">Dépenses, historique, journal.</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Pourquoi Chantier Pro ?</div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4 text-sm text-[var(--app-text-muted)]">
-                  Moins d’erreurs de quantité sur le terrain.
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4 text-sm text-[var(--app-text-muted)]">
-                  Gain de temps sur les calculs et les suivis.
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4 text-sm text-[var(--app-text-muted)]">
-                  Meilleur suivi du budget (prévu vs réel).
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4 text-sm text-[var(--app-text-muted)]">
-                  Rapports plus propres et historique par chantier.
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Un module Fondations pour les projets plus complets</div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                Avec l’offre Entreprise, Chantier Pro accompagne les équipes BTP dans les étapes clés des fondations : choix du type de
-                fondation, fouilles, béton de propreté, ferraillage, bétonnage, quantitatifs et suivi des travaux.
-              </div>
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <Button href="/pricing" variant="secondary">
-                  Découvrir l’offre Entreprise
-                </Button>
-                <Button href="/features" variant="ghost">
-                  Voir les fonctionnalités
-                </Button>
-              </div>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Tester rapidement</div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                Explore un chantier exemple (données fictives) pour comprendre Chantier Pro en 2 minutes.
-              </div>
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <Button href="/demo" variant="secondary">
-                  Tester avec un chantier exemple
-                </Button>
-                <Button href="/use-cases" variant="ghost">
-                  Voir les cas d’usage
-                </Button>
-              </div>
-            </div>
-
-            <div id="pour-qui" className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Pour qui ?</div>
-              <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Techniciens génie civil</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Chefs chantier bâtiments</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Conducteurs de travaux</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">PME BTP</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3 sm:col-span-2">Responsables de projet</div>
-              </div>
-            </div>
-
-            <div id="fonctionnalites" className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Fonctionnalités clés</div>
-              <div className="mt-3 grid gap-2 text-sm text-[var(--app-text-muted)] sm:grid-cols-2">
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Calcul béton</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Calcul acier</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Suivi dépenses</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Budget prévu vs réel</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Rapports journaliers</div>
-                <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-3">Historique par chantier</div>
-              </div>
-            </div>
-
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               <HomeProtectedCardLink
                 hrefAuthenticated="/calculs"
                 hrefUnauthenticated="/features/calculs-beton-acier"
@@ -225,104 +68,116 @@ export default function Home() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
                 )}
               >
-                <div className="text-sm font-bold text-[var(--app-text)]">Calculs</div>
-                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Béton & acier</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Béton</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Volumes et dosages</div>
               </HomeProtectedCardLink>
 
               <HomeProtectedCardLink
-                hrefAuthenticated="/dashboard"
-                hrefUnauthenticated="/features/suivi-budget"
-                ariaLabelAuthenticated="Ouvrir le suivi sur le dashboard"
-                ariaLabelUnauthenticated="Découvrir le suivi budget sur Chantier Pro"
+                hrefAuthenticated="/dashboard/calculators/steel"
+                hrefUnauthenticated="/features/calculs-beton-acier"
+                ariaLabelAuthenticated="Ouvrir les calculateurs acier"
+                ariaLabelUnauthenticated="Découvrir les calculs acier sur Chantier Pro"
                 className={cn(
                   "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
                   "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
                 )}
               >
-                <div className="text-sm font-bold text-[var(--app-text)]">Suivi</div>
-                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Budget vs réel</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Acier / Ferraillage</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Poids et quantités</div>
               </HomeProtectedCardLink>
 
               <HomeProtectedCardLink
-                hrefAuthenticated="/dashboard/reports"
-                hrefUnauthenticated="/features/rapports-journaliers"
-                ariaLabelAuthenticated="Ouvrir les rapports journaliers"
-                ariaLabelUnauthenticated="Découvrir les rapports journaliers sur Chantier Pro"
+                hrefAuthenticated="/dashboard/calculators/fondations"
+                hrefUnauthenticated="/features/fondations"
+                ariaLabelAuthenticated="Ouvrir le module fondations"
+                ariaLabelUnauthenticated="Découvrir le module fondations sur Chantier Pro"
                 className={cn(
                   "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
                   "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
                 )}
               >
-                <div className="text-sm font-bold text-[var(--app-text)]">Rapports</div>
-                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Journal chantier</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Fondations</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Étapes et quantitatifs</div>
+              </HomeProtectedCardLink>
+
+              <HomeProtectedCardLink
+                hrefAuthenticated="/dashboard/calculators/formwork"
+                hrefUnauthenticated="/features"
+                ariaLabelAuthenticated="Ouvrir les calculateurs coffrage"
+                ariaLabelUnauthenticated="Découvrir les outils coffrage sur Chantier Pro"
+                className={cn(
+                  "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
+                  "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
+                )}
+              >
+                <div className="text-sm font-bold text-[var(--app-text)]">Coffrage</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Surfaces et besoins</div>
+              </HomeProtectedCardLink>
+
+              <HomeProtectedCardLink
+                hrefAuthenticated="/dashboard/calculators"
+                hrefUnauthenticated="/register"
+                ariaLabelAuthenticated="Voir tous les calculateurs"
+                ariaLabelUnauthenticated="Se connecter pour accéder à tous les calculateurs"
+                className={cn(
+                  "cp-hover-lift rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 transition",
+                  "cursor-pointer hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
+                )}
+              >
+                <div className="text-sm font-bold text-[var(--app-text)]">Voir tout</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Tous les calculateurs</div>
               </HomeProtectedCardLink>
             </div>
+          </section>
 
-            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Tarifs (aperçu)</div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">Démarre gratuitement, puis active le plan adapté à ton équipe.</div>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-sm font-bold text-[var(--app-text)]">Gratuit</div>
-                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">Pour tester les calculateurs de base.</div>
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-sm font-bold text-[var(--app-text)]">Pro</div>
-                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">Calculs + suivi budget/dépenses + rapports.</div>
-                </div>
-                <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                  <div className="text-sm font-bold text-[var(--app-text)]">Entreprise</div>
-                  <div className="mt-1 text-xs text-[var(--app-text-muted)]">Multi-utilisateurs et collaboration.</div>
-                </div>
+          <section className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">Plans</div>
+            <div className="mt-2 text-sm text-[var(--app-text-muted)]">Gratuit pour démarrer, puis Pro ou Entreprise selon vos besoins.</div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Gratuit</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Pour démarrer et tester l’essentiel.</div>
               </div>
-              <div className="mt-4">
-                <Button href="/pricing" variant="secondary">Voir les tarifs</Button>
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Pro</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Suivi complet, dépenses et documents.</div>
+              </div>
+              <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
+                <div className="text-sm font-bold text-[var(--app-text)]">Entreprise</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Collaboration et projets plus avancés.</div>
               </div>
             </div>
-
-            <div className="mt-6 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">FAQ</div>
-              <div className="mt-3 grid gap-3 text-sm text-[var(--app-text-muted)]">
-                <div>
-                  <div className="font-bold text-[var(--app-text)]">Chantier Pro fonctionne-t-il sur mobile ?</div>
-                  <div className="mt-1">Oui. L’interface est pensée mobile-first pour saisir rapidement sur le terrain.</div>
-                </div>
-                <div>
-                  <div className="font-bold text-[var(--app-text)]">Puis-je démarrer gratuitement ?</div>
-                  <div className="mt-1">Oui, avec le plan Gratuit pour tester les bases avant de passer au suivi complet.</div>
-                </div>
-                <div>
-                  <div className="font-bold text-[var(--app-text)]">Est-ce adapté aux chantiers au Bénin ?</div>
-                  <div className="mt-1">Oui. Chantier Pro est conçu pour les besoins BTP du terrain, avec un support local.</div>
-                </div>
-              </div>
+            <div className="mt-4">
+              <HomeProtectedCardLink
+                hrefAuthenticated="/pricing"
+                hrefUnauthenticated="/pricing"
+                ariaLabelAuthenticated="Voir les tarifs"
+                ariaLabelUnauthenticated="Voir les tarifs"
+                className={cn(
+                  "inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold",
+                  "bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text)] ring-1 ring-[var(--app-card-border)]",
+                  "hover:bg-[color-mix(in_oklab,var(--app-card),transparent_2%)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cp-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)]",
+                )}
+              >
+                Voir les tarifs
+              </HomeProtectedCardLink>
             </div>
+          </section>
 
-            <div className="mt-8 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
-              <div className="text-sm font-bold text-[var(--app-text)]">Prêt à gagner du temps sur tes chantiers ?</div>
-              <div className="mt-2 text-sm text-[var(--app-text-muted)]">
-                Crée un compte en quelques minutes et commence à centraliser tes calculs, dépenses et rapports.
-              </div>
-              <div className="mt-4">
-                <HomePublicCtas variant="pair" />
-              </div>
+          <section className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-5">
+            <div className="text-sm font-bold text-[var(--app-text)]">Prêt à organiser vos chantiers ?</div>
+            <div className="mt-2 text-sm text-[var(--app-text-muted)]">
+              Démarrez en quelques minutes et centralisez vos projets, calculs et documents.
             </div>
-
-          </div>
-
-          <div className="lg:col-span-5">
-            <Card>
-              <CardHeader>
-                <CardTitle>Démarrage rapide</CardTitle>
-                <CardDescription>
-                  Crée un chantier, ajoute les membres, puis enregistre calculs, dépenses et rapports.
-                </CardDescription>
-              </CardHeader>
-              <HomePublicCtas variant="quickstart" />
-            </Card>
-          </div>
+            <div className="mt-4">
+              <HomePublicCtas variant="pair" />
+            </div>
+          </section>
         </div>
       </AppShell>
       <MarketingFooter />

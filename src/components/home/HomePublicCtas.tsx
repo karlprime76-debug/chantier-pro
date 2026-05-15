@@ -15,12 +15,25 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
   if (variant === "pair") {
     return (
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <Button href={isAuthenticated ? "/dashboard/projects" : "/register"} size="lg" variant="secondary" className="whitespace-nowrap">
-          {isAuthenticated ? "Accéder à mes chantiers" : "Créer un compte gratuit"}
-        </Button>
-        <Button href="/pricing" size="lg" variant="ghost" className="whitespace-nowrap">
-          Voir les tarifs
-        </Button>
+        {isAuthenticated ? (
+          <>
+            <Button href="/dashboard" size="lg" variant="secondary" className="whitespace-nowrap">
+              Ouvrir mon dashboard
+            </Button>
+            <Button href="/dashboard/calculators" size="lg" variant="ghost" className="whitespace-nowrap">
+              Accéder aux calculateurs
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button href="/register" size="lg" variant="secondary" className="whitespace-nowrap">
+              Commencer gratuitement
+            </Button>
+            <Button href="/pricing" size="lg" variant="ghost" className="whitespace-nowrap">
+              Voir les tarifs
+            </Button>
+          </>
+        )}
       </div>
     );
   }
@@ -35,17 +48,17 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
         }
       >
         <Button
-          href="/dashboard/projects"
+          href="/dashboard"
           size={variant === "hero" ? "lg" : undefined}
           variant="secondary"
           className={
             variant === "hero" ? "w-full justify-center whitespace-nowrap sm:w-auto sm:min-w-fit" : undefined
           }
         >
-          Accéder à mes chantiers
+          Ouvrir mon dashboard
         </Button>
         <Button
-          href="/dashboard"
+          href="/dashboard/calculators"
           size={variant === "hero" ? "lg" : undefined}
           variant="ghost"
           className={
@@ -54,19 +67,7 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
               : undefined
           }
         >
-          Ouvrir mon tableau de bord
-        </Button>
-        <Button
-          href="/features"
-          size={variant === "hero" ? "lg" : undefined}
-          variant="ghost"
-          className={
-            variant === "hero"
-              ? "w-full justify-center whitespace-nowrap bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] sm:w-auto sm:min-w-fit sm:bg-transparent sm:text-[color-mix(in_oklab,var(--app-text),transparent_15%)] sm:ring-transparent"
-              : undefined
-          }
-        >
-          Découvrir les fonctionnalités
+          Accéder aux calculateurs
         </Button>
       </div>
     );
@@ -75,23 +76,20 @@ export function HomePublicCtas({ variant = "hero" }: HomePublicCtasProps) {
   return (
     <div className={variant === "hero" ? "mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap" : "grid gap-3"}>
       <Button
-        href="/login"
+        href="/register"
         size={variant === "hero" ? "lg" : undefined}
         variant={variant === "hero" ? "secondary" : "ghost"}
         className={variant === "hero" ? "whitespace-nowrap" : undefined}
       >
-        Connexion
-      </Button>
-      <Button href="/register" size={variant === "hero" ? "lg" : undefined} className={variant === "hero" ? "whitespace-nowrap" : undefined}>
-        Créer un compte gratuit
+        Commencer gratuitement
       </Button>
       <Button
-        href={variant === "hero" ? "/pricing" : "/features"}
+        href="/pricing"
         size={variant === "hero" ? "lg" : undefined}
         variant="ghost"
         className={variant === "hero" ? "whitespace-nowrap" : undefined}
       >
-        {variant === "hero" ? "Voir les tarifs" : "Découvrir les fonctionnalités"}
+        Voir les tarifs
       </Button>
     </div>
   );
