@@ -194,7 +194,7 @@ export function MobileBottomNav() {
           aria-label="Ajouter"
           className={cn(
             "absolute left-1/2 -translate-x-1/2",
-            "bottom-[calc(0.75rem+env(safe-area-inset-bottom)+42px)]",
+            "bottom-[calc(0.75rem+env(safe-area-inset-bottom)+78px)]",
             "grid h-14 w-14 place-items-center rounded-2xl bg-[var(--app-primary)] text-[var(--app-on-primary)] shadow-[var(--cp-shadow)] ring-1 ring-[color-mix(in_oklab,var(--app-primary),black_18%)]",
             "active:scale-[0.98] active:opacity-90",
           )}
