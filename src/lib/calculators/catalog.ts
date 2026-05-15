@@ -4,7 +4,7 @@ export type CalculatorCategory =
   | "Béton"
   | "Acier / Ferraillage"
   | "Maçonnerie"
-  | "Finition"
+  | "Finitions"
   | "Toiture"
   | "Fondations"
   | "Escaliers"
@@ -127,7 +127,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "paint_simple",
     title: "Peinture (simple)",
     description: "Surfaces, couches, rendement et estimation en litres.",
-    category: "Finition",
+    category: "Finitions",
     plan: "FREE",
     href: "/dashboard/calculators/paint",
     status: "AVAILABLE",
@@ -138,7 +138,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "tiling_simple",
     title: "Carrelage (simple)",
     description: "Estimation carreaux, cartons et chutes.",
-    category: "Finition",
+    category: "Finitions",
     plan: "FREE",
     href: "/dashboard/calculators/tiling",
     status: "AVAILABLE",
@@ -184,8 +184,8 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "paint_advanced",
     title: "Peinture (avancé)",
-    description: "Supports, rendement, couches et variantes (à venir).",
-    category: "Finition",
+    description: "Supports, rendement, couches et variantes.",
+    category: "Finitions",
     plan: "PREMIUM",
     href: "/dashboard/calculators/painting",
     featureKey: "painting",
@@ -196,8 +196,8 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "plaster",
     title: "Enduit",
-    description: "Quantités d’enduit, ciment/sable et surfaces (à venir).",
-    category: "Finition",
+    description: "Quantités d’enduit, ciment/sable et surfaces.",
+    category: "Finitions",
     plan: "PREMIUM",
     href: "/dashboard/calculators/plaster",
     featureKey: "plaster",
@@ -208,7 +208,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "earthwork",
     title: "Terrassement",
-    description: "Volumes de déblais/remblais (à venir).",
+    description: "Volumes de déblais/remblais estimatifs.",
     category: "Terrassement",
     plan: "PREMIUM",
     href: "/dashboard/calculators/earthwork",
@@ -220,7 +220,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "roofing",
     title: "Toiture",
-    description: "Surfaces, pentes et quantités selon couverture (à venir).",
+    description: "Surfaces, pentes et quantités selon couverture.",
     category: "Toiture",
     plan: "PREMIUM",
     href: "/dashboard/calculators/roofing",
@@ -232,7 +232,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "formwork",
     title: "Coffrage",
-    description: "Surfaces de coffrage estimatives (à venir).",
+    description: "Surfaces de coffrage estimatives.",
     category: "Coffrage",
     plan: "PREMIUM",
     href: "/dashboard/calculators/formwork",
@@ -244,7 +244,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "stair_landing",
     title: "Escalier avec palier",
-    description: "Dimensions et quantités (MVP à venir).",
+    description: "Dimensions et quantités (MVP).",
     category: "Escaliers",
     plan: "PREMIUM",
     href: "/dashboard/calculators/stairs/landing",
@@ -257,7 +257,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "stair_quarter_turn",
     title: "Escalier quart tournant",
-    description: "Pré-dimensionnement et quantités (à venir).",
+    description: "Pré-dimensionnement et quantités (MVP).",
     category: "Escaliers",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/stairs/quarter-turn",
@@ -269,7 +269,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "septic_tank",
     title: "Fosse septique / puisard",
-    description: "Pré-dimensionnement et quantités (à venir).",
+    description: "Pré-dimensionnement et quantités (MVP).",
     category: "Outils Entreprise",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/septic-tank",
@@ -281,7 +281,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "fence",
     title: "Clôture",
-    description: "Poteaux, linéaire et fondations (à venir).",
+    description: "Poteaux, linéaire et fondations (MVP).",
     category: "Outils Entreprise",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/fence",
@@ -317,7 +317,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "advanced_slab",
     title: "Dalle pleine (avancé)",
-    description: "Béton, aciers, pertes et variantes (à venir).",
+    description: "Béton, aciers, pertes et variantes.",
     category: "Béton",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/slab/advanced",
@@ -330,7 +330,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "enterprise_estimation",
     title: "Estimation complète d’un ouvrage",
-    description: "Module avancé en préparation (Entreprise).",
+    description: "Estimation globale (matériaux, main-d’œuvre, marge) + coût au m².",
     category: "Outils Entreprise",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/enterprise-estimation",
@@ -342,7 +342,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "enterprise_quote_generator",
     title: "Générateur de devis automatique",
-    description: "Disponible prochainement pour les comptes Entreprise.",
+    description: "Devis simple avec lignes dynamiques, remise, marge et totaux.",
     category: "Outils Entreprise",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/enterprise-quote-generator",
@@ -354,7 +354,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "enterprise_smart_report",
     title: "Rapport chantier intelligent",
-    description: "Disponible prochainement pour les comptes Entreprise.",
+    description: "Génère un rapport structuré à partir des informations du jour.",
     category: "Outils Entreprise",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/enterprise-smart-report",
@@ -366,7 +366,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
   {
     id: "enterprise_price_library",
     title: "Bibliothèque de prix",
-    description: "Module avancé en préparation (Entreprise).",
+    description: "Ajoute des prix unitaires, quantités optionnelles, et totalise tes lignes.",
     category: "Outils Entreprise",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/enterprise-price-library",

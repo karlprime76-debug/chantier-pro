@@ -58,6 +58,18 @@ export function QuarterTurnStairCalculator() {
     }
   }
 
+  function handleReset() {
+    setTotalHeightM("3");
+    setStairWidthM("1.2");
+    setTargetRiserHeightM("0.17");
+    setTreadDepthM("0.28");
+    setBalancedStepsCount("3");
+    setSlabThicknessM("0.12");
+    setWastePercent("8");
+    setOutput(null);
+    setError(null);
+  }
+
   return (
     <div className="grid gap-4">
       <Card>
@@ -95,9 +107,12 @@ export function QuarterTurnStairCalculator() {
             <div />
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <Button type="button" variant="secondary" onClick={handleCompute}>
               Calculer
+            </Button>
+            <Button type="button" variant="ghost" onClick={handleReset}>
+              Réinitialiser
             </Button>
           </div>
 

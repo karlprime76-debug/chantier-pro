@@ -1,16 +1,15 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { EnterpriseQuoteGenerator } from "@/components/calculators/EnterpriseQuoteGenerator";
 
 export default function EnterpriseQuoteGeneratorPage() {
   return (
     <FeatureGate featureKey="enterprise_quote_generator">
       <CalculatorPageShell
-        title="Générateur de devis automatique"
-        description="Disponible prochainement pour les comptes Entreprise."
+        title="Générateur de devis"
+        description="Devis simple avec lignes dynamiques, totaux, remise et marge."
       >
-        <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
-          Module avancé en préparation.
-        </div>
+        <EnterpriseQuoteGenerator />
       </CalculatorPageShell>
     </FeatureGate>
   );

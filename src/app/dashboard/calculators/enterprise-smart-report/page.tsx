@@ -1,16 +1,15 @@
 import { FeatureGate } from "@/components/subscription/FeatureGate";
 import { CalculatorPageShell } from "@/components/calculators/CalculatorPageShell";
+import { EnterpriseSmartReport } from "@/components/calculators/EnterpriseSmartReport";
 
 export default function EnterpriseSmartReportPage() {
   return (
     <FeatureGate featureKey="enterprise_smart_report">
       <CalculatorPageShell
         title="Rapport chantier intelligent"
-        description="Disponible prochainement pour les comptes Entreprise."
+        description="Génération d’un rapport structuré à partir des informations du jour."
       >
-        <div className="rounded-xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
-          Module avancé en préparation.
-        </div>
+        <EnterpriseSmartReport />
       </CalculatorPageShell>
     </FeatureGate>
   );

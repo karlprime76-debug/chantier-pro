@@ -7,7 +7,7 @@ export default function QuarterTurnStairCalculatorPage() {
     <FeatureGate featureKey="stair_quarter_turn">
       <CalculatorPageShell
         title="Calculateur escalier quart tournant"
-        description="Pré-dimensionnement et quantités estimatives pour un quart tournant (à venir)."
+        description="Pré-dimensionnement et quantités estimatives pour un quart tournant (MVP)."
       >
         <QuarterTurnStairCalculator />
       </CalculatorPageShell>
