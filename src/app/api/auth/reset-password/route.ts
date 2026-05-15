@@ -5,6 +5,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
 import { sendEmail } from "@/lib/email/sendEmail";
+import { buildPasswordChangedEmail } from "@/lib/email/templates";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -106,15 +107,13 @@ export async function POST(req: Request) {
     logInfo("auth.reset_password.password_updated", { requestId, userId: resetToken.userId });
 
     if (resetToken.user?.email) {
-      const text = `Bonjour,\n\nVotre mot de passe a bien été modifié.\n\nSi vous n’êtes pas à l’origine de cette action, contactez rapidement le support.\n\nL’équipe Chantier Pro.`;
-
-      const html = `<p>Bonjour,</p><p>Votre mot de passe a bien été modifié.</p><p>Si vous n’êtes pas à l’origine de cette action, contactez rapidement le support.</p><p>L’équipe Chantier Pro.</p>`;
+      const confirmation = buildPasswordChangedEmail();
 
       sendEmail({
         to: resetToken.user.email,
-        subject: "Votre mot de passe Chantier Pro a été modifié",
-        text,
-        html,
+        subject: confirmation.subject,
+        text: confirmation.text,
+        html: confirmation.html,
       }).then((result) => {
         if (!result.ok) {
           logError("auth.reset_password.confirmation_email_failed", {

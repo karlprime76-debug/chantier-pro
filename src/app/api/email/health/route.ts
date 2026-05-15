@@ -6,10 +6,10 @@ import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestI
 
 type EmailHealthResponse = {
   ok: boolean;
-  provider: "resend" | "none" | "unknown";
-  emailProviderConfigured: boolean;
+  provider: "resend" | "none";
   resendConfigured: boolean;
   emailFromConfigured: boolean;
+  emailReplyToConfigured: boolean;
   appUrlConfigured: boolean;
   nextAuthUrlConfigured: boolean;
   appUrlDetected: string | null;
@@ -48,22 +48,20 @@ export async function GET(req: Request) {
 
   const missing: string[] = [];
 
-  const providerRaw = (process.env.EMAIL_PROVIDER ?? "").trim().toLowerCase();
-  const provider: EmailHealthResponse["provider"] =
-    providerRaw === "resend" ? "resend" : providerRaw ? "unknown" : "none";
-
   const resendKey = (process.env.RESEND_API_KEY ?? "").trim();
   const emailFrom = (process.env.EMAIL_FROM ?? "").trim();
+  const emailReplyTo = (process.env.EMAIL_REPLY_TO ?? "").trim();
   const nextAuthUrl = (process.env.NEXTAUTH_URL ?? "").trim();
 
-  const emailProviderConfigured = provider !== "none";
-  const resendConfigured = provider === "resend" && Boolean(resendKey);
+  const provider: EmailHealthResponse["provider"] = resendKey ? "resend" : "none";
+  const resendConfigured = Boolean(resendKey);
   const emailFromConfigured = Boolean(emailFrom);
+  const emailReplyToConfigured = Boolean(emailReplyTo);
   const nextAuthUrlConfigured = Boolean(nextAuthUrl);
 
-  if (!providerRaw) missing.push("EMAIL_PROVIDER");
-  if (providerRaw === "resend" && !resendKey) missing.push("RESEND_API_KEY");
+  if (!resendKey) missing.push("RESEND_API_KEY");
   if (!emailFrom) missing.push("EMAIL_FROM");
+  if (!emailReplyTo) missing.push("EMAIL_REPLY_TO");
 
   const appUrlConfig = getAppUrlConfig();
   const appUrlConfigured = appUrlConfig.configured;
@@ -87,9 +85,9 @@ export async function GET(req: Request) {
   const res: EmailHealthResponse = {
     ok,
     provider,
-    emailProviderConfigured,
     resendConfigured,
     emailFromConfigured,
+    emailReplyToConfigured,
     appUrlConfigured,
     nextAuthUrlConfigured,
     appUrlDetected: appUrlConfig.detected,

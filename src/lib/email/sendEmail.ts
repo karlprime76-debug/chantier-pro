@@ -6,6 +6,7 @@ type SendEmailInput = {
   subject: string;
   html?: string;
   text?: string;
+  replyTo?: string;
 };
 
 type SendEmailResult =
@@ -27,9 +28,9 @@ function isLocalhostUrl(url: string) {
 }
 
 export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult> {
-  const provider = (process.env.EMAIL_PROVIDER ?? "").trim().toLowerCase();
   const resendKey = (process.env.RESEND_API_KEY ?? "").trim();
   const from = (process.env.EMAIL_FROM ?? "").trim() || "Chantier Pro <onboarding@resend.dev>";
+  const replyTo = (input.replyTo ?? process.env.EMAIL_REPLY_TO ?? "").trim() || undefined;
 
   const baseUrl = getBaseUrl();
   if (process.env.NODE_ENV === "production" && isLocalhostUrl(baseUrl)) {
@@ -40,7 +41,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
     };
   }
 
-  if (provider !== "resend" || !resendKey) {
+  if (!resendKey) {
     const safeText = (input.text ?? "").slice(0, 500);
 
     if (process.env.NODE_ENV === "production") {
@@ -48,7 +49,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
         ok: false,
         provider: "resend",
         error:
-          "Email provider not configured. Set EMAIL_PROVIDER=resend and RESEND_API_KEY (and a valid EMAIL_FROM).",
+          "Email provider not configured. Set RESEND_API_KEY (and a valid EMAIL_FROM).",
       };
     }
 
@@ -56,6 +57,7 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
       to: input.to,
       subject: input.subject,
       baseUrl,
+      replyToConfigured: Boolean(replyTo),
       hasHtml: Boolean(input.html),
       textPreview: safeText || undefined,
     });
@@ -73,12 +75,14 @@ export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult>
             to: input.to,
             subject: input.subject,
             html: input.html,
+            replyTo,
           }
         : {
             from,
             to: input.to,
             subject: input.subject,
             text: typeof input.text === "string" ? input.text : "",
+            replyTo,
           };
 
     await resend.emails.send(payload);

@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
 import { getAppUrl, sendEmail } from "@/lib/email/sendEmail";
+import { buildPasswordResetEmail } from "@/lib/email/templates";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 import { checkRateLimit } from "@/lib/security/rateLimit";
@@ -84,15 +85,13 @@ export async function POST(req: Request) {
       const appUrl = getAppUrl();
       const resetUrl = `${appUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(rawToken)}`;
 
-      const text = `Bonjour,\n\nVous avez demandé à réinitialiser votre mot de passe.\n\nCliquez sur le lien ci-dessous pour choisir un nouveau mot de passe :\n${resetUrl}\n\nCe lien expire dans 30 minutes.\n\nSi vous n’êtes pas à l’origine de cette demande, ignorez cet email.\n\nL’équipe Chantier Pro.`;
-
-      const html = `<p>Bonjour,</p><p>Vous avez demandé à réinitialiser votre mot de passe.</p><p>Cliquez sur le lien ci-dessous pour choisir un nouveau mot de passe :</p><p><a href="${resetUrl}">Réinitialiser mon mot de passe</a></p><p>Ce lien expire dans 30 minutes.</p><p>Si vous n’êtes pas à l’origine de cette demande, ignorez cet email.</p><p>L’équipe Chantier Pro.</p>`;
+      const emailTpl = buildPasswordResetEmail({ resetUrl });
 
       sendEmail({
         to: user.email,
-        subject: "Réinitialisation de votre mot de passe Chantier Pro",
-        text,
-        html,
+        subject: emailTpl.subject,
+        text: emailTpl.text,
+        html: emailTpl.html,
       }).then((result) => {
         if (!result.ok) {
           logError("auth.forgot_password.email_failed", {
