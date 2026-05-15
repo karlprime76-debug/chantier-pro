@@ -3,6 +3,8 @@ import type { FeatureKey, UserPlan } from "@/lib/subscription/access";
 export type CalculatorCategory =
   | "Béton"
   | "Acier / Ferraillage"
+  | "Maçonnerie"
+  | "Finition"
   | "Fondations"
   | "Escaliers"
   | "Coffrage"
@@ -65,7 +67,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "masonry_blocks",
     title: "Blocs / Agglos",
     description: "Surface de mur, nombre de blocs et marge de perte.",
-    category: "Béton",
+    category: "Maçonnerie",
     plan: "FREE",
     href: "/dashboard/calculators/masonry-blocks",
     status: "AVAILABLE",
@@ -76,7 +78,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "paint_simple",
     title: "Peinture (simple)",
     description: "Surfaces, couches, rendement et estimation en litres.",
-    category: "Documents / Rapports",
+    category: "Finition",
     plan: "FREE",
     href: "/dashboard/calculators/paint",
     status: "AVAILABLE",
@@ -87,7 +89,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "tiling_simple",
     title: "Carrelage (simple)",
     description: "Estimation carreaux, cartons et chutes.",
-    category: "Documents / Rapports",
+    category: "Finition",
     plan: "FREE",
     href: "/dashboard/calculators/tiling",
     status: "AVAILABLE",
@@ -122,7 +124,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "masonry_advanced",
     title: "Maçonnerie (avancé)",
     description: "Blocs, mortier, surfaces et ouvertures.",
-    category: "Béton",
+    category: "Maçonnerie",
     plan: "PREMIUM",
     href: "/dashboard/calculators/masonry",
     featureKey: "masonry",
@@ -134,7 +136,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "paint_advanced",
     title: "Peinture (avancé)",
     description: "Supports, rendement, couches et variantes (à venir).",
-    category: "Documents / Rapports",
+    category: "Finition",
     plan: "PREMIUM",
     href: "/dashboard/calculators/painting",
     featureKey: "painting",
@@ -146,7 +148,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "plaster",
     title: "Enduit",
     description: "Quantités d’enduit, ciment/sable et surfaces (à venir).",
-    category: "Béton",
+    category: "Finition",
     plan: "PREMIUM",
     href: "/dashboard/calculators/plaster",
     featureKey: "plaster",
@@ -170,7 +172,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "roofing",
     title: "Toiture",
     description: "Surfaces, pentes et quantités selon couverture (à venir).",
-    category: "Documents / Rapports",
+    category: "Finition",
     plan: "PREMIUM",
     href: "/dashboard/calculators/roofing",
     featureKey: "roofing",
@@ -329,7 +331,7 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "dosage_library",
     title: "Bibliothèque de dosages",
     description: "Dosages indicatifs et repères terrain.",
-    category: "Documents / Rapports",
+    category: "Béton",
     plan: "PREMIUM",
     href: "/calculs/bibliotheque-dosages",
     featureKey: "dosage_library",

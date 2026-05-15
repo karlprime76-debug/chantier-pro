@@ -32,6 +32,8 @@ const CATEGORY_FILTERS: Array<{ id: CategoryFilter; label: string }> = [
   { id: "ALL", label: "Tous" },
   { id: "Béton", label: "Béton" },
   { id: "Acier / Ferraillage", label: "Acier / Ferraillage" },
+  { id: "Maçonnerie", label: "Maçonnerie" },
+  { id: "Finition", label: "Finition" },
   { id: "Fondations", label: "Fondations" },
   { id: "Escaliers", label: "Escaliers" },
   { id: "Coffrage", label: "Coffrage" },
