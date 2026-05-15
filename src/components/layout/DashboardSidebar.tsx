@@ -20,8 +20,8 @@ type DashboardSidebarProps = {
 
 export function DashboardSidebar({ activeHref }: DashboardSidebarProps) {
   return (
-    <aside className="hidden w-64 shrink-0 sm:block">
-      <div className="sticky top-6 rounded-2xl border border-[var(--app-card-border)] bg-[var(--app-card)] p-3">
+    <aside className="hidden sm:fixed sm:inset-y-0 sm:left-0 sm:z-40 sm:block sm:w-64 sm:overflow-y-auto sm:px-4 sm:py-6">
+      <div className="rounded-2xl border border-[var(--app-card-border)] bg-[var(--app-card)] p-3">
         <div className="mb-3 flex items-center gap-3 px-3 py-2">
           <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] ring-1 ring-[var(--app-card-border)]">
             <Image src="/logo.png" alt="Chantier Pro" width={40} height={40} className="h-10 w-10 object-contain" />

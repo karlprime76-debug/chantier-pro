@@ -32,12 +32,12 @@ async function DashboardLayoutInner({
 
   return (
     <div className="min-h-full">
-      <AppShell className="pb-[calc(104px+env(safe-area-inset-bottom))] sm:pb-10">
-        <div className="grid gap-6 sm:grid-cols-[16rem_1fr]">
-          <DashboardSidebar />
+      <DashboardSidebar />
+      <div className="sm:pl-64">
+        <AppShell className="pb-[calc(104px+env(safe-area-inset-bottom))] sm:pb-10">
           <div className="min-w-0">{children}</div>
-        </div>
-      </AppShell>
+        </AppShell>
+      </div>
       <MobileBottomNav />
     </div>
   );
