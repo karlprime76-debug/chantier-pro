@@ -1,31 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --cp-bg: #f8fafc;
+  --cp-bg: #f3ede6;
   --cp-surface: #ffffff;
-  --cp-text: #0b1220;
-  --cp-muted: rgba(11, 18, 32, 0.62);
-  --cp-border: rgba(11, 18, 32, 0.12);
+  --cp-text: #14110e;
+  --cp-muted: rgba(20, 17, 14, 0.62);
+  --cp-border: rgba(20, 17, 14, 0.12);
   --cp-accent: #ff6a00;
   --cp-accent-2: #3b220f;
   --cp-card: #ffffff;
   --cp-shadow: 0 10px 26px rgba(6, 27, 58, 0.08);
 
   --app-bg: var(--cp-bg);
-  --app-bg-soft: rgba(6, 27, 58, 0.04);
-  --app-card: rgba(255, 255, 255, 0.92);
-  --app-card-border: rgba(11, 18, 32, 0.1);
+  --app-bg-soft: rgba(20, 17, 14, 0.04);
+  --app-card: rgba(255, 255, 255, 0.88);
+  --app-card-border: rgba(20, 17, 14, 0.1);
   --app-text: var(--cp-text);
-  --app-text-muted: rgba(11, 18, 32, 0.6);
+  --app-text-muted: rgba(20, 17, 14, 0.6);
   --app-primary: var(--cp-accent);
   --app-primary-soft: rgba(255, 106, 0, 0.14);
   --app-on-primary: #ffffff;
-  --app-nav-bg: rgba(38, 22, 12, 0.96);
-  --app-input-bg: rgba(255, 255, 255, 0.9);
+  --app-nav-bg: rgba(255, 255, 255, 0.92);
+  --app-input-bg: rgba(255, 255, 255, 0.92);
 
-  --app-hero-glow-1: rgba(255, 106, 0, 0.18);
-  --app-hero-glow-2: rgba(88, 52, 30, 0.12);
-  --app-hero-glow-3: rgba(0, 0, 0, 0.03);
+  --app-hero-glow-1: rgba(255, 106, 0, 0.14);
+  --app-hero-glow-2: rgba(88, 52, 30, 0.1);
+  --app-hero-glow-3: rgba(0, 0, 0, 0.02);
 }
 
 @keyframes cp-splash-in {
@@ -47,8 +47,8 @@
 }
 
 html[data-theme="dark"] {
-  --cp-bg: #0b0f14;
-  --cp-surface: #101826;
+  --cp-bg: #07090d;
+  --cp-surface: #0d1118;
   --cp-text: #f2f5f9;
   --cp-muted: rgba(242, 245, 249, 0.62);
   --cp-border: rgba(242, 245, 249, 0.12);
@@ -57,7 +57,7 @@ html[data-theme="dark"] {
   --cp-card: rgba(255, 255, 255, 0.06);
   --cp-shadow: 0 12px 42px rgba(0, 0, 0, 0.45);
 
-  --app-bg: #070b10;
+  --app-bg: #06070a;
   --app-bg-soft: rgba(255, 255, 255, 0.04);
   --app-card: rgba(18, 22, 28, 0.86);
   --app-card-border: rgba(255, 255, 255, 0.1);
@@ -66,7 +66,7 @@ html[data-theme="dark"] {
   --app-primary: var(--cp-accent);
   --app-primary-soft: rgba(255, 106, 0, 0.16);
   --app-on-primary: #ffffff;
-  --app-nav-bg: rgba(38, 22, 12, 0.92);
+  --app-nav-bg: rgba(10, 12, 16, 0.92);
   --app-input-bg: rgba(16, 24, 38, 0.72);
 
   --app-hero-glow-1: rgba(249, 115, 22, 0.22);
@@ -83,8 +83,8 @@ html[data-theme="dark"] {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --cp-bg: #0b0f14;
-    --cp-surface: #101826;
+    --cp-bg: #07090d;
+    --cp-surface: #0d1118;
     --cp-text: #f2f5f9;
     --cp-muted: rgba(242, 245, 249, 0.62);
     --cp-border: rgba(242, 245, 249, 0.12);
