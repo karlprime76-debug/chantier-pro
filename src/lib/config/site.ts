@@ -1,5 +1,5 @@
 export const SITE_NAME = "Chantier Pro";
-export const DEFAULT_SITE_URL = "https://chantier-pro-snowy.vercel.app";
+export const DEFAULT_SITE_URL = "https://chantierpro.xyz";
 
 function normalizeBaseUrl(url: string) {
   return url.trim().replace(/\/+$/, "");

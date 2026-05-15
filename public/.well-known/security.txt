@@ -1,3 +1,3 @@
 Contact: mailto:chantierprobj@gmail.com
 Preferred-Languages: fr, en
-Canonical: https://chantier-pro-snowy.vercel.app/.well-known/security.txt
+Canonical: https://chantierpro.xyz/.well-known/security.txt
