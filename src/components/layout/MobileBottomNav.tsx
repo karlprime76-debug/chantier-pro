@@ -213,7 +213,7 @@ export function MobileBottomNav() {
         <div
           className={cn(
             "relative mx-auto grid grid-cols-5 gap-1 rounded-3xl border p-2 shadow-lg supports-[backdrop-filter]:backdrop-blur",
-            "bg-[var(--app-nav-bg)] border-[color-mix(in_oklab,var(--app-nav-bg),white_12%)]",
+            "bg-[var(--app-nav-bg)] border-[var(--app-card-border)]",
           )}
         >
           {items.map((item, idx) => {
@@ -228,14 +228,14 @@ export function MobileBottomNav() {
                 className={cn(
                   "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",
                   active
-                    ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_82%)] text-[var(--app-primary)]"
-                    : "text-[color-mix(in_oklab,white,transparent_24%)] hover:bg-[color-mix(in_oklab,white,transparent_92%)] hover:text-white",
+                    ? "bg-[var(--app-primary-soft)] text-[var(--app-primary)]"
+                    : "text-[color-mix(in_oklab,var(--app-text),transparent_28%)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 <span
                   className={cn(
                     "grid h-7 w-7 place-items-center",
-                    active ? "text-[var(--app-primary)]" : "text-[color-mix(in_oklab,white,transparent_24%)]",
+                    active ? "text-[var(--app-primary)]" : "text-[color-mix(in_oklab,var(--app-text),transparent_28%)]",
                   )}
                 >
                   {item.icon({ className: "h-6 w-6" })}
@@ -255,14 +255,14 @@ export function MobileBottomNav() {
                 className={cn(
                   "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",
                   active
-                    ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_82%)] text-[var(--app-primary)]"
-                    : "text-[color-mix(in_oklab,white,transparent_24%)] hover:bg-[color-mix(in_oklab,white,transparent_92%)] hover:text-white",
+                    ? "bg-[var(--app-primary-soft)] text-[var(--app-primary)]"
+                    : "text-[color-mix(in_oklab,var(--app-text),transparent_28%)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
                 )}
               >
                 <span
                   className={cn(
                     "grid h-7 w-7 place-items-center",
-                    active ? "text-[var(--app-primary)]" : "text-[color-mix(in_oklab,white,transparent_24%)]",
+                    active ? "text-[var(--app-primary)]" : "text-[color-mix(in_oklab,var(--app-text),transparent_28%)]",
                   )}
                 >
                   {moreAction.icon({ className: "h-6 w-6" })}
