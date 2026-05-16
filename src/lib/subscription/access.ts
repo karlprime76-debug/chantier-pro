@@ -50,7 +50,16 @@ export type FeatureKey =
   | "lab_compressive_strength"
   | "lab_press_to_mpa"
   | "lab_fresh_density"
-  | "lab_slump_abram";
+  | "lab_slump_abram"
+  | "lab_sieve_analysis"
+  | "lab_sand_fineness_modulus"
+  | "lab_aggregate_moisture"
+  | "lab_bulk_density"
+  | "lab_soil_moisture"
+  | "lab_dry_density"
+  | "lab_compaction_degree"
+  | "lab_atterberg_limits"
+  | "lab_cbr_simplified";
 
 export const PLAN_ORDER: Record<UserPlan, number> = {
   FREE: 0,
@@ -119,6 +128,16 @@ export const FEATURE_MIN_PLAN: Record<FeatureKey, UserPlan> = {
   lab_press_to_mpa: "PREMIUM",
   lab_fresh_density: "PREMIUM",
   lab_slump_abram: "PREMIUM",
+
+  lab_sieve_analysis: "PREMIUM",
+  lab_sand_fineness_modulus: "PREMIUM",
+  lab_aggregate_moisture: "PREMIUM",
+  lab_bulk_density: "PREMIUM",
+  lab_soil_moisture: "PREMIUM",
+  lab_dry_density: "PREMIUM",
+  lab_compaction_degree: "PREMIUM",
+  lab_atterberg_limits: "PREMIUM",
+  lab_cbr_simplified: "PREMIUM",
 };
 
 export function canAccessPlan(userPlan: UserPlan, requiredPlan: UserPlan): boolean {
