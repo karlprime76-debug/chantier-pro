@@ -17,15 +17,6 @@ import {
 import { cn } from "@/lib/cn";
 import { FEATURE_MIN_PLAN, canAccessFeature, canAccessPlan, type UserPlan } from "@/lib/subscription/access";
 
-type PlanFilter = "ALL" | UserPlan;
-
-const PLAN_FILTERS: Array<{ id: PlanFilter; label: string }> = [
-  { id: "ALL", label: "Tous" },
-  { id: "FREE", label: "Gratuit" },
-  { id: "PREMIUM", label: "Pro" },
-  { id: "ENTERPRISE", label: "Entreprise" },
-];
-
 type CategoryFilter = "ALL" | CalculatorCategory;
 
 const CATEGORY_FILTERS: Array<{ id: CategoryFilter; label: string }> = [
@@ -83,7 +74,6 @@ function withPlan(href: string, userPlan: UserPlan) {
 export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [planFilter, setPlanFilter] = useState<PlanFilter>("ALL");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("ALL");
 
   useEffect(() => {
@@ -109,15 +99,151 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
     const q = query.trim().toLowerCase();
 
     return CALCULATORS_CATALOG.filter((c) => {
-      const requiredPlan = requiredPlanForItem(c);
-      if (planFilter !== "ALL" && requiredPlan !== planFilter) return false;
       if (categoryFilter !== "ALL" && c.category !== categoryFilter) return false;
       if (!q) return true;
       return (c.title + " " + c.description).toLowerCase().includes(q);
     });
-  }, [query, planFilter, categoryFilter]);
+  }, [query, categoryFilter]);
+
+  const grouped = useMemo(() => {
+    const byPlan: Record<UserPlan, CalculatorCatalogItem[]> = {
+      FREE: [],
+      PREMIUM: [],
+      ENTERPRISE: [],
+    };
+
+    for (const c of filtered) {
+      const requiredPlan = requiredPlanForItem(c);
+      byPlan[requiredPlan].push(c);
+    }
+
+    (Object.keys(byPlan) as UserPlan[]).forEach((p) => {
+      byPlan[p] = byPlan[p].sort((a, b) => a.category.localeCompare(b.category) || a.title.localeCompare(b.title));
+    });
+
+    return byPlan;
+  }, [filtered]);
 
   const visibleCountLabel = `${filtered.length} outil${filtered.length > 1 ? "s" : ""}`;
+
+  function renderCalculatorCard(c: CalculatorCatalogItem) {
+    const requiredPlan = requiredPlanForItem(c);
+    const requiredPlanOk = canAccessPlan(userPlan, requiredPlan);
+    const featureOk = c.featureKey ? canAccessFeature(userPlan, c.featureKey) : true;
+    const canAccess = requiredPlanOk && featureOk;
+
+    const needsEnterprise = requiredPlan === "ENTERPRISE";
+    const isEnterpriseLocked = needsEnterprise && !canAccessPlan(userPlan, "ENTERPRISE");
+    const shouldShowUpgrade = !isEnterpriseLocked && !canAccess;
+
+    return (
+      <Card key={c.id} className="cp-hover-lift overflow-hidden">
+        <CardHeader className="mb-0">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex min-w-0 gap-3">
+              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--app-card-border)]">
+                <span className="text-lg" aria-hidden="true">
+                  {c.iconName}
+                </span>
+              </div>
+
+              <div className="min-w-0">
+                <CardTitle className="text-base">
+                  <span className="truncate">{c.title}</span>
+                </CardTitle>
+                <CardDescription className="line-clamp-2">{c.description}</CardDescription>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                    {c.category}
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                    {planLabel(requiredPlan)}
+                  </span>
+                  {c.status !== "AVAILABLE" ? (
+                    <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                      Bientôt
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid justify-items-end gap-2">
+              {badgeForPlan(requiredPlan)}
+              <span className="text-[11px] font-bold text-[var(--app-text-muted)]">{statusLabel(c)}</span>
+            </div>
+          </div>
+        </CardHeader>
+
+        <div className="mt-4 border-t border-[var(--app-card-border)] px-6 py-4">
+          {c.status !== "AVAILABLE" ? (
+            <ResponsiveButton type="button" variant="ghost" size="md" disabled className="w-full">
+              Bientôt
+            </ResponsiveButton>
+          ) : canAccess ? (
+            <ResponsiveButton
+              href={withPlan(c.href, userPlan)}
+              prefetch
+              loadingText="Ouverture…"
+              variant="secondary"
+              size="md"
+              className="w-full"
+            >
+              Ouvrir
+            </ResponsiveButton>
+          ) : isEnterpriseLocked ? (
+            <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
+              Passer à Entreprise
+            </ResponsiveButton>
+          ) : shouldShowUpgrade ? (
+            needsEnterprise ? (
+              <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
+                Passer à Entreprise
+              </ResponsiveButton>
+            ) : (
+              <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
+                Passer à Pro
+              </ResponsiveButton>
+            )
+          ) : (
+            <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
+              Voir les offres
+            </ResponsiveButton>
+          )}
+        </div>
+      </Card>
+    );
+  }
+
+  function sectionCta(plan: UserPlan) {
+    if (plan === "FREE") return null;
+
+    const hasAccess = canAccessPlan(userPlan, plan);
+    if (hasAccess) {
+      const label = userPlan === plan ? "Inclus dans votre plan" : "Accessible avec votre plan";
+      return (
+        <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-3 py-1 text-xs font-extrabold text-[var(--app-text)] ring-1 ring-[var(--app-card-border)]">
+          {label}
+        </span>
+      );
+    }
+
+    return (
+      <Link
+        href="/pricing"
+        className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] px-3 py-1 text-xs font-extrabold text-[var(--app-primary)] ring-1 ring-[color-mix(in_oklab,var(--app-primary),transparent_55%)] hover:bg-[color-mix(in_oklab,var(--app-primary),transparent_82%)]"
+      >
+        {plan === "ENTERPRISE" ? "Passer à Entreprise" : "Passer à Pro"}
+      </Link>
+    );
+  }
+
+  function sectionDescription(plan: UserPlan) {
+    if (plan === "FREE") return "Outils essentiels accessibles à tous.";
+    if (plan === "PREMIUM") return "Outils avancés pour aller plus loin sur vos chantiers.";
+    return "Outils complets pour les besoins avancés des entreprises et grands projets.";
+  }
 
   return (
     <div className="grid gap-6">
@@ -143,28 +269,6 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
 
         <div className="grid gap-2">
           <div className="flex gap-2 overflow-x-auto pb-1">
-            {PLAN_FILTERS.map((f) => {
-              const active = f.id === planFilter;
-              return (
-                <button
-                  key={f.id}
-                  type="button"
-                  onClick={() => setPlanFilter(f.id)}
-                  className={cn(
-                    "shrink-0 rounded-full px-4 py-2 text-xs font-extrabold ring-1 transition",
-                    "ring-[var(--app-card-border)] shadow-sm",
-                    active
-                      ? "bg-[color-mix(in_oklab,var(--app-primary),transparent_86%)] text-[var(--app-primary)]"
-                      : "bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] text-[var(--app-text-muted)] hover:bg-[color-mix(in_oklab,var(--app-text),transparent_94%)] hover:text-[var(--app-text)]",
-                  )}
-                >
-                  {f.label}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="flex gap-2 overflow-x-auto pb-1">
             {CATEGORY_FILTERS.map((f) => {
               const active = f.id === categoryFilter;
               return (
@@ -188,91 +292,36 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        {filtered.map((c) => {
-          const requiredPlan = requiredPlanForItem(c);
-          const requiredPlanOk = canAccessPlan(userPlan, requiredPlan);
-          const featureOk = c.featureKey ? canAccessFeature(userPlan, c.featureKey) : true;
-          const canAccess = requiredPlanOk && featureOk;
-
-          const needsEnterprise = requiredPlan === "ENTERPRISE";
-          const isEnterpriseLocked = needsEnterprise && !canAccessPlan(userPlan, "ENTERPRISE");
-          const shouldShowUpgrade = !isEnterpriseLocked && !canAccess;
+      <div className="grid gap-6">
+        {(["FREE", "PREMIUM", "ENTERPRISE"] as UserPlan[]).map((plan) => {
+          const items = grouped[plan];
+          const countLabel = `${items.length} outil${items.length > 1 ? "s" : ""}`;
 
           return (
-            <Card key={c.id} className="cp-hover-lift overflow-hidden">
-              <CardHeader className="mb-0">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex min-w-0 gap-3">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--app-card-border)]">
-                      <span className="text-lg" aria-hidden="true">
-                        {c.iconName}
-                      </span>
+            <Card key={plan} className="overflow-hidden">
+              <CardHeader>
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <CardTitle className="text-base sm:text-lg">{planLabel(plan)}</CardTitle>
+                      {badgeForPlan(plan)}
                     </div>
-
-                    <div className="min-w-0">
-                      <CardTitle className="text-base">
-                        <span className="truncate">{c.title}</span>
-                      </CardTitle>
-                      <CardDescription className="line-clamp-2">{c.description}</CardDescription>
-
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                          {c.category}
-                        </span>
-                        <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                          {planLabel(requiredPlan)}
-                        </span>
-                        {c.status !== "AVAILABLE" ? (
-                          <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                            Bientôt
-                          </span>
-                        ) : null}
-                      </div>
-                    </div>
+                    <CardDescription>
+                      {sectionDescription(plan)} · <span className="font-semibold text-[var(--app-text)]">{countLabel}</span>
+                    </CardDescription>
                   </div>
 
-                  <div className="grid justify-items-end gap-2">
-                    {badgeForPlan(requiredPlan)}
-                    <span className="text-[11px] font-bold text-[var(--app-text-muted)]">{statusLabel(c)}</span>
-                  </div>
+                  <div className="shrink-0">{sectionCta(plan)}</div>
                 </div>
               </CardHeader>
 
-              <div className="mt-4 border-t border-[var(--app-card-border)] px-6 py-4">
-                {c.status !== "AVAILABLE" ? (
-                  <ResponsiveButton type="button" variant="ghost" size="md" disabled className="w-full">
-                    Bientôt
-                  </ResponsiveButton>
-                ) : canAccess ? (
-                  <ResponsiveButton
-                    href={withPlan(c.href, userPlan)}
-                    prefetch
-                    loadingText="Ouverture…"
-                    variant="secondary"
-                    size="md"
-                    className="w-full"
-                  >
-                    Ouvrir
-                  </ResponsiveButton>
-                ) : isEnterpriseLocked ? (
-                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
-                    Passer à Entreprise
-                  </ResponsiveButton>
-                ) : shouldShowUpgrade ? (
-                  needsEnterprise ? (
-                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
-                      Passer à Entreprise
-                    </ResponsiveButton>
-                  ) : (
-                    <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
-                      Passer à Pro
-                    </ResponsiveButton>
-                  )
+              <div className="grid gap-3 px-6 pb-6 sm:grid-cols-2">
+                {items.length ? (
+                  items.map((c) => renderCalculatorCard(c))
                 ) : (
-                  <ResponsiveButton href="/pricing" prefetch loadingText="Ouverture…" variant="secondary" size="md" className="w-full">
-                    Voir les offres
-                  </ResponsiveButton>
+                  <div className="sm:col-span-2 rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-4 text-sm text-[var(--app-text-muted)]">
+                    Aucun outil dans cette section avec les filtres actuels.
+                  </div>
                 )}
               </div>
             </Card>
