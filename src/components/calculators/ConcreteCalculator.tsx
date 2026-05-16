@@ -8,6 +8,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Ca
 import { Input } from "@/components/ui/Input";
 import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 import { setPrintPayload } from "@/lib/calculations/printPayload";
+import { parseIntegerFR, parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeConcrete,
@@ -15,13 +16,6 @@ import {
   ConcreteInputSchema,
   type ConcreteOutput,
 } from "@/lib/calculators/concrete";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 const ELEMENT_LABEL: Record<string, string> = {
   dalle: "Dalle",
@@ -70,6 +64,7 @@ export function ConcreteCalculator() {
 
   const [output, setOutput] = useState<ConcreteOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [saveLoading, setSaveLoading] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -101,14 +96,29 @@ export function ConcreteCalculator() {
   function getNumericInput() {
     return {
       elementType,
-      lengthM: toNumber(lengthM),
-      widthM: toNumber(widthM),
-      heightM: toNumber(heightM),
-      quantity: toNumber(quantity),
-      concreteDosageKgM3: toNumber(concreteDosageKgM3),
-      wasteMarginPercent: toNumber(wasteMarginPercent),
-      pricePerM3: toNumber(pricePerM3),
+      lengthM: parseNumberFR(lengthM),
+      widthM: parseNumberFR(widthM),
+      heightM: parseNumberFR(heightM),
+      quantity: parseIntegerFR(quantity),
+      concreteDosageKgM3: parseNumberFR(concreteDosageKgM3),
+      wasteMarginPercent: parseNumberFR(wasteMarginPercent),
+      pricePerM3: parseNumberFR(pricePerM3),
     };
+  }
+
+  function validateFields() {
+    const numeric = getNumericInput();
+    const next: Record<string, string> = {};
+
+    if (numeric.lengthM === null) next.lengthM = "Nombre invalide";
+    if (numeric.widthM === null) next.widthM = "Nombre invalide";
+    if (numeric.heightM === null) next.heightM = "Nombre invalide";
+    if (numeric.quantity === null) next.quantity = "Entier requis";
+    if (numeric.concreteDosageKgM3 === null) next.concreteDosageKgM3 = "Nombre invalide";
+    if (numeric.wasteMarginPercent === null) next.wasteMarginPercent = "Nombre invalide";
+
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, numeric };
   }
 
   const refreshHistory = useCallback(async (nextProjectId: string) => {
@@ -186,6 +196,7 @@ export function ConcreteCalculator() {
     setError(null);
     setSaveOk(null);
     setSaveError(null);
+    setFieldErrors({});
 
     if (!elementTypeOk) {
       setOutput(null);
@@ -193,10 +204,17 @@ export function ConcreteCalculator() {
       return;
     }
 
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsedInput = buildParsedInput();
     if (!parsedInput) {
       setOutput(null);
-      setError("Vérifie les champs numériques.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -211,6 +229,7 @@ export function ConcreteCalculator() {
   async function handleSave() {
     setSaveOk(null);
     setSaveError(null);
+    setFieldErrors({});
 
     if (!projectId) {
       setSaveError("Choisis un chantier pour sauvegarder ce calcul.");
@@ -221,9 +240,15 @@ export function ConcreteCalculator() {
       return;
     }
 
+    const fields = validateFields();
+    if (!fields.ok) {
+      setSaveError("Corrige les champs en erreur avant de sauvegarder.");
+      return;
+    }
+
     const parsedInput = buildParsedInput();
     if (!parsedInput) {
-      setSaveError("Vérifie les champs numériques avant de sauvegarder.");
+      setSaveError("Vérifie les valeurs (unités et bornes) avant de sauvegarder.");
       return;
     }
 
@@ -332,22 +357,39 @@ export function ConcreteCalculator() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
-            <Input label="Longueur (m)" value={lengthM} onChange={(e) => setLengthM(e.target.value)} />
-            <Input label="Largeur (m)" value={widthM} onChange={(e) => setWidthM(e.target.value)} />
-            <Input label="Hauteur/épaisseur (m)" value={heightM} onChange={(e) => setHeightM(e.target.value)} />
+            <Input
+              label="Longueur (m)"
+              value={lengthM}
+              onChange={(e) => setLengthM(e.target.value)}
+              error={fieldErrors.lengthM}
+            />
+            <Input
+              label="Largeur (m)"
+              value={widthM}
+              onChange={(e) => setWidthM(e.target.value)}
+              error={fieldErrors.widthM}
+            />
+            <Input
+              label="Hauteur/épaisseur (m)"
+              value={heightM}
+              onChange={(e) => setHeightM(e.target.value)}
+              error={fieldErrors.heightM}
+            />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
-            <Input label="Quantité" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+            <Input label="Quantité" value={quantity} onChange={(e) => setQuantity(e.target.value)} error={fieldErrors.quantity} />
             <Input
               label="Dosage béton (kg/m³)"
               value={concreteDosageKgM3}
               onChange={(e) => setConcreteDosageKgM3(e.target.value)}
+              error={fieldErrors.concreteDosageKgM3}
             />
             <Input
               label="Marge de perte (%)"
               value={wasteMarginPercent}
               onChange={(e) => setWasteMarginPercent(e.target.value)}
+              error={fieldErrors.wasteMarginPercent}
             />
           </div>
 
