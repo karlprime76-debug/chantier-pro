@@ -7,9 +7,11 @@ export type CalculatorCategory =
   | "Finitions"
   | "Toiture"
   | "Fondations"
+  | "Dalles / Planchers"
   | "Escaliers"
   | "Coffrage"
   | "Terrassement"
+  | "Laboratoire / Contrôle qualité"
   | "Documents / Rapports"
   | "Outils Entreprise";
 
@@ -318,12 +320,110 @@ export const CALCULATORS_CATALOG: CalculatorCatalogItem[] = [
     id: "advanced_slab",
     title: "Dalle pleine (avancé)",
     description: "Béton, aciers, pertes et variantes.",
-    category: "Béton",
+    category: "Dalles / Planchers",
     plan: "ENTERPRISE",
     href: "/dashboard/calculators/slab/advanced",
     featureKey: "advanced_slab",
     status: "AVAILABLE",
     iconName: "🧱",
+    isAvailable: true,
+  },
+
+  {
+    id: "slab_rc",
+    title: "Dalle pleine BA",
+    description: "Surface, béton, ferraillage X/Y et coût estimatif (estimation).",
+    category: "Dalles / Planchers",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/slabs/reinforced",
+    featureKey: "slab_rc",
+    status: "AVAILABLE",
+    iconName: "🧱",
+    isAvailable: true,
+  },
+  {
+    id: "slab_on_grade",
+    title: "Dalle sur terre-plein",
+    description: "Béton + couche de forme + sable + polyane/treillis (estimation).",
+    category: "Dalles / Planchers",
+    plan: "FREE",
+    href: "/dashboard/calculators/slabs/on-grade",
+    featureKey: "slab_on_grade",
+    status: "AVAILABLE",
+    iconName: "🪨",
+    isAvailable: true,
+  },
+  {
+    id: "slab_compression_hourdis",
+    title: "Dalle de compression (hourdis)",
+    description: "Béton compression, poutrelles, hourdis et treillis (estimation).",
+    category: "Dalles / Planchers",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/slabs/compression-hourdis",
+    featureKey: "slab_compression_hourdis",
+    status: "AVAILABLE",
+    iconName: "🏗️",
+    isAvailable: true,
+  },
+  {
+    id: "plancher_poutrelles_hourdis",
+    title: "Plancher poutrelles-hourdis",
+    description: "Surface, quantités de poutrelles/hourdis et béton de compression (estimation).",
+    category: "Dalles / Planchers",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/slabs/poutrelles-hourdis",
+    featureKey: "plancher_poutrelles_hourdis",
+    status: "AVAILABLE",
+    iconName: "🏗️",
+    isAvailable: true,
+  },
+
+  {
+    id: "lab_compressive_strength",
+    title: "Résistance moyenne (compression)",
+    description: "MPa, moyenne, min/max et écart entre éprouvettes.",
+    category: "Laboratoire / Contrôle qualité",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/lab/compressive-strength",
+    featureKey: "lab_compressive_strength",
+    status: "AVAILABLE",
+    iconName: "🧪",
+    isAvailable: true,
+  },
+  {
+    id: "lab_press_to_mpa",
+    title: "Charge presse → MPa",
+    description: "Conversion kN → MPa selon section de l’éprouvette.",
+    category: "Laboratoire / Contrôle qualité",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/lab/press-to-mpa",
+    featureKey: "lab_press_to_mpa",
+    status: "AVAILABLE",
+    iconName: "⚙️",
+    isAvailable: true,
+  },
+  {
+    id: "lab_fresh_density",
+    title: "Masse volumique béton frais",
+    description: "Calcul kg/m³ à partir de masse et volume du récipient.",
+    category: "Laboratoire / Contrôle qualité",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/lab/fresh-density",
+    featureKey: "lab_fresh_density",
+    status: "AVAILABLE",
+    iconName: "⚖️",
+    isAvailable: true,
+  },
+  {
+    id: "lab_slump_abram",
+    title: "Affaissement cône d’Abrams",
+    description: "Affaissement (mm) + interprétation indicative.",
+    category: "Laboratoire / Contrôle qualité",
+    plan: "PREMIUM",
+    href: "/dashboard/calculators/lab/slump-abram",
+    featureKey: "lab_slump_abram",
+    status: "AVAILABLE",
+    iconName: "📏",
     isAvailable: true,
   },
 

@@ -36,9 +36,11 @@ const CATEGORY_FILTERS: Array<{ id: CategoryFilter; label: string }> = [
   { id: "Finitions", label: "Finitions" },
   { id: "Toiture", label: "Toiture" },
   { id: "Fondations", label: "Fondations" },
+  { id: "Dalles / Planchers", label: "Dalles / Planchers" },
   { id: "Escaliers", label: "Escaliers" },
   { id: "Coffrage", label: "Coffrage" },
   { id: "Terrassement", label: "Terrassement" },
+  { id: "Laboratoire / Contrôle qualité", label: "Laboratoire / Contrôle qualité" },
   { id: "Documents / Rapports", label: "Documents / Rapports" },
   { id: "Outils Entreprise", label: "Outils Entreprise" },
 ];
