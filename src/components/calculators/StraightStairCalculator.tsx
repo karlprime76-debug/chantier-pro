@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
+import { setPrintPayload } from "@/lib/calculations/printPayload";
 
 import {
   computeStraightStair,
@@ -25,6 +27,7 @@ function toNumber(value: string): number | null {
 export function StraightStairCalculator() {
   const searchParams = useSearchParams();
   const projectIdFromUrl = searchParams.get("projectId")?.trim() || "";
+  const userPlan = (searchParams.get("plan") as UserPlan | null) ?? "FREE";
 
   const [stepsMode, setStepsMode] = useState<StepsMode>("auto");
 
@@ -381,6 +384,37 @@ export function StraightStairCalculator() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
         <Button type="button" variant="secondary" onClick={handleCompute}>
           Calculer
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          disabled={!output || !canAccessFeature(userPlan, "calc_pdf")}
+          onClick={() => {
+            if (!output) return;
+
+            setPrintPayload({
+              calculatorName: "Calcul escalier droit",
+              createdAt: new Date().toISOString(),
+              warning: "Avertissement: document indicatif, à vérifier selon normes et chantier.",
+              input: {
+                totalHeightCm,
+                availableLengthCm,
+                stairWidthCm,
+                slabThicknessCm,
+                concreteDosageKgM3,
+                wasteMarginPercent,
+                stepsMode,
+                stepsCount: stepsMode === "manual" ? stepsCount : undefined,
+                pricePerM3,
+                projectId,
+              },
+              output: output as unknown as Record<string, unknown>,
+            });
+
+            window.location.href = "/dashboard/calculations/print";
+          }}
+        >
+          Exporter PDF
         </Button>
       </div>
 

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
+import { setPrintPayload } from "@/lib/calculations/printPayload";
 
 import {
   computeConcrete,
@@ -363,6 +364,36 @@ export function ConcreteCalculator() {
             </Button>
             <Button type="button" variant="ghost" onClick={handleSave} disabled={saveLoading}>
               {saveLoading ? "Sauvegarde…" : "Sauvegarder dans le chantier"}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={!output || !canAccessFeature(userPlan, "calc_pdf")}
+              onClick={() => {
+                if (!output) return;
+
+                setPrintPayload({
+                  calculatorName: "Calcul béton",
+                  createdAt: new Date().toISOString(),
+                  warning: "Avertissement: document indicatif, à vérifier selon normes et chantier.",
+                  input: {
+                    elementType,
+                    lengthM,
+                    widthM,
+                    heightM,
+                    quantity,
+                    concreteDosageKgM3,
+                    wasteMarginPercent,
+                    pricePerM3,
+                    projectId,
+                  },
+                  output: output as unknown as Record<string, unknown>,
+                });
+
+                window.location.href = "/dashboard/calculations/print";
+              }}
+            >
+              Exporter PDF
             </Button>
             <Button
               type="button"

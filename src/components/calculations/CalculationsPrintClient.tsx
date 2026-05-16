@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { clearPrintPayload, getPrintPayload } from "@/lib/calculations/printPayload";
 
 type Payload = {
   calculatorName: string;
@@ -29,11 +30,24 @@ function todayLabel() {
 }
 
 export function CalculationsPrintClient() {
-  const [calculatorName, setCalculatorName] = useState("Calcul Chantier Pro");
-  const [warning, setWarning] = useState("Avertissement: document indicatif, à vérifier selon normes et chantier.");
+  const payload = typeof window === "undefined" ? null : getPrintPayload();
 
-  const [inputJson, setInputJson] = useState('{"longueur":10,"largeur":8,"epaisseur":0.12}');
-  const [outputJson, setOutputJson] = useState('{"volume_beton":9.6,"acier_estime":176}');
+  const [calculatorName, setCalculatorName] = useState(() => payload?.calculatorName || "Calcul Chantier Pro");
+  const [warning, setWarning] = useState(
+    () => payload?.warning || "Avertissement: document indicatif, à vérifier selon normes et chantier.",
+  );
+
+  const [inputJson, setInputJson] = useState(() =>
+    payload ? JSON.stringify(payload.input ?? {}, null, 2) : '{"longueur":10,"largeur":8,"epaisseur":0.12}',
+  );
+  const [outputJson, setOutputJson] = useState(() =>
+    payload ? JSON.stringify(payload.output ?? {}, null, 2) : '{"volume_beton":9.6,"acier_estime":176}',
+  );
+
+  useEffect(() => {
+    if (!payload) return;
+    clearPrintPayload();
+  }, [payload]);
 
   const input = useMemo(() => safeJsonParse(inputJson), [inputJson]);
   const output = useMemo(() => safeJsonParse(outputJson), [outputJson]);
