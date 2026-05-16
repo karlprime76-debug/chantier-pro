@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { createElement } from "react";
 import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
-import { getAppUrl, sendEmail } from "@/lib/email/sendEmail";
-import { buildWelcomeEmail } from "@/lib/email/templates";
+import { getPublicAppUrl, sendTransactionalEmail } from "@/lib/email/resend";
+import { WelcomeEmail } from "@/components/emails/WelcomeEmail";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -68,23 +69,21 @@ export async function POST(req: Request) {
 
     logInfo("auth.register.user_created", { requestId, userId: user.id });
 
-    const appUrl = getAppUrl();
+    const appUrl = getPublicAppUrl();
     const dashboardUrl = `${appUrl.replace(/\/$/, "")}/dashboard`;
 
-    const welcome = buildWelcomeEmail({ name: userName, dashboardUrl });
-
-    sendEmail({
+    sendTransactionalEmail({
       to: email,
-      subject: welcome.subject,
-      text: welcome.text,
-      html: welcome.html,
+      subject: "Bienvenue sur Chantier Pro",
+      react: createElement(WelcomeEmail, { name: userName, dashboardUrl, appUrl }),
+      text: `Bonjour${userName ? ` ${userName}` : ""},\n\nVotre compte Chantier Pro a bien été créé.\n\nOuvrir mon tableau de bord :\n${dashboardUrl}\n\nChantier Pro\nPlateforme de calculs et gestion de chantier\ncontact@chantierpro.xyz`,
     }).then((result) => {
       if (!result.ok) {
         logError("auth.register.welcome_email_failed", { requestId, userId: user.id, error: result.error });
         return;
       }
 
-      logInfo("auth.register.welcome_email_sent", { requestId, userId: user.id, provider: result.provider });
+      logInfo("auth.register.welcome_email_sent", { requestId, userId: user.id, provider: result.provider, id: result.id });
     });
 
     return withRequestIdHeaders(NextResponse.json({ ok: true, userId: user.id, requestId }), requestId);

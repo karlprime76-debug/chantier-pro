@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireApiAdmin } from "@/lib/auth/api";
-import { sendEmail } from "@/lib/email/sendEmail";
+import { sendTransactionalEmail } from "@/lib/email/resend";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
   logInfo("email.test.sending", { requestId, to: parsed.data.to });
 
-  const result = await sendEmail({
+  const result = await sendTransactionalEmail({
     to: parsed.data.to,
     subject: "Test email Chantier Pro",
     text: "Ceci est un email de test depuis Chantier Pro.",
@@ -81,9 +81,9 @@ export async function POST(req: Request) {
     );
   }
 
-  logInfo("email.test.send_ok", { requestId, provider: result.provider });
+  logInfo("email.test.send_ok", { requestId, provider: result.provider, id: result.id });
   return withRequestIdHeaders(
-    NextResponse.json({ ok: true, message: "Email test envoyé.", provider: result.provider, requestId }),
+    NextResponse.json({ ok: true, message: "Email test envoyé.", provider: result.provider, id: result.id, requestId }),
     requestId,
   );
 }

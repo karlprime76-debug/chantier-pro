@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import { createElement } from "react";
 import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
-import { getAppUrl, sendEmail } from "@/lib/email/sendEmail";
-import { buildPasswordResetEmail } from "@/lib/email/templates";
+import { getPublicAppUrl, sendTransactionalEmail } from "@/lib/email/resend";
+import { PasswordResetEmail } from "@/components/emails/PasswordResetEmail";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 import { checkRateLimit } from "@/lib/security/rateLimit";
@@ -82,16 +83,14 @@ export async function POST(req: Request) {
         expiresAt: expiresAt.toISOString(),
       });
 
-      const appUrl = getAppUrl();
+      const appUrl = getPublicAppUrl();
       const resetUrl = `${appUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(rawToken)}`;
 
-      const emailTpl = buildPasswordResetEmail({ resetUrl });
-
-      sendEmail({
+      sendTransactionalEmail({
         to: user.email,
-        subject: emailTpl.subject,
-        text: emailTpl.text,
-        html: emailTpl.html,
+        subject: "Réinitialisation de votre mot de passe Chantier Pro",
+        react: createElement(PasswordResetEmail, { resetUrl }),
+        text: `Bonjour,\n\nNous avons reçu une demande de réinitialisation de mot de passe pour votre compte Chantier Pro.\n\nRéinitialiser mon mot de passe :\n${resetUrl}\n\nCe lien expire dans 30 minutes.\n\nSi vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet email.\n\nChantier Pro — Outils professionnels pour le chantier\ncontact@chantierpro.xyz`,
       }).then((result) => {
         if (!result.ok) {
           logError("auth.forgot_password.email_failed", {
@@ -102,7 +101,7 @@ export async function POST(req: Request) {
           return;
         }
 
-        logInfo("auth.forgot_password.email_sent", { requestId, userId: user.id });
+        logInfo("auth.forgot_password.email_sent", { requestId, userId: user.id, provider: result.provider, id: result.id });
       });
     } else {
       logInfo("auth.forgot_password.user_not_found", { requestId });
