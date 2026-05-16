@@ -9,7 +9,7 @@ const BRAND = {
   tagline: "Outils professionnels pour le chantier",
   siteUrl: "https://chantierpro.xyz",
   supportEmail: "contact@chantierpro.xyz",
-  fromEmail: "noreply@chantierpro.xyz",
+  fromEmail: "no-reply@chantierpro.xyz",
   whatsappLabel: "+229 01 58 68 45 48",
   whatsappUrl: "https://wa.me/2290158684548",
   location: "Cotonou, Bénin",
