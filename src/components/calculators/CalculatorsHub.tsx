@@ -45,8 +45,8 @@ function planLabel(plan: UserPlan): string {
 function statusLabel(item: CalculatorCatalogItem): string {
   if (item.status !== "AVAILABLE") return "Bientôt";
   const requiredPlan = requiredPlanForItem(item);
-  if (requiredPlan === "ENTERPRISE") return "Inclus Entreprise";
-  if (requiredPlan === "PREMIUM") return "Inclus Pro";
+  if (requiredPlan === "ENTERPRISE") return "Inclus dans Entreprise";
+  if (requiredPlan === "PREMIUM") return "Inclus dans Pro";
   return "Inclus";
 }
 
@@ -139,39 +139,36 @@ export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
     return (
       <Card key={c.id} className="cp-hover-lift overflow-hidden">
         <CardHeader className="mb-0">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex min-w-0 gap-3">
-              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--app-card-border)]">
-                <span className="text-lg" aria-hidden="true">
-                  {c.iconName}
-                </span>
-              </div>
-
-              <div className="min-w-0">
-                <CardTitle className="text-base">
-                  <span className="truncate">{c.title}</span>
-                </CardTitle>
-                <CardDescription className="line-clamp-2">{c.description}</CardDescription>
-
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                    {c.category}
-                  </span>
-                  <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                    {planLabel(requiredPlan)}
-                  </span>
-                  {c.status !== "AVAILABLE" ? (
-                    <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
-                      Bientôt
-                    </span>
-                  ) : null}
-                </div>
-              </div>
+          <div className="flex min-w-0 items-start gap-3">
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--cp-accent-2),white_88%)] text-[var(--cp-accent-2)] ring-1 ring-[var(--app-card-border)]">
+              <span className="text-lg" aria-hidden="true">
+                {c.iconName}
+              </span>
             </div>
 
-            <div className="grid justify-items-end gap-2">
-              {badgeForPlan(requiredPlan)}
-              <span className="text-[11px] font-bold text-[var(--app-text-muted)]">{statusLabel(c)}</span>
+            <div className="min-w-0 flex-1">
+              <CardTitle className="text-base">
+                <span className="line-clamp-2 break-words">{c.title}</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-2">{c.description}</CardDescription>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                  {c.category}
+                </span>
+
+                {badgeForPlan(requiredPlan)}
+
+                <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text)] ring-1 ring-[var(--app-card-border)] whitespace-nowrap">
+                  {statusLabel(c)}
+                </span>
+
+                {c.status !== "AVAILABLE" ? (
+                  <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-text),transparent_92%)] px-2.5 py-1 text-[11px] font-extrabold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)] whitespace-nowrap">
+                    Bientôt
+                  </span>
+                ) : null}
+              </div>
             </div>
           </div>
         </CardHeader>
