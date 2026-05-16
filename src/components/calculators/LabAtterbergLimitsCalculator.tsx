@@ -5,15 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import { computeLabAtterbergLimits, LabAtterbergLimitsInputSchema, type LabAtterbergLimitsOutput } from "@/lib/calculators/labAtterbergLimits";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function LabAtterbergLimitsCalculator() {
   const [liquidLimitLL, setLiquidLimitLL] = useState("35");
@@ -21,18 +15,37 @@ export function LabAtterbergLimitsCalculator() {
 
   const [output, setOutput] = useState<LabAtterbergLimitsOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const ll = parseNumberFR(liquidLimitLL);
+    const pl = parseNumberFR(plasticLimitPL);
+    if (ll === null) next.liquidLimitLL = "Nombre invalide";
+    if (pl === null) next.plasticLimitPL = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, ll, pl };
+  }
 
   function handleCompute() {
     setError(null);
 
+    setFieldErrors({});
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsed = LabAtterbergLimitsInputSchema.safeParse({
-      liquidLimitLL: toNumber(liquidLimitLL) ?? NaN,
-      plasticLimitPL: toNumber(plasticLimitPL) ?? NaN,
+      liquidLimitLL: fields.ll ?? NaN,
+      plasticLimitPL: fields.pl ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie LL et PL.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -49,6 +62,7 @@ export function LabAtterbergLimitsCalculator() {
     setPlasticLimitPL("22");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -61,8 +75,18 @@ export function LabAtterbergLimitsCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Limite de liquidité LL (%)" value={liquidLimitLL} onChange={(e) => setLiquidLimitLL(e.target.value)} />
-            <Input label="Limite de plasticité PL (%)" value={plasticLimitPL} onChange={(e) => setPlasticLimitPL(e.target.value)} />
+            <Input
+              label="Limite de liquidité LL (%)"
+              value={liquidLimitLL}
+              onChange={(e) => setLiquidLimitLL(e.target.value)}
+              error={fieldErrors.liquidLimitLL}
+            />
+            <Input
+              label="Limite de plasticité PL (%)"
+              value={plasticLimitPL}
+              onChange={(e) => setPlasticLimitPL(e.target.value)}
+              error={fieldErrors.plasticLimitPL}
+            />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">

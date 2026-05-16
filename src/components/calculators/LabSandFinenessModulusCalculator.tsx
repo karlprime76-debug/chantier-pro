@@ -5,19 +5,13 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeLabSandFinenessModulus,
   LabSandFinenessModulusInputSchema,
   type LabSandFinenessModulusOutput,
 } from "@/lib/calculators/labSandFinenessModulus";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 function buildDefault() {
   return ["10", "25", "45", "65", "80", "92"];
@@ -28,7 +22,17 @@ export function LabSandFinenessModulusCalculator() {
   const [output, setOutput] = useState<LabSandFinenessModulusOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const parsed = useMemo(() => values.map((v) => toNumber(v)).filter((v): v is number => v !== null), [values]);
+  const parsed = useMemo(
+    () => values.map((v) => parseNumberFR(v)).filter((v): v is number => v !== null),
+    [values],
+  );
+
+  const rowErrors = useMemo(() => {
+    return values.map((v) => {
+      if (!v.trim()) return undefined;
+      return parseNumberFR(v) === null ? "Nombre invalide" : undefined;
+    });
+  }, [values]);
 
   function handleCompute() {
     setError(null);
@@ -79,6 +83,7 @@ export function LabSandFinenessModulusCalculator() {
                     next[idx] = e.target.value;
                     setValues(next);
                   }}
+                  error={rowErrors[idx]}
                 />
                 <Button
                   type="button"

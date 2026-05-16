@@ -5,19 +5,9 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
-import {
-  computeLabCompressiveStrength,
-  LabCompressiveStrengthInputSchema,
-  type LabCompressiveStrengthOutput,
-} from "@/lib/calculators/labCompressiveStrength";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
+import { computeLabCompressiveStrength, LabCompressiveStrengthInputSchema, type LabCompressiveStrengthOutput } from "@/lib/calculators/labCompressiveStrength";
 
 function buildDefaultValues() {
   return ["25", "27", "26"]; 
@@ -28,7 +18,17 @@ export function LabCompressiveStrengthCalculator() {
   const [output, setOutput] = useState<LabCompressiveStrengthOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const parsedNumbers = useMemo(() => values.map((v) => toNumber(v)).filter((v): v is number => v !== null), [values]);
+  const parsedNumbers = useMemo(
+    () => values.map((v) => parseNumberFR(v)).filter((v): v is number => v !== null),
+    [values],
+  );
+
+  const rowErrors = useMemo(() => {
+    return values.map((v) => {
+      if (!v.trim()) return undefined;
+      return parseNumberFR(v) === null ? "Nombre invalide" : undefined;
+    });
+  }, [values]);
 
   function handleCompute() {
     setError(null);
@@ -77,6 +77,7 @@ export function LabCompressiveStrengthCalculator() {
                     next[idx] = e.target.value;
                     setValues(next);
                   }}
+                  error={rowErrors[idx]}
                 />
                 <Button
                   type="button"

@@ -5,19 +5,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeLabCompactionDegree,
   LabCompactionDegreeInputSchema,
   type LabCompactionDegreeOutput,
 } from "@/lib/calculators/labCompactionDegree";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function LabCompactionDegreeCalculator() {
   const [dryDensityKgPerM3, setDryDensityKgPerM3] = useState("1800");
@@ -26,19 +20,40 @@ export function LabCompactionDegreeCalculator() {
 
   const [output, setOutput] = useState<LabCompactionDegreeOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const dry = parseNumberFR(dryDensityKgPerM3);
+    const maxDry = parseNumberFR(maxDryDensityKgPerM3);
+    const threshold = parseNumberFR(thresholdPercent);
+    if (dry === null) next.dryDensityKgPerM3 = "Nombre invalide";
+    if (maxDry === null) next.maxDryDensityKgPerM3 = "Nombre invalide";
+    if (threshold === null) next.thresholdPercent = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, dry, maxDry, threshold };
+  }
 
   function handleCompute() {
     setError(null);
 
+    setFieldErrors({});
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsed = LabCompactionDegreeInputSchema.safeParse({
-      dryDensityKgPerM3: toNumber(dryDensityKgPerM3) ?? NaN,
-      maxDryDensityKgPerM3: toNumber(maxDryDensityKgPerM3) ?? NaN,
-      thresholdPercent: toNumber(thresholdPercent) ?? NaN,
+      dryDensityKgPerM3: fields.dry ?? NaN,
+      maxDryDensityKgPerM3: fields.maxDry ?? NaN,
+      thresholdPercent: fields.threshold ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie les densités et le seuil.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -56,6 +71,7 @@ export function LabCompactionDegreeCalculator() {
     setThresholdPercent("95");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -72,13 +88,20 @@ export function LabCompactionDegreeCalculator() {
               label="Densité sèche ρd (kg/m³)"
               value={dryDensityKgPerM3}
               onChange={(e) => setDryDensityKgPerM3(e.target.value)}
+              error={fieldErrors.dryDensityKgPerM3}
             />
             <Input
               label="Densité max ρd,max (kg/m³)"
               value={maxDryDensityKgPerM3}
               onChange={(e) => setMaxDryDensityKgPerM3(e.target.value)}
+              error={fieldErrors.maxDryDensityKgPerM3}
             />
-            <Input label="Seuil (%)" value={thresholdPercent} onChange={(e) => setThresholdPercent(e.target.value)} />
+            <Input
+              label="Seuil (%)"
+              value={thresholdPercent}
+              onChange={(e) => setThresholdPercent(e.target.value)}
+              error={fieldErrors.thresholdPercent}
+            />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">

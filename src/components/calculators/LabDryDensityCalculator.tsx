@@ -5,15 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import { computeLabDryDensity, LabDryDensityInputSchema, type LabDryDensityOutput } from "@/lib/calculators/labDryDensity";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function LabDryDensityCalculator() {
   const [wetDensityKgPerM3, setWetDensityKgPerM3] = useState("1950");
@@ -21,18 +15,37 @@ export function LabDryDensityCalculator() {
 
   const [output, setOutput] = useState<LabDryDensityOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const wet = parseNumberFR(wetDensityKgPerM3);
+    const w = parseNumberFR(moisturePercent);
+    if (wet === null) next.wetDensityKgPerM3 = "Nombre invalide";
+    if (w === null) next.moisturePercent = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, wet, w };
+  }
 
   function handleCompute() {
     setError(null);
 
+    setFieldErrors({});
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsed = LabDryDensityInputSchema.safeParse({
-      wetDensityKgPerM3: toNumber(wetDensityKgPerM3) ?? NaN,
-      moisturePercent: toNumber(moisturePercent) ?? NaN,
+      wetDensityKgPerM3: fields.wet ?? NaN,
+      moisturePercent: fields.w ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie la densité humide et l’humidité w%." );
+      setError("Vérifie les valeurs (unités et bornes)." );
       return;
     }
 
@@ -49,6 +62,7 @@ export function LabDryDensityCalculator() {
     setMoisturePercent("8");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -65,8 +79,14 @@ export function LabDryDensityCalculator() {
               label="Densité humide (kg/m³)"
               value={wetDensityKgPerM3}
               onChange={(e) => setWetDensityKgPerM3(e.target.value)}
+              error={fieldErrors.wetDensityKgPerM3}
             />
-            <Input label="Humidité w (%)" value={moisturePercent} onChange={(e) => setMoisturePercent(e.target.value)} />
+            <Input
+              label="Humidité w (%)"
+              value={moisturePercent}
+              onChange={(e) => setMoisturePercent(e.target.value)}
+              error={fieldErrors.moisturePercent}
+            />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">

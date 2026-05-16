@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeLabMoistureContent,
@@ -12,31 +13,43 @@ import {
   type LabMoistureContentOutput,
 } from "@/lib/calculators/labMoistureContent";
 
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
-
 export function LabAggregateMoistureCalculator() {
   const [wetMassG, setWetMassG] = useState("1200");
   const [dryMassG, setDryMassG] = useState("1140");
 
   const [output, setOutput] = useState<LabMoistureContentOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const wet = parseNumberFR(wetMassG);
+    const dry = parseNumberFR(dryMassG);
+    if (wet === null) next.wetMassG = "Nombre invalide";
+    if (dry === null) next.dryMassG = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, wet, dry };
+  }
 
   function handleCompute() {
     setError(null);
 
+    setFieldErrors({});
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsed = LabMoistureContentInputSchema.safeParse({
-      wetMassG: toNumber(wetMassG) ?? NaN,
-      dryMassG: toNumber(dryMassG) ?? NaN,
+      wetMassG: fields.wet ?? NaN,
+      dryMassG: fields.dry ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie les masses humide et sèche.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -53,6 +66,7 @@ export function LabAggregateMoistureCalculator() {
     setDryMassG("1140");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -65,8 +79,13 @@ export function LabAggregateMoistureCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Masse humide (g)" value={wetMassG} onChange={(e) => setWetMassG(e.target.value)} />
-            <Input label="Masse sèche (g)" value={dryMassG} onChange={(e) => setDryMassG(e.target.value)} />
+            <Input
+              label="Masse humide (g)"
+              value={wetMassG}
+              onChange={(e) => setWetMassG(e.target.value)}
+              error={fieldErrors.wetMassG}
+            />
+            <Input label="Masse sèche (g)" value={dryMassG} onChange={(e) => setDryMassG(e.target.value)} error={fieldErrors.dryMassG} />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">

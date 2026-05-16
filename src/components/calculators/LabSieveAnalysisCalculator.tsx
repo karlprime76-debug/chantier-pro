@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeLabSieveAnalysis,
@@ -12,13 +13,6 @@ import {
   type LabSieveAnalysisOutput,
   type LabSieveRow,
 } from "@/lib/calculators/labSieveAnalysis";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 type RowState = { sieveMm: string; retainedG: string };
 
@@ -40,11 +34,24 @@ export function LabSieveAnalysisCalculator() {
   const [output, setOutput] = useState<LabSieveAnalysisOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const totalMassError = useMemo(() => {
+    if (!totalMassG.trim()) return undefined;
+    return parseNumberFR(totalMassG) === null ? "Nombre invalide" : undefined;
+  }, [totalMassG]);
+
+  const rowErrors = useMemo(() => {
+    return rows.map((r) => {
+      const sieveErr = r.sieveMm.trim() && parseNumberFR(r.sieveMm) === null ? "Nombre invalide" : undefined;
+      const retainedErr = r.retainedG.trim() && parseNumberFR(r.retainedG) === null ? "Nombre invalide" : undefined;
+      return { sieveMm: sieveErr, retainedG: retainedErr };
+    });
+  }, [rows]);
+
   const parsedRows = useMemo(() => {
     const out: LabSieveRow[] = [];
     for (const r of rows) {
-      const sieveMm = toNumber(r.sieveMm);
-      const retainedG = toNumber(r.retainedG);
+      const sieveMm = parseNumberFR(r.sieveMm);
+      const retainedG = parseNumberFR(r.retainedG);
       if (sieveMm === null || retainedG === null) continue;
       out.push({ sieveMm, retainedG });
     }
@@ -55,7 +62,7 @@ export function LabSieveAnalysisCalculator() {
     setError(null);
 
     const parsed = LabSieveAnalysisInputSchema.safeParse({
-      totalMassG: toNumber(totalMassG) ?? NaN,
+      totalMassG: parseNumberFR(totalMassG) ?? NaN,
       rows: parsedRows,
     });
 
@@ -89,7 +96,12 @@ export function LabSieveAnalysisCalculator() {
         </CardHeader>
 
         <div className="grid gap-4">
-          <Input label="Masse totale échantillon (g)" value={totalMassG} onChange={(e) => setTotalMassG(e.target.value)} />
+          <Input
+            label="Masse totale échantillon (g)"
+            value={totalMassG}
+            onChange={(e) => setTotalMassG(e.target.value)}
+            error={totalMassError}
+          />
 
           <div className="grid gap-2">
             <div className="text-sm font-semibold text-[var(--app-text)]">Tamis (mm) et masse retenue (g)</div>
@@ -105,6 +117,7 @@ export function LabSieveAnalysisCalculator() {
                       next[idx] = { ...next[idx], sieveMm: e.target.value };
                       setRows(next);
                     }}
+                    error={rowErrors[idx]?.sieveMm}
                   />
                   <Input
                     label={`Retenu ${idx + 1} (g)`}
@@ -114,6 +127,7 @@ export function LabSieveAnalysisCalculator() {
                       next[idx] = { ...next[idx], retainedG: e.target.value };
                       setRows(next);
                     }}
+                    error={rowErrors[idx]?.retainedG}
                   />
                   <Button
                     type="button"

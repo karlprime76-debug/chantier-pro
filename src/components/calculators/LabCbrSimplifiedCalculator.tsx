@@ -5,15 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import { computeLabCbrSimplified, LabCbrSimplifiedInputSchema, type LabCbrSimplifiedOutput } from "@/lib/calculators/labCbrSimplified";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function LabCbrSimplifiedCalculator() {
   const [cbr25, setCbr25] = useState("12");
@@ -21,18 +15,37 @@ export function LabCbrSimplifiedCalculator() {
 
   const [output, setOutput] = useState<LabCbrSimplifiedOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const v25 = parseNumberFR(cbr25);
+    const v5 = parseNumberFR(cbr5);
+    if (v25 === null) next.cbr25 = "Nombre invalide";
+    if (v5 === null) next.cbr5 = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, v25, v5 };
+  }
 
   function handleCompute() {
     setError(null);
+    setFieldErrors({});
+
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
 
     const parsed = LabCbrSimplifiedInputSchema.safeParse({
-      cbr25: toNumber(cbr25) ?? NaN,
-      cbr5: toNumber(cbr5) ?? NaN,
+      cbr25: fields.v25 ?? NaN,
+      cbr5: fields.v5 ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie les valeurs CBR (0 à 100)." );
+      setError("Vérifie les valeurs (unités et bornes)." );
       return;
     }
 
@@ -49,6 +62,7 @@ export function LabCbrSimplifiedCalculator() {
     setCbr5("15");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -61,8 +75,8 @@ export function LabCbrSimplifiedCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="CBR à 2,5" value={cbr25} onChange={(e) => setCbr25(e.target.value)} />
-            <Input label="CBR à 5" value={cbr5} onChange={(e) => setCbr5(e.target.value)} />
+            <Input label="CBR à 2,5" value={cbr25} onChange={(e) => setCbr25(e.target.value)} error={fieldErrors.cbr25} />
+            <Input label="CBR à 5" value={cbr5} onChange={(e) => setCbr5(e.target.value)} error={fieldErrors.cbr5} />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">

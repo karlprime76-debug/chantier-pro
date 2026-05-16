@@ -5,19 +5,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeLabFreshDensity,
   LabFreshDensityInputSchema,
   type LabFreshDensityOutput,
 } from "@/lib/calculators/labFreshDensity";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function LabFreshDensityCalculator() {
   const [containerVolumeL, setContainerVolumeL] = useState("7");
@@ -26,19 +20,42 @@ export function LabFreshDensityCalculator() {
 
   const [output, setOutput] = useState<LabFreshDensityOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const volume = parseNumberFR(containerVolumeL);
+    const emptyMass = parseNumberFR(emptyContainerMassKg);
+    const filledMass = parseNumberFR(filledContainerMassKg);
+
+    if (volume === null) next.containerVolumeL = "Nombre invalide";
+    if (emptyMass === null) next.emptyContainerMassKg = "Nombre invalide";
+    if (filledMass === null) next.filledContainerMassKg = "Nombre invalide";
+
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, volume, emptyMass, filledMass };
+  }
 
   function handleCompute() {
     setError(null);
 
+    setFieldErrors({});
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsed = LabFreshDensityInputSchema.safeParse({
-      containerVolumeL: toNumber(containerVolumeL) ?? NaN,
-      emptyContainerMassKg: toNumber(emptyContainerMassKg) ?? NaN,
-      filledContainerMassKg: toNumber(filledContainerMassKg) ?? NaN,
+      containerVolumeL: fields.volume ?? NaN,
+      emptyContainerMassKg: fields.emptyMass ?? NaN,
+      filledContainerMassKg: fields.filledMass ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie les masses et le volume.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -56,6 +73,7 @@ export function LabFreshDensityCalculator() {
     setFilledContainerMassKg("18.5");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -67,17 +85,24 @@ export function LabFreshDensityCalculator() {
         </CardHeader>
 
         <div className="grid gap-4">
-          <Input label="Volume récipient (L)" value={containerVolumeL} onChange={(e) => setContainerVolumeL(e.target.value)} />
+          <Input
+            label="Volume récipient (L)"
+            value={containerVolumeL}
+            onChange={(e) => setContainerVolumeL(e.target.value)}
+            error={fieldErrors.containerVolumeL}
+          />
           <div className="grid gap-4 sm:grid-cols-2">
             <Input
               label="Masse récipient vide (kg)"
               value={emptyContainerMassKg}
               onChange={(e) => setEmptyContainerMassKg(e.target.value)}
+              error={fieldErrors.emptyContainerMassKg}
             />
             <Input
               label="Masse récipient rempli (kg)"
               value={filledContainerMassKg}
               onChange={(e) => setFilledContainerMassKg(e.target.value)}
+              error={fieldErrors.filledContainerMassKg}
             />
           </div>
 

@@ -7,13 +7,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Ca
 import { Input } from "@/components/ui/Input";
 
 import { computeLabPressToMpa, LabPressToMpaInputSchema, type LabPressToMpaOutput } from "@/lib/calculators/labPressToMpa";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 const SPECIMEN_DIAMETERS_MM = [100, 150, 160];
 
@@ -23,18 +17,36 @@ export function LabPressToMpaCalculator() {
 
   const [output, setOutput] = useState<LabPressToMpaOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const load = parseNumberFR(loadKn);
+    if (load === null) next.loadKn = "Nombre invalide";
+
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, loadKn: load };
+  }
 
   function handleCompute() {
     setError(null);
+    setFieldErrors({});
+
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
 
     const parsed = LabPressToMpaInputSchema.safeParse({
-      loadKn: toNumber(loadKn) ?? NaN,
-      specimenDiameterMm: toNumber(specimenDiameterMm) ?? NaN,
+      loadKn: fields.loadKn ?? NaN,
+      specimenDiameterMm: parseNumberFR(specimenDiameterMm) ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie la charge et le diamètre.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -51,6 +63,7 @@ export function LabPressToMpaCalculator() {
     setSpecimenDiameterMm("150");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -62,7 +75,12 @@ export function LabPressToMpaCalculator() {
         </CardHeader>
 
         <div className="grid gap-4">
-          <Input label="Charge à rupture (kN)" value={loadKn} onChange={(e) => setLoadKn(e.target.value)} />
+          <Input
+            label="Charge à rupture (kN)"
+            value={loadKn}
+            onChange={(e) => setLoadKn(e.target.value)}
+            error={fieldErrors.loadKn}
+          />
 
           <label className="block">
             <div className="mb-1 text-sm font-semibold text-[var(--app-text)]">Diamètre éprouvette (mm)</div>

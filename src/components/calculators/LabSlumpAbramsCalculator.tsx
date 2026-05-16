@@ -5,19 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
-import {
-  computeLabSlumpAbrams,
-  LabSlumpAbramsInputSchema,
-  type LabSlumpAbramsOutput,
-} from "@/lib/calculators/labSlumpAbrams";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
+import { computeLabSlumpAbrams, LabSlumpAbramsInputSchema, type LabSlumpAbramsOutput } from "@/lib/calculators/labSlumpAbrams";
 
 export function LabSlumpAbramsCalculator() {
   const [coneHeightMm, setConeHeightMm] = useState("300");
@@ -25,18 +15,37 @@ export function LabSlumpAbramsCalculator() {
 
   const [output, setOutput] = useState<LabSlumpAbramsOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const cone = parseNumberFR(coneHeightMm);
+    const measured = parseNumberFR(measuredHeightMm);
+    if (cone === null) next.coneHeightMm = "Nombre invalide";
+    if (measured === null) next.measuredHeightMm = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, cone, measured };
+  }
 
   function handleCompute() {
     setError(null);
+    setFieldErrors({});
+
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
 
     const parsed = LabSlumpAbramsInputSchema.safeParse({
-      coneHeightMm: toNumber(coneHeightMm) ?? NaN,
-      measuredHeightMm: toNumber(measuredHeightMm) ?? NaN,
+      coneHeightMm: fields.cone ?? NaN,
+      measuredHeightMm: fields.measured ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie les hauteurs.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -53,6 +62,7 @@ export function LabSlumpAbramsCalculator() {
     setMeasuredHeightMm("220");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -65,8 +75,18 @@ export function LabSlumpAbramsCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Hauteur cône (mm)" value={coneHeightMm} onChange={(e) => setConeHeightMm(e.target.value)} />
-            <Input label="Hauteur mesurée (mm)" value={measuredHeightMm} onChange={(e) => setMeasuredHeightMm(e.target.value)} />
+            <Input
+              label="Hauteur cône (mm)"
+              value={coneHeightMm}
+              onChange={(e) => setConeHeightMm(e.target.value)}
+              error={fieldErrors.coneHeightMm}
+            />
+            <Input
+              label="Hauteur mesurée (mm)"
+              value={measuredHeightMm}
+              onChange={(e) => setMeasuredHeightMm(e.target.value)}
+              error={fieldErrors.measuredHeightMm}
+            />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">

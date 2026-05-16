@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 import { setPrintPayload } from "@/lib/calculations/printPayload";
+import { parseIntegerFR, parseNumberFR } from "@/lib/forms/numbers";
 
 import {
   computeStraightStair,
@@ -16,13 +17,6 @@ import {
 } from "@/lib/calculators/stairStraight";
 
 type StepsMode = "auto" | "manual";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function StraightStairCalculator() {
   const searchParams = useSearchParams();
@@ -67,6 +61,7 @@ export function StraightStairCalculator() {
 
   const [output, setOutput] = useState<StairStraightOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [saveLoading, setSaveLoading] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -85,16 +80,34 @@ export function StraightStairCalculator() {
 
   function getNumericInput() {
     return {
-      totalHeightCm: toNumber(totalHeightCm),
-      availableLengthCm: toNumber(availableLengthCm),
-      stairWidthCm: toNumber(stairWidthCm),
-      slabThicknessCm: toNumber(slabThicknessCm),
-      concreteDosageKgM3: toNumber(concreteDosageKgM3),
-      wasteMarginPercent: toNumber(wasteMarginPercent),
+      totalHeightCm: parseNumberFR(totalHeightCm),
+      availableLengthCm: parseNumberFR(availableLengthCm),
+      stairWidthCm: parseNumberFR(stairWidthCm),
+      slabThicknessCm: parseNumberFR(slabThicknessCm),
+      concreteDosageKgM3: parseNumberFR(concreteDosageKgM3),
+      wasteMarginPercent: parseNumberFR(wasteMarginPercent),
       stepsMode,
-      stepsCount: stepsMode === "manual" ? toNumber(stepsCount) : null,
-      pricePerM3: toNumber(pricePerM3),
+      stepsCount: stepsMode === "manual" ? parseIntegerFR(stepsCount) : null,
+      pricePerM3: parseNumberFR(pricePerM3),
     };
+  }
+
+  function validateFields() {
+    const input = getNumericInput();
+    const next: Record<string, string> = {};
+
+    if (input.totalHeightCm === null) next.totalHeightCm = "Nombre invalide";
+    if (input.availableLengthCm === null) next.availableLengthCm = "Nombre invalide";
+    if (input.stairWidthCm === null) next.stairWidthCm = "Nombre invalide";
+    if (input.slabThicknessCm === null) next.slabThicknessCm = "Nombre invalide";
+    if (input.concreteDosageKgM3 === null) next.concreteDosageKgM3 = "Nombre invalide";
+    if (input.wasteMarginPercent === null) next.wasteMarginPercent = "Nombre invalide";
+
+    if (stepsMode === "manual" && input.stepsCount === null) next.stepsCount = "Entier requis";
+    if (pricePerM3.trim() && input.pricePerM3 === null) next.pricePerM3 = "Nombre invalide";
+
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, input };
   }
 
   const refreshHistory = useCallback(async (nextProjectId: string) => {
@@ -171,8 +184,16 @@ export function StraightStairCalculator() {
     setError(null);
     setSaveOk(null);
     setSaveError(null);
+    setFieldErrors({});
 
-    const input = getNumericInput();
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
+    const input = fields.input;
 
     const parsed = StairStraightInputSchema.safeParse({
       totalHeightCm: input.totalHeightCm ?? NaN,
@@ -188,7 +209,7 @@ export function StraightStairCalculator() {
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie les champs numériques.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -204,6 +225,7 @@ export function StraightStairCalculator() {
   async function handleSave() {
     setSaveOk(null);
     setSaveError(null);
+    setFieldErrors({});
 
     if (!projectId) {
       setSaveError("Choisis un chantier pour sauvegarder ce calcul.");
@@ -214,7 +236,13 @@ export function StraightStairCalculator() {
       return;
     }
 
-    const input = getNumericInput();
+    const fields = validateFields();
+    if (!fields.ok) {
+      setSaveError("Corrige les champs en erreur avant de sauvegarder.");
+      return;
+    }
+
+    const input = fields.input;
     const parsed = StairStraightInputSchema.safeParse({
       totalHeightCm: input.totalHeightCm ?? NaN,
       availableLengthCm: input.availableLengthCm ?? NaN,
@@ -228,7 +256,7 @@ export function StraightStairCalculator() {
     });
 
     if (!parsed.success) {
-      setSaveError("Vérifie les champs numériques avant de sauvegarder.");
+      setSaveError("Vérifie les valeurs (unités et bornes) avant de sauvegarder.");
       return;
     }
 
@@ -312,12 +340,14 @@ export function StraightStairCalculator() {
           name="totalHeightCm"
           value={totalHeightCm}
           onChange={(e) => setTotalHeightCm(e.target.value)}
+          error={fieldErrors.totalHeightCm}
         />
         <Input
           label="Longueur disponible (cm)"
           name="availableLengthCm"
           value={availableLengthCm}
           onChange={(e) => setAvailableLengthCm(e.target.value)}
+          error={fieldErrors.availableLengthCm}
         />
       </div>
 
@@ -327,12 +357,14 @@ export function StraightStairCalculator() {
           name="stairWidthCm"
           value={stairWidthCm}
           onChange={(e) => setStairWidthCm(e.target.value)}
+          error={fieldErrors.stairWidthCm}
         />
         <Input
           label="Épaisseur de paillasse (cm)"
           name="slabThicknessCm"
           value={slabThicknessCm}
           onChange={(e) => setSlabThicknessCm(e.target.value)}
+          error={fieldErrors.slabThicknessCm}
         />
       </div>
 
@@ -355,6 +387,7 @@ export function StraightStairCalculator() {
           value={stepsCount}
           onChange={(e) => setStepsCount(e.target.value)}
           disabled={stepsMode !== "manual"}
+          error={stepsMode === "manual" ? fieldErrors.stepsCount : undefined}
         />
 
         <div />
@@ -366,18 +399,21 @@ export function StraightStairCalculator() {
           name="concreteDosageKgM3"
           value={concreteDosageKgM3}
           onChange={(e) => setConcreteDosageKgM3(e.target.value)}
+          error={fieldErrors.concreteDosageKgM3}
         />
         <Input
           label="Marge de perte (%)"
           name="wasteMarginPercent"
           value={wasteMarginPercent}
           onChange={(e) => setWasteMarginPercent(e.target.value)}
+          error={fieldErrors.wasteMarginPercent}
         />
         <Input
           label="Prix estimatif du m³ (optionnel)"
           name="pricePerM3"
           value={pricePerM3}
           onChange={(e) => setPricePerM3(e.target.value)}
+          error={fieldErrors.pricePerM3}
         />
       </div>
 

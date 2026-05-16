@@ -5,15 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { parseNumberFR } from "@/lib/forms/numbers";
 
 import { computeLabBulkDensity, LabBulkDensityInputSchema, type LabBulkDensityOutput } from "@/lib/calculators/labBulkDensity";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 export function LabBulkDensityCalculator() {
   const [containerVolumeL, setContainerVolumeL] = useState("10");
@@ -21,18 +15,37 @@ export function LabBulkDensityCalculator() {
 
   const [output, setOutput] = useState<LabBulkDensityOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  function validateFields() {
+    const next: Record<string, string> = {};
+    const volume = parseNumberFR(containerVolumeL);
+    const mass = parseNumberFR(netMassKg);
+    if (volume === null) next.containerVolumeL = "Nombre invalide";
+    if (mass === null) next.netMassKg = "Nombre invalide";
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, volume, mass };
+  }
 
   function handleCompute() {
     setError(null);
+    setFieldErrors({});
+
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
 
     const parsed = LabBulkDensityInputSchema.safeParse({
-      containerVolumeL: toNumber(containerVolumeL) ?? NaN,
-      netMassKg: toNumber(netMassKg) ?? NaN,
+      containerVolumeL: fields.volume ?? NaN,
+      netMassKg: fields.mass ?? NaN,
     });
 
     if (!parsed.success) {
       setOutput(null);
-      setError("Vérifie le volume et la masse.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -49,6 +62,7 @@ export function LabBulkDensityCalculator() {
     setNetMassKg("16");
     setOutput(null);
     setError(null);
+    setFieldErrors({});
   }
 
   return (
@@ -61,8 +75,13 @@ export function LabBulkDensityCalculator() {
 
         <div className="grid gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Volume récipient (L)" value={containerVolumeL} onChange={(e) => setContainerVolumeL(e.target.value)} />
-            <Input label="Masse nette (kg)" value={netMassKg} onChange={(e) => setNetMassKg(e.target.value)} />
+            <Input
+              label="Volume récipient (L)"
+              value={containerVolumeL}
+              onChange={(e) => setContainerVolumeL(e.target.value)}
+              error={fieldErrors.containerVolumeL}
+            />
+            <Input label="Masse nette (kg)" value={netMassKg} onChange={(e) => setNetMassKg(e.target.value)} error={fieldErrors.netMassKg} />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
