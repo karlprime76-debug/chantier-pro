@@ -7,9 +7,12 @@ import { SubscribeButton } from "@/components/billing/SubscribeButton";
 import { BillingHealthCheck } from "@/components/billing/BillingHealthCheck";
 import { Button } from "@/components/ui/Button";
 import { getSession } from "@/lib/auth/session";
+import type { UserPlan } from "@/lib/subscription/access";
+import { getEffectiveUserPlan } from "@/lib/subscription/server";
 
 export default async function PricingPage() {
   const session = await getSession();
+  const currentPlan: UserPlan | null = session ? await getEffectiveUserPlan(session) : null;
   const canSeeBillingHealth = process.env.NODE_ENV !== "production" || session?.role === "ADMIN";
   const freeCtaHref = session ? "/dashboard" : "/register";
 
@@ -26,7 +29,13 @@ export default async function PricingPage() {
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <Card className="h-full">
+            <Card
+              className={
+                currentPlan === "FREE"
+                  ? "h-full ring-2 ring-[var(--cp-accent)]/25"
+                  : "h-full"
+              }
+            >
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Gratuit</CardTitle>
@@ -37,6 +46,11 @@ export default async function PricingPage() {
               <div className="flex h-full flex-col gap-3 px-6 pb-6">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">0 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
+                {currentPlan === "FREE" ? (
+                  <div className="-mt-1 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                    Offre actuelle
+                  </div>
+                ) : null}
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
                   <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
@@ -48,14 +62,32 @@ export default async function PricingPage() {
                   </div>
                 </div>
                 <div className="mt-auto pt-1">
-                  <Button href={freeCtaHref} size="lg" className="w-full justify-center">
-                    Commencer gratuitement
-                  </Button>
+                  {session ? (
+                    currentPlan === "FREE" ? (
+                      <Button type="button" size="lg" className="w-full justify-center" disabled>
+                        Offre actuelle
+                      </Button>
+                    ) : (
+                      <Button type="button" size="lg" className="w-full justify-center" disabled>
+                        Inclus
+                      </Button>
+                    )
+                  ) : (
+                    <Button href={freeCtaHref} size="lg" className="w-full justify-center">
+                      Commencer gratuitement
+                    </Button>
+                  )}
                 </div>
               </div>
             </Card>
 
-            <Card className="h-full ring-1 ring-[var(--cp-accent)]/20">
+            <Card
+              className={
+                currentPlan === "PREMIUM"
+                  ? "h-full ring-2 ring-[var(--cp-accent)]/35"
+                  : "h-full ring-1 ring-[var(--cp-accent)]/20"
+              }
+            >
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Pro</CardTitle>
@@ -68,9 +100,15 @@ export default async function PricingPage() {
               <div className="flex h-full flex-col gap-3 px-6 pb-6">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">15 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
-                <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
-                  Pro recommandé
-                </div>
+                {currentPlan === "PREMIUM" ? (
+                  <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                    Offre actuelle
+                  </div>
+                ) : (
+                  <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                    Pro recommandé
+                  </div>
+                )}
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
                   <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
@@ -84,14 +122,36 @@ export default async function PricingPage() {
                 </div>
 
                 <div className="mt-auto pt-1">
-                  <SubscribeButton plan="PREMIUM" className="w-full justify-center">
-                    S&apos;abonner
-                  </SubscribeButton>
+                  {session ? (
+                    currentPlan === "PREMIUM" ? (
+                      <Button type="button" size="lg" className="w-full justify-center" disabled>
+                        Offre actuelle
+                      </Button>
+                    ) : currentPlan === "ENTERPRISE" ? (
+                      <Button type="button" size="lg" className="w-full justify-center" disabled>
+                        Inclus
+                      </Button>
+                    ) : (
+                      <SubscribeButton plan="PREMIUM" className="w-full justify-center">
+                        Passer à Pro
+                      </SubscribeButton>
+                    )
+                  ) : (
+                    <SubscribeButton plan="PREMIUM" className="w-full justify-center">
+                      S&apos;abonner
+                    </SubscribeButton>
+                  )}
                 </div>
               </div>
             </Card>
 
-            <Card className="h-full">
+            <Card
+              className={
+                currentPlan === "ENTERPRISE"
+                  ? "h-full ring-2 ring-[var(--cp-accent)]/35"
+                  : "h-full"
+              }
+            >
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Entreprise</CardTitle>
@@ -104,6 +164,11 @@ export default async function PricingPage() {
               <div className="flex h-full flex-col gap-3 px-6 pb-6">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">25 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
+                {currentPlan === "ENTERPRISE" ? (
+                  <div className="-mt-1 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                    Offre actuelle
+                  </div>
+                ) : null}
                 <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_10%)] p-3">
                   <div className="text-sm font-bold text-[var(--app-text)]">Inclus</div>
                   <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
@@ -140,9 +205,21 @@ export default async function PricingPage() {
                 </div>
 
                 <div className="mt-auto pt-1">
-                  <SubscribeButton plan="ENTERPRISE" className="w-full justify-center">
-                    S&apos;abonner
-                  </SubscribeButton>
+                  {session ? (
+                    currentPlan === "ENTERPRISE" ? (
+                      <Button type="button" size="lg" className="w-full justify-center" disabled>
+                        Offre actuelle
+                      </Button>
+                    ) : (
+                      <SubscribeButton plan="ENTERPRISE" className="w-full justify-center">
+                        Passer à Entreprise
+                      </SubscribeButton>
+                    )
+                  ) : (
+                    <SubscribeButton plan="ENTERPRISE" className="w-full justify-center">
+                      S&apos;abonner
+                    </SubscribeButton>
+                  )}
                 </div>
               </div>
             </Card>
