@@ -32,8 +32,8 @@ export default async function PricingPage() {
             <Card
               className={
                 currentPlan === "FREE"
-                  ? "h-full ring-2 ring-[var(--cp-accent)]/25"
-                  : "h-full"
+                  ? "flex h-full flex-col overflow-hidden ring-2 ring-[var(--cp-accent)]/25"
+                  : "flex h-full flex-col overflow-hidden"
               }
             >
               <CardHeader>
@@ -43,11 +43,11 @@ export default async function PricingPage() {
                 </div>
                 <CardDescription>Pour tester Chantier Pro avec les calculateurs de base.</CardDescription>
               </CardHeader>
-              <div className="flex h-full flex-col gap-3 px-6 pb-6">
+              <div className="flex flex-1 flex-col gap-3">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">0 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 {currentPlan === "FREE" ? (
-                  <div className="-mt-1 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                  <div className="inline-flex w-fit items-center whitespace-nowrap rounded-full bg-[var(--cp-accent)]/15 px-3 py-1 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
                     Offre actuelle
                   </div>
                 ) : null}
@@ -61,7 +61,7 @@ export default async function PricingPage() {
                     <div>Support standard</div>
                   </div>
                 </div>
-                <div className="mt-auto pt-1">
+                <div className="mt-auto pt-2">
                   {session ? (
                     currentPlan === "FREE" ? (
                       <Button type="button" size="lg" className="w-full justify-center" disabled>
@@ -84,8 +84,8 @@ export default async function PricingPage() {
             <Card
               className={
                 currentPlan === "PREMIUM"
-                  ? "h-full ring-2 ring-[var(--cp-accent)]/35"
-                  : "h-full ring-1 ring-[var(--cp-accent)]/20"
+                  ? "flex h-full flex-col overflow-hidden ring-2 ring-[var(--cp-accent)]/35"
+                  : "flex h-full flex-col overflow-hidden ring-1 ring-[var(--cp-accent)]/20"
               }
             >
               <CardHeader>
@@ -97,15 +97,15 @@ export default async function PricingPage() {
                   Pour les pros : calculs + suivi budget/dépenses + rapports.
                 </CardDescription>
               </CardHeader>
-              <div className="flex h-full flex-col gap-3 px-6 pb-6">
+              <div className="flex flex-1 flex-col gap-3">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">15 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 {currentPlan === "PREMIUM" ? (
-                  <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                  <div className="inline-flex w-fit items-center whitespace-nowrap rounded-full bg-[var(--cp-accent)]/15 px-3 py-1 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
                     Offre actuelle
                   </div>
                 ) : (
-                  <div className="-mt-2 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                  <div className="inline-flex w-fit items-center whitespace-nowrap rounded-full bg-[var(--cp-accent)]/15 px-3 py-1 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
                     Pro recommandé
                   </div>
                 )}
@@ -121,7 +121,7 @@ export default async function PricingPage() {
                   </div>
                 </div>
 
-                <div className="mt-auto pt-1">
+                <div className="mt-auto pt-2">
                   {session ? (
                     currentPlan === "PREMIUM" ? (
                       <Button type="button" size="lg" className="w-full justify-center" disabled>
@@ -148,8 +148,8 @@ export default async function PricingPage() {
             <Card
               className={
                 currentPlan === "ENTERPRISE"
-                  ? "h-full ring-2 ring-[var(--cp-accent)]/35"
-                  : "h-full"
+                  ? "flex h-full flex-col overflow-hidden ring-2 ring-[var(--cp-accent)]/35"
+                  : "flex h-full flex-col overflow-hidden"
               }
             >
               <CardHeader>
@@ -161,11 +161,11 @@ export default async function PricingPage() {
                   Pour travailler en équipe avec accès multi-utilisateurs.
                 </CardDescription>
               </CardHeader>
-              <div className="flex h-full flex-col gap-3 px-6 pb-6">
+              <div className="flex flex-1 flex-col gap-3">
                 <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">25 000 FCFA</div>
                 <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
                 {currentPlan === "ENTERPRISE" ? (
-                  <div className="-mt-1 inline-flex w-fit items-center rounded-full bg-[var(--cp-accent)]/15 px-2 py-0.5 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
+                  <div className="inline-flex w-fit items-center whitespace-nowrap rounded-full bg-[var(--cp-accent)]/15 px-3 py-1 text-[11px] font-bold text-[var(--cp-accent)] ring-1 ring-[var(--cp-accent)]/30">
                     Offre actuelle
                   </div>
                 ) : null}
@@ -204,7 +204,7 @@ export default async function PricingPage() {
                   Pour les entreprises BTP qui gèrent plusieurs chantiers, équipes et rapports.
                 </div>
 
-                <div className="mt-auto pt-1">
+                <div className="mt-auto pt-2">
                   {session ? (
                     currentPlan === "ENTERPRISE" ? (
                       <Button type="button" size="lg" className="w-full justify-center" disabled>
