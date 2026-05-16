@@ -1,6 +1,8 @@
 import { Resend } from "resend";
 import type { CreateEmailOptions } from "resend";
 
+import { getEmailFrom, getEmailReplyTo } from "@/lib/email/config";
+
 type SendEmailInput = {
   to: string;
   subject: string;
@@ -29,8 +31,8 @@ function isLocalhostUrl(url: string) {
 
 export async function sendEmail(input: SendEmailInput): Promise<SendEmailResult> {
   const resendKey = (process.env.RESEND_API_KEY ?? "").trim();
-  const from = (process.env.EMAIL_FROM ?? "").trim() || "Chantier Pro <onboarding@resend.dev>";
-  const replyTo = (input.replyTo ?? process.env.EMAIL_REPLY_TO ?? "").trim() || undefined;
+  const from = getEmailFrom();
+  const replyTo = (input.replyTo ?? getEmailReplyTo()).trim() || undefined;
 
   const baseUrl = getBaseUrl();
   if (process.env.NODE_ENV === "production" && isLocalhostUrl(baseUrl)) {
