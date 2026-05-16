@@ -8,15 +8,9 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Ca
 import { Input } from "@/components/ui/Input";
 import { canAccessFeature, type UserPlan } from "@/lib/subscription/access";
 import { setPrintPayload } from "@/lib/calculations/printPayload";
+import { parseIntegerFR, parseNumberFR } from "@/lib/forms/numbers";
 
 import { computeSteel, SteelDiameterSchema, SteelInputSchema, type SteelOutput } from "@/lib/calculators/steel";
-
-function toNumber(value: string): number | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  const n = Number(trimmed.replace(",", "."));
-  return Number.isFinite(n) ? n : null;
-}
 
 const DIAMETERS: Array<{ key: string; label: string }> = [
   { key: "HA6", label: "HA6" },
@@ -64,6 +58,7 @@ export function SteelCalculator() {
 
   const [output, setOutput] = useState<SteelOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [saveLoading, setSaveLoading] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -94,13 +89,28 @@ export function SteelCalculator() {
   function getNumericInput() {
     return {
       diameter,
-      unitLengthM: toNumber(unitLengthM),
-      count: toNumber(count),
-      overlapM: toNumber(overlapM),
-      lossPercent: toNumber(lossPercent),
-      pricePerKg: toNumber(pricePerKg),
-      pricePerBar: toNumber(pricePerBar),
+      unitLengthM: parseNumberFR(unitLengthM),
+      count: parseIntegerFR(count),
+      overlapM: parseNumberFR(overlapM),
+      lossPercent: parseNumberFR(lossPercent),
+      pricePerKg: parseNumberFR(pricePerKg),
+      pricePerBar: parseNumberFR(pricePerBar),
     };
+  }
+
+  function validateFields() {
+    const numeric = getNumericInput();
+    const next: Record<string, string> = {};
+
+    if (numeric.unitLengthM === null) next.unitLengthM = "Nombre invalide";
+    if (numeric.count === null) next.count = "Entier requis";
+    if (numeric.overlapM === null) next.overlapM = "Nombre invalide";
+    if (numeric.lossPercent === null) next.lossPercent = "Nombre invalide";
+    if (pricePerKg.trim() && numeric.pricePerKg === null) next.pricePerKg = "Nombre invalide";
+    if (pricePerBar.trim() && numeric.pricePerBar === null) next.pricePerBar = "Nombre invalide";
+
+    setFieldErrors(next);
+    return { ok: Object.keys(next).length === 0, numeric };
   }
 
   const refreshHistory = useCallback(async (nextProjectId: string) => {
@@ -178,6 +188,7 @@ export function SteelCalculator() {
     setError(null);
     setSaveOk(null);
     setSaveError(null);
+    setFieldErrors({});
 
     if (!diameterOk) {
       setOutput(null);
@@ -185,10 +196,17 @@ export function SteelCalculator() {
       return;
     }
 
+    const fields = validateFields();
+    if (!fields.ok) {
+      setOutput(null);
+      setError("Corrige les champs en erreur.");
+      return;
+    }
+
     const parsedInput = buildParsedInput();
     if (!parsedInput) {
       setOutput(null);
-      setError("Vérifie les champs numériques.");
+      setError("Vérifie les valeurs (unités et bornes).");
       return;
     }
 
@@ -203,6 +221,7 @@ export function SteelCalculator() {
   async function handleSave() {
     setSaveOk(null);
     setSaveError(null);
+    setFieldErrors({});
 
     if (!projectId) {
       setSaveError("Choisis un chantier pour sauvegarder ce calcul.");
@@ -213,9 +232,15 @@ export function SteelCalculator() {
       return;
     }
 
+    const fields = validateFields();
+    if (!fields.ok) {
+      setSaveError("Corrige les champs en erreur avant de sauvegarder.");
+      return;
+    }
+
     const parsedInput = buildParsedInput();
     if (!parsedInput) {
-      setSaveError("Vérifie les champs numériques avant de sauvegarder.");
+      setSaveError("Vérifie les valeurs (unités et bornes) avant de sauvegarder.");
       return;
     }
 
@@ -317,18 +342,33 @@ export function SteelCalculator() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Longueur unitaire (m)" value={unitLengthM} onChange={(e) => setUnitLengthM(e.target.value)} />
-            <Input label="Nombre de pièces" value={count} onChange={(e) => setCount(e.target.value)} />
+            <Input
+              label="Longueur unitaire (m)"
+              value={unitLengthM}
+              onChange={(e) => setUnitLengthM(e.target.value)}
+              error={fieldErrors.unitLengthM}
+            />
+            <Input label="Nombre de pièces" value={count} onChange={(e) => setCount(e.target.value)} error={fieldErrors.count} />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Recouvrement (m)" value={overlapM} onChange={(e) => setOverlapM(e.target.value)} />
-            <Input label="Perte (%)" value={lossPercent} onChange={(e) => setLossPercent(e.target.value)} />
+            <Input label="Recouvrement (m)" value={overlapM} onChange={(e) => setOverlapM(e.target.value)} error={fieldErrors.overlapM} />
+            <Input label="Perte (%)" value={lossPercent} onChange={(e) => setLossPercent(e.target.value)} error={fieldErrors.lossPercent} />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Prix par kg (optionnel)" value={pricePerKg} onChange={(e) => setPricePerKg(e.target.value)} />
-            <Input label="Prix par barre 12m (optionnel)" value={pricePerBar} onChange={(e) => setPricePerBar(e.target.value)} />
+            <Input
+              label="Prix par kg (optionnel)"
+              value={pricePerKg}
+              onChange={(e) => setPricePerKg(e.target.value)}
+              error={fieldErrors.pricePerKg}
+            />
+            <Input
+              label="Prix par barre 12m (optionnel)"
+              value={pricePerBar}
+              onChange={(e) => setPricePerBar(e.target.value)}
+              error={fieldErrors.pricePerBar}
+            />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
