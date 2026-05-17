@@ -1,5 +1,7 @@
 import type { ReactElement } from "react";
 
+import { EmailButton, EmailInfoBox, EmailLayout, EmailLink, EmailMutedText, EmailText } from "./EmailLayout";
+
 export function WelcomeEmail({
   name,
   dashboardUrl,
@@ -14,108 +16,40 @@ export function WelcomeEmail({
   const displayName = name.trim();
 
   return (
-    <html lang="fr">
-      <body style={{ margin: 0, padding: 0, backgroundColor: "#F8FAFC", fontFamily: "system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial" }}>
-        <div style={{ padding: "24px 12px" }}>
-          <div
-            style={{
-              maxWidth: 560,
-              margin: "0 auto",
-              background: "#ffffff",
-              border: "1px solid rgba(2,6,23,0.10)",
-              borderRadius: 24,
-              overflow: "hidden",
-            }}
-          >
-            <div style={{ padding: "18px 22px", background: "#061B3A", color: "#ffffff" }}>
-              <div style={{ fontWeight: 900, fontSize: 16, letterSpacing: "-0.02em" }}>Chantier Pro</div>
-              <div style={{ marginTop: 2, fontSize: 12, color: "rgba(255,255,255,0.82)", fontWeight: 600 }}>
-                Outils professionnels pour le chantier
-              </div>
-            </div>
+    <EmailLayout
+      title="Bienvenue sur Chantier Pro"
+      preview="Votre espace Chantier Pro est prêt."
+      appUrl={appUrl}
+      supportEmail={supportEmail}
+    >
+      <EmailText>Bonjour{displayName ? ` ${displayName}` : ""},</EmailText>
+      <EmailText><strong>Bienvenue sur Chantier Pro.</strong></EmailText>
+      <EmailText>
+        Chantier Pro aide les professionnels du BTP à gagner du temps sur les calculs, le suivi et l’organisation des projets de construction.
+      </EmailText>
 
-            <div style={{ padding: "22px 22px 10px 22px", color: "#0f172a" }}>
-              <h1 style={{ margin: "0 0 10px 0", fontSize: 18, lineHeight: 1.3, fontWeight: 800 }}>Bienvenue !</h1>
+      <div style={{ margin: "16px 0", padding: "0 0 0 18px", color: "#0F172A", fontSize: 14, lineHeight: 1.7 }}>
+        <div>Calculateurs BTP</div>
+        <div>Suivi de projets</div>
+        <div>Rapports et exports</div>
+        <div>Modules Pro et Entreprise</div>
+        <div>Outils pour béton, acier, fondations et laboratoire</div>
+      </div>
 
-              <p style={{ margin: "0 0 12px 0", fontSize: 14, lineHeight: 1.6 }}>
-                Bonjour{displayName ? ` ${displayName}` : ""},
-              </p>
-              <p style={{ margin: "0 0 12px 0", fontSize: 14, lineHeight: 1.6 }}>
-                Votre compte <b>Chantier Pro</b> a bien été créé.
-              </p>
-              <p style={{ margin: "0 0 12px 0", fontSize: 14, lineHeight: 1.6 }}>
-                Accédez à vos calculateurs, projets et outils de chantier.
-              </p>
+      <EmailButton href={dashboardUrl}>Accéder à mon tableau de bord</EmailButton>
 
-              <div style={{ margin: "16px 0 8px 0" }}>
-                <a
-                  href={dashboardUrl}
-                  style={{
-                    display: "inline-block",
-                    background: "#FF6A00",
-                    color: "#061B3A",
-                    textDecoration: "none",
-                    fontWeight: 900,
-                    padding: "12px 18px",
-                    borderRadius: 14,
-                  }}
-                >
-                  Ouvrir mon tableau de bord
-                </a>
-              </div>
+      <EmailMutedText>
+        Si le bouton ne fonctionne pas, utilisez ce lien :<br />
+        <EmailLink href={dashboardUrl}>{dashboardUrl}</EmailLink>
+      </EmailMutedText>
 
-              <p style={{ margin: "0 0 10px 0", fontSize: 13, lineHeight: 1.6, color: "rgba(15,23,42,0.78)" }}>
-                Si le bouton ne fonctionne pas, utilisez ce lien :<br />
-                {dashboardUrl}
-              </p>
+      <EmailInfoBox>
+        Conseil : commencez par créer votre premier projet ou tester un calculateur gratuit.
+      </EmailInfoBox>
 
-              <div
-                style={{
-                  marginTop: 10,
-                  padding: "12px 14px",
-                  borderRadius: 16,
-                  background: "rgba(2,6,23,0.04)",
-                  border: "1px solid rgba(2,6,23,0.08)",
-                }}
-              >
-                <div style={{ fontSize: 12, lineHeight: 1.6, color: "rgba(15,23,42,0.78)" }}>
-                  Vous recevez cet email car un compte a été créé avec cette adresse sur Chantier Pro.
-                </div>
-              </div>
-
-              <div style={{ height: 18 }} />
-            </div>
-
-            <div
-              style={{
-                padding: "16px 22px 22px 22px",
-                borderTop: "1px solid rgba(2,6,23,0.08)",
-                fontSize: 12,
-                lineHeight: 1.6,
-                color: "rgba(15,23,42,0.70)",
-              }}
-            >
-              <div>
-                <b style={{ color: "#061B3A" }}>Chantier Pro</b> — Outils professionnels pour le chantier
-              </div>
-              <div style={{ marginTop: 8 }}>
-                Contact : <a href={`mailto:${supportEmail}`} style={{ color: "#061B3A", textDecoration: "underline", fontWeight: 700 }}>
-                  {supportEmail}
-                </a>
-              </div>
-              <div>
-                Site :{" "}
-                <a href={appUrl} style={{ color: "#061B3A", textDecoration: "underline", fontWeight: 700 }}>
-                  {appUrl.replace(/^https?:\/\//, "")}
-                </a>
-              </div>
-              <div style={{ marginTop: 10 }}>
-                Si vous n’êtes pas à l’origine de cette action, ignorez cet email ou contactez le support.
-              </div>
-            </div>
-          </div>
-        </div>
-      </body>
-    </html>
+      <EmailInfoBox>
+        Besoin d’aide ? Écrivez-nous à <EmailLink href={`mailto:${supportEmail}`}>{supportEmail}</EmailLink> ou contactez-nous via WhatsApp.
+      </EmailInfoBox>
+    </EmailLayout>
   );
 }

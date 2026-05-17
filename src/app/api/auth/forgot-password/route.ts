@@ -90,7 +90,7 @@ export async function POST(req: Request) {
       const emailResult = await sendTransactionalEmail({
         to: user.email,
         subject: "Réinitialisation de votre mot de passe Chantier Pro",
-        react: createElement(PasswordResetEmail, { resetUrl, supportEmail: SITE_CONFIG.supportEmail }),
+        react: createElement(PasswordResetEmail, { resetUrl, appUrl, supportEmail: SITE_CONFIG.supportEmail }),
         text: `Bonjour,\n\nNous avons reçu une demande de réinitialisation de mot de passe pour votre compte Chantier Pro.\n\nRéinitialiser mon mot de passe :\n${resetUrl}\n\nCe lien expire dans 30 minutes.\n\nSi vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet email.\n\nChantier Pro — Outils professionnels pour le chantier\n${SITE_CONFIG.supportEmail}`,
       });
 

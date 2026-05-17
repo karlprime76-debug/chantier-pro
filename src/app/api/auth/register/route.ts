@@ -77,7 +77,7 @@ export async function POST(req: Request) {
       to: email,
       subject: "Bienvenue sur Chantier Pro",
       react: createElement(WelcomeEmail, { name: userName, dashboardUrl, appUrl, supportEmail: SITE_CONFIG.supportEmail }),
-      text: `Bonjour${userName ? ` ${userName}` : ""},\n\nVotre compte Chantier Pro a bien été créé.\n\nOuvrir mon tableau de bord :\n${dashboardUrl}\n\nChantier Pro\nPlateforme de calculs et gestion de chantier\n${SITE_CONFIG.supportEmail}`,
+      text: `Bonjour${userName ? ` ${userName}` : ""},\n\nBienvenue sur Chantier Pro.\n\nChantier Pro aide les professionnels du BTP à gagner du temps sur les calculs, le suivi et l’organisation des projets de construction.\n\nFonctionnalités utiles :\n- Calculateurs BTP\n- Suivi de projets\n- Rapports et exports\n- Modules Pro et Entreprise\n- Outils pour béton, acier, fondations et laboratoire\n\nAccéder à mon tableau de bord :\n${dashboardUrl}\n\nConseil : commencez par créer votre premier projet ou tester un calculateur gratuit.\n\nSupport : ${SITE_CONFIG.supportEmail}\nWhatsApp : +229 01 58 68 45 48\n\nChantier Pro — L’outil BTP pour calculer, suivre et organiser vos chantiers.\n${appUrl}`,
     });
 
     if (!emailResult.ok) {
