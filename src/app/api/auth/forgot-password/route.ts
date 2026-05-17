@@ -87,23 +87,22 @@ export async function POST(req: Request) {
       const appUrl = getPublicAppUrl();
       const resetUrl = `${appUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(rawToken)}`;
 
-      sendTransactionalEmail({
+      const emailResult = await sendTransactionalEmail({
         to: user.email,
         subject: "Réinitialisation de votre mot de passe Chantier Pro",
         react: createElement(PasswordResetEmail, { resetUrl, supportEmail: SITE_CONFIG.supportEmail }),
         text: `Bonjour,\n\nNous avons reçu une demande de réinitialisation de mot de passe pour votre compte Chantier Pro.\n\nRéinitialiser mon mot de passe :\n${resetUrl}\n\nCe lien expire dans 30 minutes.\n\nSi vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet email.\n\nChantier Pro — Outils professionnels pour le chantier\n${SITE_CONFIG.supportEmail}`,
-      }).then((result) => {
-        if (!result.ok) {
-          logError("auth.forgot_password.email_failed", {
-            requestId,
-            userId: user.id,
-            error: result.error,
-          });
-          return;
-        }
-
-        logInfo("auth.forgot_password.email_sent", { requestId, userId: user.id, provider: result.provider, id: result.id });
       });
+
+      if (!emailResult.ok) {
+        logError("auth.forgot_password.email_failed", {
+          requestId,
+          userId: user.id,
+          error: emailResult.error,
+        });
+      } else {
+        logInfo("auth.forgot_password.email_sent", { requestId, userId: user.id, provider: emailResult.provider, id: emailResult.id });
+      }
     } else {
       logInfo("auth.forgot_password.user_not_found", { requestId });
     }

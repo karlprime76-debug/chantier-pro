@@ -73,19 +73,18 @@ export async function POST(req: Request) {
     const appUrl = getPublicAppUrl();
     const dashboardUrl = `${appUrl.replace(/\/$/, "")}/dashboard`;
 
-    sendTransactionalEmail({
+    const emailResult = await sendTransactionalEmail({
       to: email,
       subject: "Bienvenue sur Chantier Pro",
       react: createElement(WelcomeEmail, { name: userName, dashboardUrl, appUrl, supportEmail: SITE_CONFIG.supportEmail }),
       text: `Bonjour${userName ? ` ${userName}` : ""},\n\nVotre compte Chantier Pro a bien été créé.\n\nOuvrir mon tableau de bord :\n${dashboardUrl}\n\nChantier Pro\nPlateforme de calculs et gestion de chantier\n${SITE_CONFIG.supportEmail}`,
-    }).then((result) => {
-      if (!result.ok) {
-        logError("auth.register.welcome_email_failed", { requestId, userId: user.id, error: result.error });
-        return;
-      }
-
-      logInfo("auth.register.welcome_email_sent", { requestId, userId: user.id, provider: result.provider, id: result.id });
     });
+
+    if (!emailResult.ok) {
+      logError("auth.register.welcome_email_failed", { requestId, userId: user.id, error: emailResult.error });
+    } else {
+      logInfo("auth.register.welcome_email_sent", { requestId, userId: user.id, provider: emailResult.provider, id: emailResult.id });
+    }
 
     return withRequestIdHeaders(NextResponse.json({ ok: true, userId: user.id, requestId }), requestId);
   } catch (err) {

@@ -107,28 +107,27 @@ export async function POST(req: Request) {
     logInfo("auth.reset_password.password_updated", { requestId, userId: resetToken.userId });
 
     if (resetToken.user?.email) {
-      sendTransactionalEmail({
+      const emailResult = await sendTransactionalEmail({
         to: resetToken.user.email,
         subject: "Votre mot de passe Chantier Pro a été modifié",
         text: `Bonjour,\n\nVotre mot de passe a bien été modifié.\n\nSi vous n’êtes pas à l’origine de cette action, contactez rapidement le support.\n\nChantier Pro — Outils professionnels pour le chantier\n${SITE_CONFIG.supportEmail}`,
         html: `<p>Bonjour,</p><p>Votre mot de passe a bien été modifié.</p><p>Si vous n’êtes pas à l’origine de cette action, contactez rapidement le support : <a href="mailto:${SITE_CONFIG.supportEmail}">${SITE_CONFIG.supportEmail}</a>.</p><p><strong>Chantier Pro</strong> — Outils professionnels pour le chantier</p>`,
-      }).then((result) => {
-        if (!result.ok) {
-          logError("auth.reset_password.confirmation_email_failed", {
-            requestId,
-            userId: resetToken.userId,
-            error: result.error,
-          });
-          return;
-        }
+      });
 
+      if (!emailResult.ok) {
+        logError("auth.reset_password.confirmation_email_failed", {
+          requestId,
+          userId: resetToken.userId,
+          error: emailResult.error,
+        });
+      } else {
         logInfo("auth.reset_password.confirmation_email_sent", {
           requestId,
           userId: resetToken.userId,
-          provider: result.provider,
-          id: result.id,
+          provider: emailResult.provider,
+          id: emailResult.id,
         });
-      });
+      }
     }
 
     return withRequestIdHeaders(

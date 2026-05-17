@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
+    "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.0.8",
     "bcryptjs": "^2.4.3",
     "next": "16.2.4",
     "next-auth": "^4.24.11",
