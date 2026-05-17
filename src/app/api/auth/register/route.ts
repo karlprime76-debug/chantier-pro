@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
 import { getPublicAppUrl, sendTransactionalEmail } from "@/lib/email/resend";
 import { WelcomeEmail } from "@/components/emails/WelcomeEmail";
+import { SITE_CONFIG } from "@/lib/site-config";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -75,8 +76,8 @@ export async function POST(req: Request) {
     sendTransactionalEmail({
       to: email,
       subject: "Bienvenue sur Chantier Pro",
-      react: createElement(WelcomeEmail, { name: userName, dashboardUrl, appUrl }),
-      text: `Bonjour${userName ? ` ${userName}` : ""},\n\nVotre compte Chantier Pro a bien été créé.\n\nOuvrir mon tableau de bord :\n${dashboardUrl}\n\nChantier Pro\nPlateforme de calculs et gestion de chantier\ncontact@chantierpro.xyz`,
+      react: createElement(WelcomeEmail, { name: userName, dashboardUrl, appUrl, supportEmail: SITE_CONFIG.supportEmail }),
+      text: `Bonjour${userName ? ` ${userName}` : ""},\n\nVotre compte Chantier Pro a bien été créé.\n\nOuvrir mon tableau de bord :\n${dashboardUrl}\n\nChantier Pro\nPlateforme de calculs et gestion de chantier\n${SITE_CONFIG.supportEmail}`,
     }).then((result) => {
       if (!result.ok) {
         logError("auth.register.welcome_email_failed", { requestId, userId: user.id, error: result.error });

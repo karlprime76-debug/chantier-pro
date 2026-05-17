@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 
-export function PasswordResetEmail({ resetUrl }: { resetUrl: string }): ReactElement {
+export function PasswordResetEmail({ resetUrl, supportEmail }: { resetUrl: string; supportEmail: string }): ReactElement {
   return (
     <html lang="fr">
       <body style={{ margin: 0, padding: 0, backgroundColor: "#F8FAFC", fontFamily: "system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial" }}>
@@ -88,8 +88,8 @@ export function PasswordResetEmail({ resetUrl }: { resetUrl: string }): ReactEle
                 <b style={{ color: "#061B3A" }}>Chantier Pro</b> — Outils professionnels pour le chantier
               </div>
               <div style={{ marginTop: 8 }}>
-                Contact : <a href="mailto:contact@chantierpro.xyz" style={{ color: "#061B3A", textDecoration: "underline", fontWeight: 700 }}>
-                  contact@chantierpro.xyz
+                Contact : <a href={`mailto:${supportEmail}`} style={{ color: "#061B3A", textDecoration: "underline", fontWeight: 700 }}>
+                  {supportEmail}
                 </a>
               </div>
             </div>

@@ -4,12 +4,14 @@ type EmailTemplate = {
   html: string;
 };
 
+const SUPPORT_EMAIL = (process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "chantierprobj@gmail.com").trim();
+
 const BRAND = {
   name: "Chantier Pro",
   tagline: "Outils professionnels pour le chantier",
   siteUrl: "https://chantierpro.xyz",
-  supportEmail: "contact@chantierpro.xyz",
-  fromEmail: "no-reply@chantierpro.xyz",
+  supportEmail: SUPPORT_EMAIL,
+  fromEmail: "noreply@chantierpro.xyz",
   whatsappLabel: "+229 01 58 68 45 48",
   whatsappUrl: "https://wa.me/2290158684548",
   location: "Cotonou, Bénin",

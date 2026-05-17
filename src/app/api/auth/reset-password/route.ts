@@ -5,6 +5,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
 import { sendTransactionalEmail } from "@/lib/email/resend";
+import { SITE_CONFIG } from "@/lib/site-config";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -109,8 +110,8 @@ export async function POST(req: Request) {
       sendTransactionalEmail({
         to: resetToken.user.email,
         subject: "Votre mot de passe Chantier Pro a été modifié",
-        text: "Bonjour,\n\nVotre mot de passe a bien été modifié.\n\nSi vous n’êtes pas à l’origine de cette action, contactez rapidement le support.\n\nChantier Pro — Outils professionnels pour le chantier\ncontact@chantierpro.xyz",
-        html: "<p>Bonjour,</p><p>Votre mot de passe a bien été modifié.</p><p>Si vous n’êtes pas à l’origine de cette action, contactez rapidement le support : <a href=\"mailto:contact@chantierpro.xyz\">contact@chantierpro.xyz</a>.</p><p><strong>Chantier Pro</strong> — Outils professionnels pour le chantier</p>",
+        text: `Bonjour,\n\nVotre mot de passe a bien été modifié.\n\nSi vous n’êtes pas à l’origine de cette action, contactez rapidement le support.\n\nChantier Pro — Outils professionnels pour le chantier\n${SITE_CONFIG.supportEmail}`,
+        html: `<p>Bonjour,</p><p>Votre mot de passe a bien été modifié.</p><p>Si vous n’êtes pas à l’origine de cette action, contactez rapidement le support : <a href="mailto:${SITE_CONFIG.supportEmail}">${SITE_CONFIG.supportEmail}</a>.</p><p><strong>Chantier Pro</strong> — Outils professionnels pour le chantier</p>`,
       }).then((result) => {
         if (!result.ok) {
           logError("auth.reset_password.confirmation_email_failed", {

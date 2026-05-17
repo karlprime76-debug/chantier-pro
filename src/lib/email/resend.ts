@@ -39,14 +39,30 @@ function isLocalhostUrl(url: string) {
   return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\b/i.test(url.trim());
 }
 
+function getEmailFrom() {
+  const configured = (process.env.EMAIL_FROM ?? "").trim();
+  if (configured) return configured;
+  if (process.env.NODE_ENV === "production") return "Chantier Pro <noreply@chantierpro.xyz>";
+  return "Chantier Pro <onboarding@resend.dev>";
+}
+
+function getReplyTo(inputReplyTo?: string) {
+  return (
+    inputReplyTo ??
+    process.env.EMAIL_REPLY_TO ??
+    process.env.NEXT_PUBLIC_SUPPORT_EMAIL ??
+    "chantierprobj@gmail.com"
+  ).trim();
+}
+
 export function getPublicAppUrl() {
   return getAppUrl();
 }
 
 export async function sendTransactionalEmail(input: SendTransactionalEmailInput): Promise<SendTransactionalEmailResult> {
   const resendKey = (process.env.RESEND_API_KEY ?? "").trim();
-  const from = (process.env.EMAIL_FROM ?? "").trim();
-  const replyTo = (input.replyTo ?? process.env.EMAIL_REPLY_TO ?? "").trim();
+  const from = getEmailFrom();
+  const replyTo = getReplyTo(input.replyTo);
 
   const baseUrl = getAppUrl();
   if (process.env.NODE_ENV === "production" && isLocalhostUrl(baseUrl)) {
@@ -54,7 +70,6 @@ export async function sendTransactionalEmail(input: SendTransactionalEmailInput)
   }
 
   if (!resendKey) return { ok: false, provider: "resend", error: "Missing RESEND_API_KEY." };
-  if (!from) return { ok: false, provider: "resend", error: "Missing EMAIL_FROM." };
 
   const to = normalizeEmail(input.to);
   if (!looksLikeEmail(to)) return { ok: false, provider: "resend", error: "Invalid recipient email." };

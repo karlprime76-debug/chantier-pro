@@ -4,10 +4,12 @@ export function WelcomeEmail({
   name,
   dashboardUrl,
   appUrl,
+  supportEmail,
 }: {
   name: string;
   dashboardUrl: string;
   appUrl: string;
+  supportEmail: string;
 }): ReactElement {
   const displayName = name.trim();
 
@@ -97,8 +99,8 @@ export function WelcomeEmail({
                 <b style={{ color: "#061B3A" }}>Chantier Pro</b> — Outils professionnels pour le chantier
               </div>
               <div style={{ marginTop: 8 }}>
-                Contact : <a href="mailto:contact@chantierpro.xyz" style={{ color: "#061B3A", textDecoration: "underline", fontWeight: 700 }}>
-                  contact@chantierpro.xyz
+                Contact : <a href={`mailto:${supportEmail}`} style={{ color: "#061B3A", textDecoration: "underline", fontWeight: 700 }}>
+                  {supportEmail}
                 </a>
               </div>
               <div>
