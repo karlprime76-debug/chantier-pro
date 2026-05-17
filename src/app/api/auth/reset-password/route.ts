@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { z } from "zod";
-import { createElement } from "react";
 
-import { PasswordChangedEmail } from "@/components/emails/PasswordChangedEmail";
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
-import { getPublicAppUrl, sendTransactionalEmail } from "@/lib/email/resend";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { sendPasswordChangedEmail } from "@/lib/email/transactional";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -109,13 +106,7 @@ export async function POST(req: Request) {
     logInfo("auth.reset_password.password_updated", { requestId, userId: resetToken.userId });
 
     if (resetToken.user?.email) {
-      const appUrl = getPublicAppUrl();
-      const emailResult = await sendTransactionalEmail({
-        to: resetToken.user.email,
-        subject: "Votre mot de passe Chantier Pro a été modifié",
-        react: createElement(PasswordChangedEmail, { appUrl, supportEmail: SITE_CONFIG.supportEmail }),
-        text: `Bonjour,\n\nVotre mot de passe Chantier Pro vient d’être mis à jour.\n\nSi vous n’avez pas effectué cette action, contactez immédiatement le support : ${SITE_CONFIG.supportEmail}\n\nOuvrir Chantier Pro :\n${appUrl}\n\nChantier Pro — L’outil BTP pour calculer, suivre et organiser vos chantiers.`,
-      });
+      const emailResult = await sendPasswordChangedEmail({ to: resetToken.user.email });
 
       if (!emailResult.ok) {
         logError("auth.reset_password.confirmation_email_failed", {

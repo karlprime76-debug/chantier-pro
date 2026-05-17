@@ -97,6 +97,23 @@ export function EmailInfoBox({ children, tone = "neutral" }: { children: ReactNo
   );
 }
 
+export function EmailFeatureList({ items }: { items: string[] }): ReactElement {
+  return (
+    <div style={{ margin: "16px 0", padding: 0 }}>
+      {items.map((item) => (
+        <div key={item} style={{ display: "table", width: "100%", margin: "0 0 8px 0" }}>
+          <div style={{ display: "table-cell", width: 20, color: colors.orange, fontWeight: 900 }}>•</div>
+          <div style={{ display: "table-cell", fontSize: 14, lineHeight: 1.55, color: colors.text }}>{item}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function EmailDivider(): ReactElement {
+  return <div style={{ height: 1, backgroundColor: colors.border, margin: "20px 0" }} />;
+}
+
 export function EmailText({ children }: { children: ReactNode }): ReactElement {
   return <p style={{ margin: "0 0 13px 0", fontSize: 15, lineHeight: 1.65, color: colors.text }}>{children}</p>;
 }

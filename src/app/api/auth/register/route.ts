@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
-import { createElement } from "react";
 import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
 import { hashPassword } from "@/lib/auth/password";
-import { getPublicAppUrl, sendTransactionalEmail } from "@/lib/email/resend";
-import { WelcomeEmail } from "@/components/emails/WelcomeEmail";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { sendWelcomeEmail } from "@/lib/email/transactional";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 
@@ -70,15 +67,7 @@ export async function POST(req: Request) {
 
     logInfo("auth.register.user_created", { requestId, userId: user.id });
 
-    const appUrl = getPublicAppUrl();
-    const dashboardUrl = `${appUrl.replace(/\/$/, "")}/dashboard`;
-
-    const emailResult = await sendTransactionalEmail({
-      to: email,
-      subject: "Bienvenue sur Chantier Pro",
-      react: createElement(WelcomeEmail, { name: userName, dashboardUrl, appUrl, supportEmail: SITE_CONFIG.supportEmail }),
-      text: `Bonjour${userName ? ` ${userName}` : ""},\n\nBienvenue sur Chantier Pro.\n\nChantier Pro aide les professionnels du BTP à gagner du temps sur les calculs, le suivi et l’organisation des projets de construction.\n\nFonctionnalités utiles :\n- Calculateurs BTP\n- Suivi de projets\n- Rapports et exports\n- Modules Pro et Entreprise\n- Outils pour béton, acier, fondations et laboratoire\n\nAccéder à mon tableau de bord :\n${dashboardUrl}\n\nConseil : commencez par créer votre premier projet ou tester un calculateur gratuit.\n\nSupport : ${SITE_CONFIG.supportEmail}\nWhatsApp : +229 01 58 68 45 48\n\nChantier Pro — L’outil BTP pour calculer, suivre et organiser vos chantiers.\n${appUrl}`,
-    });
+    const emailResult = await sendWelcomeEmail({ to: email, userName });
 
     if (!emailResult.ok) {
       logError("auth.register.welcome_email_failed", { requestId, userId: user.id, error: emailResult.error });

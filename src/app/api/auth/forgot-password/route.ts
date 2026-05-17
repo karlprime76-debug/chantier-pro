@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { createElement } from "react";
 import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
-import { getPublicAppUrl, sendTransactionalEmail } from "@/lib/email/resend";
-import { PasswordResetEmail } from "@/components/emails/PasswordResetEmail";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { getPublicAppUrl } from "@/lib/email/resend";
+import { sendPasswordResetEmail } from "@/lib/email/transactional";
 import { logError, logInfo } from "@/lib/observability/logger";
 import { getRequestId, withRequestIdHeaders } from "@/lib/observability/requestId";
 import { checkRateLimit } from "@/lib/security/rateLimit";
@@ -87,12 +85,7 @@ export async function POST(req: Request) {
       const appUrl = getPublicAppUrl();
       const resetUrl = `${appUrl.replace(/\/$/, "")}/reset-password?token=${encodeURIComponent(rawToken)}`;
 
-      const emailResult = await sendTransactionalEmail({
-        to: user.email,
-        subject: "Réinitialisation de votre mot de passe Chantier Pro",
-        react: createElement(PasswordResetEmail, { resetUrl, appUrl, supportEmail: SITE_CONFIG.supportEmail }),
-        text: `Bonjour,\n\nNous avons reçu une demande de réinitialisation de mot de passe pour votre compte Chantier Pro.\n\nRéinitialiser mon mot de passe :\n${resetUrl}\n\nCe lien expire dans 30 minutes.\n\nSi vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet email.\n\nChantier Pro — Outils professionnels pour le chantier\n${SITE_CONFIG.supportEmail}`,
-      });
+      const emailResult = await sendPasswordResetEmail({ to: user.email, resetUrl });
 
       if (!emailResult.ok) {
         logError("auth.forgot_password.email_failed", {
