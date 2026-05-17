@@ -25,7 +25,7 @@ function styles({
     "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.98] active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--app-bg)] disabled:opacity-60 disabled:pointer-events-none";
 
   const sizes: Record<ButtonSize, string> = {
-    sm: "h-9 px-3 text-sm",
+    sm: "min-h-9 px-3 py-2 text-sm",
     md: "h-11 px-4 text-sm",
     lg: "h-12 px-5 text-base",
   };

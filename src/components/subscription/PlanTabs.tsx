@@ -15,13 +15,13 @@ type TabKey = "free" | "premium" | "enterprise";
 type Tab = {
   key: TabKey;
   label: string;
-  badgeVariant: "free" | "premium";
+  badgeVariant: "free" | "premium" | "enterprise";
 };
 
 const TABS: Tab[] = [
   { key: "free", label: "Gratuit", badgeVariant: "free" },
   { key: "premium", label: "Pro", badgeVariant: "premium" },
-  { key: "enterprise", label: "Entreprise", badgeVariant: "free" },
+  { key: "enterprise", label: "Entreprise", badgeVariant: "enterprise" },
 ];
 
 export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
@@ -51,7 +51,11 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
           </div>
         </div>
 
-        <div className="mt-4 w-full max-w-full rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-1">
+        <div
+          className="mt-4 w-full max-w-full rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-1"
+          role="tablist"
+          aria-label="Choix du plan"
+        >
           <div className="grid w-full grid-cols-3 gap-1">
             {TABS.map((t) => {
               const isActive = t.key === active;
@@ -59,6 +63,8 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                 <button
                   key={t.key}
                   type="button"
+                  role="tab"
+                  aria-selected={isActive}
                   onClick={() => setActive(t.key)}
                   className={cn(
                     "min-w-0 rounded-2xl px-2 py-2 text-[11px] font-extrabold tracking-tight transition sm:px-3 sm:text-xs",
@@ -282,22 +288,31 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                 </div>
               </div>
             </div>
+
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Button type="button" size="lg" variant="ghost" onClick={() => setActive("free")}>
+                Voir Gratuit
+              </Button>
+              <Button type="button" size="lg" variant="ghost" onClick={() => setActive("enterprise")}>
+                Voir Entreprise
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="grid gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <PlanBadge variant="free" />
+                <PlanBadge variant="enterprise" />
                 <div className="text-sm font-extrabold text-[var(--app-text)]">Plan Entreprise</div>
               </div>
               <div className="mt-1 text-sm text-[var(--app-text-muted)]">
-                Pour équipes chantier, bureaux d’études et entreprises BTP
+                Pour les équipes, projets avancés et modules Entreprise (fondations, formulation béton, laboratoire, exports).
               </div>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_6%)] p-4">
-                <div className="text-sm font-bold text-[var(--app-text)]">Pour les équipes</div>
+                <div className="text-sm font-bold text-[var(--app-text)]">Équipe & contrôle</div>
                 <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                   <div>Multi-utilisateurs</div>
                   <div>Gestion d’équipe</div>
@@ -311,20 +326,37 @@ export function PlanTabs({ defaultTab = "premium" }: { defaultTab?: TabKey }) {
                 <div className="text-sm font-bold text-[var(--app-text)]">Pilotage & exports</div>
                 <div className="mt-2 grid gap-1 text-sm text-[var(--app-text-muted)]">
                   <div>Export PDF/Excel</div>
-                  <div>Devis avec logo entreprise</div>
+                  <div>Exports avancés</div>
                   <div>Dashboard rentabilité</div>
                 </div>
               </div>
             </div>
 
             <div className="rounded-2xl border border-[var(--app-card-border)] bg-[color-mix(in_oklab,var(--app-card),transparent_8%)] p-4">
-              <div>
-                <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">25 000 FCFA</div>
-                <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <div className="text-2xl font-extrabold tracking-tight text-[var(--app-text)]">25 000 FCFA</div>
+                  <div className="text-sm text-[var(--app-text-muted)]">par mois</div>
+                </div>
+                <PlanBadge variant="enterprise" />
               </div>
               <div className="mt-3">
                 <SubscribeButton plan="ENTERPRISE">Passer à Entreprise</SubscribeButton>
               </div>
+              <div className="mt-2">
+                <Button href="/pricing" variant="ghost" size="sm">
+                  Voir le détail des plans
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Button type="button" size="lg" variant="ghost" onClick={() => setActive("premium")}>
+                Voir Pro
+              </Button>
+              <Button href={startHref} size="lg" variant="secondary">
+                {isAuthenticated ? "Créer mon chantier" : "Commencer"}
+              </Button>
             </div>
           </div>
         )}

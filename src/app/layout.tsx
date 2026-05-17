@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/auth/Providers";
 import { AppSplashScreen } from "@/components/branding/AppSplashScreen";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { getSiteUrl } from "@/lib/config/site";
+import { SITE_CONFIG } from "@/lib/site-config";
 import "./globals.css";
+
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -78,11 +92,86 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteUrl = getSiteUrl();
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_CONFIG.name,
+    url: siteUrl,
+    logo: `${siteUrl}${SITE_CONFIG.logoPath}`,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: SITE_CONFIG.supportEmail,
+        availableLanguage: ["fr"],
+      },
+    ],
+    sameAs: [SITE_CONFIG.instagramUrl, SITE_CONFIG.tiktokUrl],
+  };
+
+  const webSiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_CONFIG.name,
+    url: siteUrl,
+    inLanguage: "fr-FR",
+  };
+
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: SITE_CONFIG.name,
+    description:
+      "Application BTP mobile-first pour calculs (béton/acier/fondations), suivi chantier, gestion de projets de construction, budget/dépenses et rapports.",
+    url: siteUrl,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    inLanguage: "fr-FR",
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Gratuit",
+        price: "0",
+        priceCurrency: "XOF",
+        url: `${siteUrl}/pricing`,
+      },
+      {
+        "@type": "Offer",
+        name: "Pro",
+        price: "15000",
+        priceCurrency: "XOF",
+        url: `${siteUrl}/pricing`,
+      },
+      {
+        "@type": "Offer",
+        name: "Entreprise",
+        price: "25000",
+        priceCurrency: "XOF",
+        url: `${siteUrl}/pricing`,
+      },
+    ],
+  };
+
   return (
     <html
       lang="fr"
-      className="h-full antialiased"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Providers>
           <ThemeProvider>

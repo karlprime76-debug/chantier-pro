@@ -1,6 +1,8 @@
 export const SITE_CONFIG = {
   name: "Chantier Pro",
   email: "chantierprobj@gmail.com",
+  supportEmail: (process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "chantierprobj@gmail.com").trim(),
+  logoPath: "/logo.png",
   whatsappDisplay: "+229 01 58 68 45 48",
   whatsappRaw: "2290158684548",
   whatsappUrl: "https://wa.me/2290158684548",

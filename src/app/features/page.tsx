@@ -62,7 +62,7 @@ export default async function FeaturesPage() {
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Fondations</CardTitle>
-                  <PlanBadge variant="free">Enterprise</PlanBadge>
+                  <PlanBadge variant="enterprise" />
                 </div>
                 <CardDescription>Étapes, calculs et quantitatifs pour semelles, radiers, longrines, puits et pieux.</CardDescription>
               </CardHeader>
@@ -77,7 +77,7 @@ export default async function FeaturesPage() {
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Formulation de béton</CardTitle>
-                  <PlanBadge variant="free">Enterprise</PlanBadge>
+                  <PlanBadge variant="enterprise" />
                 </div>
                 <CardDescription>
                   Dosage indicatif du béton : ciment, eau, sable, gravier, adjuvant, corrections d’humidité et quantités par volume.

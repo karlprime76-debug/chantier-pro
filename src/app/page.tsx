@@ -21,7 +21,8 @@ export default function Home() {
               Gérez vos chantiers plus simplement.
             </h1>
             <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--app-text-muted)]">
-              Chantier Pro centralise vos projets, vos calculs BTP, vos dépenses et vos documents dans une seule application.
+              Chantier Pro est une application BTP (logiciel chantier) qui centralise vos projets de construction, vos calculs béton/acier,
+              le suivi chantier, les dépenses, le budget et les rapports — pensée pour le Bénin et l’Afrique francophone.
             </p>
             <HomePublicCtas variant="hero" />
           </section>

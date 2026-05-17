@@ -181,7 +181,10 @@ export function MobileBottomNav() {
         style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
         {moreOpen ? (
-          <div className="absolute bottom-[calc(0.75rem+env(safe-area-inset-bottom)+78px)] left-1/2 z-50 w-[min(92vw,360px)] -translate-x-1/2">
+          <div
+            id="mobile-bottom-nav-more-menu"
+            className="absolute bottom-[calc(0.75rem+env(safe-area-inset-bottom)+78px)] left-1/2 z-50 w-[min(92vw,360px)] -translate-x-1/2"
+          >
             <div className="rounded-3xl border border-[color-mix(in_oklab,var(--app-nav-bg),white_12%)] bg-[var(--app-nav-bg)] p-2 shadow-lg supports-[backdrop-filter]:backdrop-blur">
               <Link
                 href="/dashboard/reports"
@@ -251,6 +254,8 @@ export function MobileBottomNav() {
               <button
                 type="button"
                 aria-current={active ? "page" : undefined}
+                aria-expanded={moreOpen}
+                aria-controls="mobile-bottom-nav-more-menu"
                 onClick={moreAction.onClick}
                 className={cn(
                   "flex h-[62px] flex-col items-center justify-center gap-1 rounded-2xl px-2 text-center select-none touch-manipulation transition duration-150 will-change-transform active:scale-[0.96] active:opacity-90",

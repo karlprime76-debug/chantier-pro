@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { getSession } from "@/lib/auth/session";
 import type { UserPlan } from "@/lib/subscription/access";
 import { getEffectiveUserPlan } from "@/lib/subscription/server";
+import { absoluteUrl } from "@/lib/config/site";
 
 export default async function PricingPage() {
   const session = await getSession();
@@ -16,16 +17,93 @@ export default async function PricingPage() {
   const canSeeBillingHealth = process.env.NODE_ENV !== "production" || session?.role === "ADMIN";
   const freeCtaHref = session ? "/dashboard" : "/register";
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Le plan Gratuit suffit-il pour démarrer ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Oui, il permet de tester l’app et les calculateurs de base avant de passer au suivi complet.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Chantier Pro est-il adapté au Bénin ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Oui, l’application est pensée pour les usages BTP au Bénin et plus largement en Afrique francophone.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "À quoi sert l’offre Pro ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Pour piloter un chantier de façon complète : suivi budget/dépenses, rapports et accès aux outils avancés.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "À quoi sert l’offre Entreprise ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Pour gérer une équipe, obtenir des exports/rapports avancés et accéder aux modules Entreprise (fondations, formulation béton, laboratoire, dalle post-tension, etc.).",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Quand mon plan payant est-il activé ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Après paiement, l’activation est automatique (ou rapide si vérification nécessaire).",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Les calculs remplacent-ils un ingénieur ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Non. Les calculateurs sont des outils d’aide à l’estimation et au suivi. Pour les choix structurants, fais valider par un ingénieur, architecte ou bureau d’études.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Peut-on utiliser l’application sur mobile ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Oui, Chantier Pro est conçu mobile-first pour une saisie rapide sur le terrain.",
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-full">
       <MarketingHeader />
       <AppShell className="pb-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({ ...faqJsonLd, url: absoluteUrl("/pricing") }) }}
+        />
         <div className="mx-auto w-full max-w-3xl">
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-[var(--app-text)]">Tarifs</h1>
             <p className="mt-2 text-sm text-[var(--app-text-muted)]">
               3 plans simples pour démarrer gratuitement, passer en mode pro, puis travailler en équipe.
             </p>
+            <div className="mt-4 grid gap-2 text-sm text-[var(--app-text-muted)]">
+              <p>
+                Chantier Pro est une application BTP pensée pour les professionnels du Bénin : calculs béton/acier, suivi chantier, gestion de
+                projets, budget/dépenses et rapports.
+              </p>
+              <p>
+                Choisis ton offre selon ton besoin : tester l’essentiel (Gratuit), piloter un chantier de façon complète (Pro), ou gérer une
+                équipe et des modules avancés (Entreprise).
+              </p>
+            </div>
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -155,10 +233,10 @@ export default async function PricingPage() {
               <CardHeader>
                 <div className="flex items-center justify-between gap-3">
                   <CardTitle>Entreprise</CardTitle>
-                  <PlanBadge variant="free">Entreprise</PlanBadge>
+                  <PlanBadge variant="enterprise" />
                 </div>
                 <CardDescription>
-                  Pour travailler en équipe avec accès multi-utilisateurs.
+                  Pour travailler en équipe, structurer le suivi et accéder aux modules les plus avancés.
                 </CardDescription>
               </CardHeader>
               <div className="flex flex-1 flex-col gap-3">
@@ -196,12 +274,19 @@ export default async function PricingPage() {
                       <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
                         Exports avancés
                       </span>
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Laboratoire
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[color-mix(in_oklab,var(--app-card),transparent_12%)] px-2 py-1 text-[11px] font-bold text-[var(--app-text-muted)] ring-1 ring-[var(--app-card-border)]">
+                        Dalle post-tension
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="text-sm text-[var(--app-text-muted)]">
-                  Pour les entreprises BTP qui gèrent plusieurs chantiers, équipes et rapports.
+                  Pour les entreprises BTP qui gèrent plusieurs chantiers, des équipes et des reporting/extractions. Inclut l’accompagnement
+                  projet selon le besoin.
                 </div>
 
                 <div className="mt-auto pt-2">
@@ -412,12 +497,34 @@ export default async function PricingPage() {
                 <div className="mt-1">Oui, il permet de tester l’app et les calculateurs de base avant de passer au suivi complet.</div>
               </div>
               <div>
-                <div className="font-bold text-[var(--app-text)]">Quelles fonctionnalités avancées sont incluses selon le plan ?</div>
-                <div className="mt-1">Certaines fonctionnalités avancées sont disponibles uniquement avec Pro ou Entreprise.</div>
+                <div className="font-bold text-[var(--app-text)]">Chantier Pro est-il adapté au Bénin ?</div>
+                <div className="mt-1">Oui, l’application est pensée pour les usages BTP au Bénin et plus largement en Afrique francophone.</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">À quoi sert l’offre Pro ?</div>
+                <div className="mt-1">Pour piloter un chantier de façon complète : suivi budget/dépenses, rapports et accès aux outils avancés.</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">À quoi sert l’offre Entreprise ?</div>
+                <div className="mt-1">
+                  Pour gérer une équipe, obtenir des exports/rapports avancés et accéder aux modules Entreprise (fondations, formulation béton,
+                  laboratoire, dalle post-tension, etc.).
+                </div>
               </div>
               <div>
                 <div className="font-bold text-[var(--app-text)]">Quand mon plan payant est-il activé ?</div>
                 <div className="mt-1">Après paiement, l’activation est automatique (ou rapide si vérification nécessaire).</div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Les calculs remplacent-ils un ingénieur ?</div>
+                <div className="mt-1">
+                  Non. Les calculateurs sont des outils d’aide à l’estimation et au suivi. Pour les choix structurants, fais valider par un
+                  ingénieur, architecte ou bureau d’études.
+                </div>
+              </div>
+              <div>
+                <div className="font-bold text-[var(--app-text)]">Peut-on utiliser l’application sur mobile ?</div>
+                <div className="mt-1">Oui, Chantier Pro est conçu mobile-first pour une saisie rapide sur le terrain.</div>
               </div>
             </div>
           </div>

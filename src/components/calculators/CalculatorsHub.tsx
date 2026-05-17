@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { ResponsiveButton } from "@/components/ui/ResponsiveButton";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -53,7 +52,7 @@ function statusLabel(item: CalculatorCatalogItem): string {
 function badgeForPlan(plan: UserPlan) {
   if (plan === "FREE") return <PlanBadge variant="free" />;
   if (plan === "PREMIUM") return <PlanBadge variant="premium" />;
-  return <PlanBadge variant="free">Entreprise</PlanBadge>;
+  return <PlanBadge variant="enterprise" />;
 }
 
 function requiredPlanForItem(item: CalculatorCatalogItem): UserPlan {
@@ -72,28 +71,8 @@ function withPlan(href: string, userPlan: UserPlan) {
 }
 
 export function CalculatorsHub({ userPlan }: CalculatorsHubProps) {
-  const router = useRouter();
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("ALL");
-
-  useEffect(() => {
-    const routesToPrefetch = [
-      "/calculs/devis",
-      "/calculs/budget-chantier",
-      "/calculs/rapports-journaliers",
-      "/calculs/bibliotheque-dosages",
-      "/calculs/bibliotheque-prix",
-      "/calculs/rentabilite-chantier",
-      "/calculs/exports-avances",
-      "/calculs/suivi-equipe",
-      "/calculs/validation-depenses",
-      "/pricing",
-    ];
-
-    routesToPrefetch.forEach((href) => {
-      router.prefetch(href);
-    });
-  }, [router]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();

@@ -1,8 +1,7 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-
-const SUPPORT_EMAIL = "chantierprobj@gmail.com";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function SupportPage() {
   return (
@@ -24,11 +23,11 @@ export default function SupportPage() {
           <div className="grid gap-4">
             <div className="rounded-2xl border border-[var(--cp-border)] bg-[color-mix(in_oklab,var(--cp-card),transparent_8%)] p-4">
               <div className="text-sm font-semibold text-[color-mix(in_oklab,var(--cp-text),transparent_45%)]">Email</div>
-              <div className="mt-1 text-sm font-bold text-[var(--cp-text)]">{SUPPORT_EMAIL}</div>
+              <div className="mt-1 text-sm font-bold text-[var(--cp-text)]">{SITE_CONFIG.supportEmail}</div>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-              <Button href={`mailto:${SUPPORT_EMAIL}`} size="lg">
+              <Button href={`mailto:${SITE_CONFIG.supportEmail}`} size="lg">
                 Envoyer un email
               </Button>
             </div>

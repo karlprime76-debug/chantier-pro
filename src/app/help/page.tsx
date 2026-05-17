@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Button } from "@/components/ui/Button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 const FAQS = [
   {
@@ -29,7 +30,7 @@ const FAQS = [
   },
   {
     q: "Comment contacter le support ?",
-    a: "Tu peux contacter le support par email à chantierprobj@gmail.com.",
+    a: `Tu peux contacter le support par email à ${SITE_CONFIG.supportEmail}.`,
   },
 ];
 
@@ -80,7 +81,7 @@ export default function HelpPage() {
             <Button href="/support" variant="secondary" size="lg">
               Contacter le support
             </Button>
-            <Button href="mailto:chantierprobj@gmail.com" size="lg">
+            <Button href={`mailto:${SITE_CONFIG.supportEmail}`} size="lg">
               Envoyer un email
             </Button>
           </div>

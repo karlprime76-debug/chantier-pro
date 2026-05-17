@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export default function PrivacyPage() {
   return (
@@ -61,7 +62,7 @@ export default function PrivacyPage() {
 
             <div>
               <div className="font-bold text-[var(--cp-text)]">Contact</div>
-              <div className="mt-1">chantierprobj@gmail.com</div>
+              <div className="mt-1">{SITE_CONFIG.supportEmail}</div>
             </div>
           </div>
         </Card>
